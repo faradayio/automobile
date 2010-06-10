@@ -1,8 +1,7 @@
-require 'leap'
-
 module BrighterPlanet
   module Automobile
     def self.included(base)
+      base.extend ::Leap::Subject
       base.decide :emission, :with => :characteristics do
         committee :emission do # returns kg CO2
           quorum 'from fuel', :needs => [:fuel_consumed, :emission_factor], :appreciates => :fuel_type do |characteristics|
