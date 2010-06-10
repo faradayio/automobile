@@ -155,7 +155,7 @@ module BrighterPlanet
         
         committee :speed do # returns kilometres per hour
           quorum 'from urbanity', :needs => :urbanity do |characteristics|
-            1 / (characteristics[:urbanity] / RESEARCH[:city_speed] + (1 - characteristics[:urbanity]) / RESEARCH[:highway_speed]) 
+            1 / (characteristics[:urbanity] / ::Automobile::RESEARCH[:city_speed] + (1 - characteristics[:urbanity]) / ::Automobile::RESEARCH[:highway_speed]) 
           end
         end
         
