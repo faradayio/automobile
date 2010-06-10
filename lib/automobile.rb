@@ -61,7 +61,7 @@ module BrighterPlanet
           end
           
           quorum 'default' do
-            Automobile.fallback.annual_distance_estimate
+            ::Automobile.fallback.annual_distance_estimate
           end
         end
         
@@ -149,7 +149,7 @@ module BrighterPlanet
           end
          
           quorum 'default' do
-            Automobile.fallback.fuel_efficiency
+            ::Automobile.fallback.fuel_efficiency
           end
         end
         
@@ -161,7 +161,7 @@ module BrighterPlanet
         
         committee :urbanity do
           quorum 'default' do
-            Automobile.fallback.urbanity
+            ::Automobile.fallback.urbanity
           end
         end
         
@@ -171,7 +171,7 @@ module BrighterPlanet
           end
     
           quorum 'default' do
-            Automobile.fallback.fuel_type
+            ::Automobile.fallback.fuel_type
           end
         end
         
