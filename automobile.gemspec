@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "automobile.gemspec",
      "lib/automobile.rb",
      "test/helper.rb",
      "test/test_automobile.rb"
