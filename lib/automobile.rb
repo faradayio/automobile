@@ -1,3 +1,5 @@
+require 'conversions'
+
 module BrighterPlanet
   module Automobile
     def self.included(base)
@@ -155,7 +157,7 @@ module BrighterPlanet
         
         committee :speed do # returns kilometres per hour
           quorum 'from urbanity', :needs => :urbanity do |characteristics|
-            1 / (characteristics[:urbanity] / ::Automobile::RESEARCH[:city_speed] + (1 - characteristics[:urbanity]) / ::Automobile::RESEARCH[:highway_speed]) 
+            1 / (characteristics[:urbanity] / ::BrighterPlanet::Automobile::SPEEDS[:city] + (1 - characteristics[:urbanity]) / ::BrighterPlanet::Automobile::SPEEDS[:highway]) 
           end
         end
         
@@ -183,6 +185,7 @@ module BrighterPlanet
         
         committee :acquisition do
           quorum 'from model year or year', :appreciates => [:model_year, :year] do |characteristics|
+            puts characteristics.inspect
             !characteristics.empty? && Date.new((characteristics[:model_year].andand.year || characteristics[:year]).to_i - 1, 1, 1)
           end
           quorum 'from retirement', :appreciates => :retirement do |characteristics, timeframe|
@@ -198,5 +201,9 @@ module BrighterPlanet
         
       end
     end
+    SPEEDS = {
+      :highway => 57.1.miles.to(:kilometres), # https://brighterplanet.sifterapp.com/projects/30/issues/428
+      :city => 19.9.miles.to(:kilometres)     # https://brighterplanet.sifterapp.com/projects/30/issues/428
+    }
   end
 end

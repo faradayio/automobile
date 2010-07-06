@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/brighterplanet/automobile"
     gem.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling"]
     gem.add_dependency 'leap'
+    gem.add_dependency 'conversions'
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
