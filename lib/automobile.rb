@@ -13,9 +13,9 @@ module BrighterPlanet
       require 'automobile/summarization'
 
       base.send :include, BrighterPlanet::Automobile::CarbonModel
-      base.send :include, BrighterPlanet::Automobile::Characterization
       base.send :include, BrighterPlanet::Automobile::Data
       base.send :include, BrighterPlanet::Automobile::Summarization
+      base.send :include, BrighterPlanet::Automobile::Characterization
     end
     def automobile_model
       if Object.const_defined? 'Automobile'

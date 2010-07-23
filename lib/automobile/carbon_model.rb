@@ -65,7 +65,7 @@ module BrighterPlanet
             end
             
             quorum 'default' do
-              ::Automobile.fallback.annual_distance_estimate
+              Automobile.automobile_model.fallback.annual_distance_estimate
             end
           end
           
@@ -153,19 +153,19 @@ module BrighterPlanet
             end
            
             quorum 'default' do
-              ::Automobile.fallback.fuel_efficiency
+              Automobile.automobile_model.fallback.fuel_efficiency
             end
           end
           
           committee :speed do # returns kilometres per hour
             quorum 'from urbanity', :needs => :urbanity do |characteristics|
-              1 / (characteristics[:urbanity] / ::BrighterPlanet::Automobile::SPEEDS[:city] + (1 - characteristics[:urbanity]) / ::BrighterPlanet::Automobile::SPEEDS[:highway]) 
+              1 / (characteristics[:urbanity] / ::BrighterPlanet::Automobile::CarbonModel::SPEEDS[:city] + (1 - characteristics[:urbanity]) / ::BrighterPlanet::Automobile::CarbonModel::SPEEDS[:highway]) 
             end
           end
           
           committee :urbanity do
             quorum 'default' do
-              ::Automobile.fallback.urbanity
+              Automobile.automobile_model.fallback.urbanity
             end
           end
           
@@ -175,7 +175,7 @@ module BrighterPlanet
             end
       
             quorum 'default' do
-              ::Automobile.fallback.fuel_type
+              Automobile.automobile_model.fallback.fuel_type
             end
           end
           

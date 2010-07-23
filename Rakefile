@@ -31,7 +31,7 @@ begin
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rdoc'
     gem.add_development_dependency 'rspec', '= 2.0.0.beta.17'
-    gem.add_development_dependency 'sniff', '=0.0.8' unless ENV['LOCAL_SNIFF']
+    gem.add_development_dependency 'sniff', '=0.0.11' unless ENV['LOCAL_SNIFF']
     gem.add_dependency 'characterizable', '=0.0.12'
     gem.add_dependency 'data_miner', '= 0.5.2' unless ENV['LOCAL_DATA_MINER']
     gem.add_dependency 'earth', '=0.0.7'
@@ -39,13 +39,8 @@ begin
     gem.add_dependency 'fast_timestamp', '= 0.0.4'
     gem.add_dependency 'leap', '= 0.4.1' unless ENV['LOCAL_LEAP']
     gem.add_dependency 'summary_judgement', '= 1.3.8'
-    gem.add_dependency 'timeframe', '= 0.0.1'
+    gem.add_dependency 'timeframe', '= 0.0.8'
     gem.add_dependency 'weighted_average', '=0.0.4'
-
-
-
-
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
@@ -68,7 +63,7 @@ begin
   end
 rescue LoadError
   task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+    abort "RCov is not available. In order to run rcov, you must: gem install spicycode-rcov"
   end
 end
 
@@ -85,9 +80,13 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-require 'cucumber'
-require 'cucumber/rake/task'
+begin
+  require 'cucumber'
+  require 'cucumber/rake/task'
 
-Cucumber::Rake::Task.new(:features) do |t|
-  t.cucumber_opts = "features --format pretty"
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "features --format pretty"
+  end
+rescue LoadError
+  puts 'Cucumber not available. `gem install cucumber`'
 end

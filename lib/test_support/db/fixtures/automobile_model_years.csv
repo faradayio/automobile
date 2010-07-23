@@ -1,0 +1,4 @@
+"name","make_name","model_name","year","make_year_name","fuel_efficiency","fuel_efficiency_units","fuel_efficiency_city","fuel_efficiency_city_units","fuel_efficiency_highway","fuel_efficiency_highway_units","created_at","updated_at"
+"Acura RSX 2003","Acura","Acura RSX","2003","Acura 2003","11.0058","kilometres_per_litre","9.39618","kilometres_per_litre","12.6153","kilometres_per_litre","NULL","NULL"
+"Honda FIT 2008","Honda","Honda FIT","2008","Honda 2008","13.0628","kilometres_per_litre","11.5652","kilometres_per_litre","14.5604","kilometres_per_litre","NULL","NULL"
+"Volkswagen RABBIT 2009","Volkswagen","Volkswagen RABBIT","2009","Volkswagen 2009","10.1119","kilometres_per_litre","8.3571","kilometres_per_litre","11.8667","kilometres_per_litre","NULL","NULL"

@@ -35,7 +35,7 @@ module BrighterPlanet
           # has :annual_fuel_cost, :trumps => [:annual_distance_estimate, :weekly_distance_estimate, :daily_distance_estimate, :daily_duration, :weekly_fuel_cost], :measures => :cost
           # has :weekly_fuel_cost, :trumps => [:annual_distance_estimate, :weekly_distance_estimate, :daily_distance_estimate, :daily_duration, :annual_fuel_cost], :measures => :cost
         end
-        add_implicit_characteristics
+        base.add_implicit_characteristics
       end
     end
   end

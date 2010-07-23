@@ -1,3 +1,3 @@
-  source :rubygems
+source :rubygems
 
-  gemspec :path => '.'
+gemspec :path => '.'

@@ -1,0 +1,4 @@
+"name","make_name","fuel_efficiency_city","fuel_efficiency_city_units","fuel_efficiency_highway","fuel_efficiency_highway_units","created_at","updated_at"
+"Acura RSX","Acura","9.36805","kilometres_per_litre","12.6569","kilometres_per_litre","NULL","NULL"
+"Honda FIT","Honda","11.6128","kilometres_per_litre","14.4797","kilometres_per_litre","NULL","NULL"
+"Volkswagen RABBIT","Volkswagen","8.26903","kilometres_per_litre","11.8779","kilometres_per_litre","NULL","NULL"
