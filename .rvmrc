@@ -1,0 +1,9 @@
+rvm 1.8.7
+project=`basename \`pwd\``
+if rvm gemset list | grep $project
+then
+  rvm 1.8.7@$project
+else
+  rvm gemset create $project
+  rvm gemset use $project
+fi
