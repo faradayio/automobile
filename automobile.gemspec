@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-07-28}
+  s.date = %q{2010-07-29}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of an automobile}
   s.email = %q{andy@rossmeissl.net}
   s.extra_rdoc_files = [
@@ -54,6 +54,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
       s.add_development_dependency(%q<sniff>, ["= 0.0.11"])
       s.add_runtime_dependency(%q<characterizable>, ["= 0.0.12"])
+      s.add_runtime_dependency(%q<cohort_scope>, ["~> 0.0"])
       s.add_runtime_dependency(%q<data_miner>, ["= 0.5.2"])
       s.add_runtime_dependency(%q<earth>, [">= 0.0.7"])
       s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.2"])
@@ -72,6 +73,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
       s.add_dependency(%q<sniff>, ["= 0.0.11"])
       s.add_dependency(%q<characterizable>, ["= 0.0.12"])
+      s.add_dependency(%q<cohort_scope>, ["~> 0.0"])
       s.add_dependency(%q<data_miner>, ["= 0.5.2"])
       s.add_dependency(%q<earth>, [">= 0.0.7"])
       s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
@@ -91,6 +93,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
     s.add_dependency(%q<sniff>, ["= 0.0.11"])
     s.add_dependency(%q<characterizable>, ["= 0.0.12"])
+    s.add_dependency(%q<cohort_scope>, ["~> 0.0"])
     s.add_dependency(%q<data_miner>, ["= 0.5.2"])
     s.add_dependency(%q<earth>, [">= 0.0.7"])
     s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
