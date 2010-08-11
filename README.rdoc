@@ -14,4 +14,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Andy Rossmeissl. See LICENSE for details.
+Copyright (c) 2010 Brighter Planet. See LICENSE for details.
