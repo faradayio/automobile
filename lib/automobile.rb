@@ -1,23 +1,10 @@
+require 'emitter'
+
 module BrighterPlanet
   module Automobile
-    extend self
+    extend BrighterPlanet::Emitter
 
-    def included(base)
-      require 'cohort_scope'
-      require 'falls_back_on'
-      require 'falls_back_on/active_record_ext'
-
-      require 'automobile/carbon_model'
-      require 'automobile/characterization'
-      require 'automobile/data'
-      require 'automobile/summarization'
-
-      base.send :include, BrighterPlanet::Automobile::CarbonModel
-      base.send :include, BrighterPlanet::Automobile::Data
-      base.send :include, BrighterPlanet::Automobile::Summarization
-      base.send :include, BrighterPlanet::Automobile::Characterization
-    end
-    def automobile_model
+    def self.automobile_model
       if Object.const_defined? 'Automobile'
         ::Automobile
       elsif Object.const_defined? 'AutomobileRecord'
