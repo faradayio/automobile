@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    automobile (0.0.8)
+    automobile (0.0.9)
       emitter (>= 0.0.1)
 
 GEM
