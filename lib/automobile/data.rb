@@ -28,9 +28,7 @@ module BrighterPlanet
             AutomobileMakeFleetYear.run_data_miner! # sabshere 5/25/10 i'm not sure we actually need to have this in cm1
           end
           
-          process "pull dependencies" do
-            run_data_miner_on_belongs_to_associations
-          end
+          process :run_data_miner_on_belongs_to_associations
         end
       end
     end
