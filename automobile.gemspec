@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-09-08}
+  s.date = %q{2010-09-13}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of an automobile}
   s.email = %q{andy@rossmeissl.net}
   s.extra_rdoc_files = [

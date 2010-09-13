@@ -1,17 +1,29 @@
 require 'rubygems'
-unless ENV['NOBUNDLE']
+
+def require_or_fail(gems, message, failure_results_in_death = false)
+  gems = [gems] unless gems.is_a?(Array)
+
   begin
-    require 'bundler'
-    Bundler.setup
+    gems.each { |gem| require gem }
+    yield
   rescue LoadError
-    puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+    puts message
+    exit if failure_results_in_death
   end
 end
 
-require 'rake'
+unless ENV['NOBUNDLE']
+  message = <<-MESSAGE
+In order to run tests, you must:
+  * `gem install bundler`
+  * `bundle install`
+  MESSAGE
+  require_or_fail('bundler',message,true) do
+    Bundler.setup
+  end
+end
 
-begin
-  require 'jeweler'
+require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it with: gem install jeweler') do
   Jeweler::Tasks.new do |gem|
     gem.name = "automobile"
     gem.summary = %Q{A carbon model}
@@ -35,8 +47,46 @@ begin
     gem.add_dependency 'emitter', '>=0.0.1' unless ENV['LOCAL_EMITTER']
   end
   Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+end
+
+require_or_fail('sniff', 'Sniff gem not found, sniff tasks unavailable') do
+  require 'sniff/rake_task'
+  Sniff::RakeTask.new(:console) do |t|
+    t.earth_domains = :hospitality
+  end
+end
+
+require_or_fail('cucumber', 'Cucumber gem not found, cucumber tasks unavailable') do
+  require 'cucumber/rake/task'
+
+  desc 'Run all cucumber tests'
+  Cucumber::Rake::Task.new(:features) do |t|
+    if ENV['CUCUMBER_FORMAT']
+      t.cucumber_opts = "features --format #{ENV['CUCUMBER_FORMAT']}"
+    else
+      t.cucumber_opts = 'features --format pretty'
+    end
+  end
+
+  desc "Run all tests with RCov"
+  Cucumber::Rake::Task.new(:features_with_coverage) do |t|
+    t.cucumber_opts = "features --format pretty"
+    t.rcov = true
+    t.rcov_opts = ['--exclude', 'features']
+  end
+
+  task :test => :features
+  task :default => :test
+end
+
+require 'rake/rdoctask'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "lodging #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
 require 'rake/testtask'
