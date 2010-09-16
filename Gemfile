@@ -1,4 +1,5 @@
 gem 'emitter', :path => ENV['LOCAL_EMITTER'] if ENV['LOCAL_EMITTER']
-source :rubygems
+gem 'sniff', :path => ENV['LOCAL_SNIFF'] if ENV['LOCAL_SNIFF']
+source ENV['GEM_REPO'] || :rubygems
 
 gemspec :path => '.'
