@@ -187,7 +187,11 @@ module BrighterPlanet
           
           committee :acquisition do
             quorum 'from model year or year', :appreciates => [:model_year, :year] do |characteristics|
-              !characteristics.empty? && Date.new((characteristics[:model_year].andand.year || characteristics[:year]).to_i - 1, 1, 1)
+              if characteristics[:model_year]
+                Date.new characteristics[:model_year].year, 1, 1
+              elsif characteristics[:year]
+                Date.new characteristics[:year].to_i, 1, 1
+              end
             end
             quorum 'from retirement', :appreciates => :retirement do |characteristics, timeframe|
               [ timeframe.from, characteristics[:retirement] ].compact.min

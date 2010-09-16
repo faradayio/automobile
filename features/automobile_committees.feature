@@ -1,21 +1,36 @@
 Feature: Automobile Committee Calculations
   The automobile model should generate correct committee calculations
 
-  Scenario Outline: Acquisition committee
-    Given an automobile has "acquisition" of "<acquisition>"
-    And it has "model_year.name" "<make_model_year>"
-    When emissions are calculated
-    Then the acquisition committee should be exactly <acquisition_committee>
+  Scenario Outline: Retirement committee from acquisition
+    Given an automobile emitter
+    And a characteristic "timeframe" of "<timeframe>"
+    And a characteristic "acquisition" of "<acquisition>"
+    When the "retirement" committee is calculated
+    Then the conclusion of the committee should be "<retirement_committee>"
     Examples:
-      | make_model_year | acquisition | acquisition_committee |
-      |                 | 2007-01-30  | 2007-01-30            |
-      | Honda FIT 2008  |             | 2010-01-01            |
+      | timeframe             | acquisition | retirement_committee |
+      | 2009-03-04/2009-08-17 | 2010-04-21  | 2010-04-21           |
+      | 2009-03-04/2009-08-17 | 2007-01-30  | 2009-08-17           |
+      | 2009-03-04/2009-08-17 |             | 2009-08-17           |
 
-  Scenario Outline: Retirement committees
-    Given an automobile has "acquisition" of "<acquisition>"
-    And it has "model_year.name" "<make_model_year>"
-    When emissions are calculated
-    Then the retirement committee should be exactly <retirement_committee>
+  Scenario Outline: Acquisition committee from model year or year
+    Given an automobile emitter
+    And a characteristic "model_year.name" of "<make_model_year>"
+    And a characteristic "year" of "<year>"
+    When the "acquisition" committee is calculated
+    Then the conclusion of the committee should be "<acquisition_committee>"
     Examples:
-      | acquisition | retirement | retirement_committee |
-      | 2007-01-30  | 2009-03-04 | 2011-01-01           |
+      | make_model_year | year | acquisition_committee |
+      |                 | 2007 | 2007-01-01            |
+      | Honda FIT 2008  |      | 2008-01-01            |
+
+  Scenario Outline: Acquisition committee from retirement
+    Given an automobile emitter
+    And a characteristic "timeframe" of "<timeframe>"
+    And a characteristic "retirement" of "<retirement>"
+    When the "acquisition" committee is calculated
+    Then the conclusion of the committee should be "<acquisition_committee>"
+    Examples:
+      | timeframe             | retirement | acquisition_committee |
+      | 2010-08-10/2010-09-16 | 2007-02-03 | 2007-02-03            |
+      | 2010-08-10/2010-09-16 |            | 2010-08-10            |
