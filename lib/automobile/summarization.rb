@@ -1,10 +1,7 @@
-require 'summary_judgement'
-
 module BrighterPlanet
   module Automobile
     module Summarization
       def self.included(base)
-        base.extend SummaryJudgement
         base.summarize do |has|
           has.adjective :model_year
           has.adjective :make

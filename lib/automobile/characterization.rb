@@ -1,10 +1,7 @@
-require 'characterizable'
-
 module BrighterPlanet
   module Automobile
     module Characterization
       def self.included(base)
-        base.send :include, Characterizable
         base.characterize do
           has :make do |make|
             make.reveals :model_year do |model_year|
@@ -35,7 +32,6 @@ module BrighterPlanet
           # has :annual_fuel_cost, :trumps => [:annual_distance_estimate, :weekly_distance_estimate, :daily_distance_estimate, :daily_duration, :weekly_fuel_cost], :measures => :cost
           # has :weekly_fuel_cost, :trumps => [:annual_distance_estimate, :weekly_distance_estimate, :daily_distance_estimate, :daily_duration, :annual_fuel_cost], :measures => :cost
         end
-        base.add_implicit_characteristics
       end
     end
   end
