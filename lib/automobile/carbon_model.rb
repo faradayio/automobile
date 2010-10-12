@@ -1,3 +1,7 @@
+# Copyright © 2010 Brighter Planet.
+# See LICENSE for details.
+# Contact Brighter Planet for dual-license arrangements.
+
 require 'conversions'
 
 module BrighterPlanet
