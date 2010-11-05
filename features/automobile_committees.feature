@@ -13,16 +13,11 @@ Feature: Automobile Committee Calculations
       | 2009-03-04/2009-08-17 | 2007-01-30  | 2009-08-17           |
       | 2009-03-04/2009-08-17 |             | 2009-08-17           |
 
-  Scenario Outline: Acquisition committee from model year or year
+  Scenario: Acquisition committee from model year
     Given an automobile emitter
-    And a characteristic "model_year.name" of "<make_model_year>"
-    And a characteristic "year" of "<year>"
+    And a characteristic "model_year.name" of "Honda FIT 2008"
     When the "acquisition" committee is calculated
-    Then the conclusion of the committee should be "<acquisition_committee>"
-    Examples:
-      | make_model_year | year | acquisition_committee |
-      |                 | 2007 | 2007-01-01            |
-      | Honda FIT 2008  |      | 2008-01-01            |
+    Then the conclusion of the committee should be "2008-01-01"
 
   Scenario Outline: Acquisition committee from retirement
     Given an automobile emitter

@@ -406,16 +406,12 @@ module BrighterPlanet
             #
             # Uses the client-input `acquisition`.
             
-            #### Acquisition from model year or year
+            #### Acquisition from model year
             # **Complies:** GHG Protocol, ISO 14064-1, Climate Registry Protocol
             #
-            # Uses the first day of the client-input automobile [model year](http://data.brighterplanet.com/automobile_model_years)'s year, or if no `model year` was specified uses the first day of the client-input `year`.
-            quorum 'from model year or year', :appreciates => [:model_year, :year] do |characteristics|
-              if characteristics[:model_year]
-                Date.new characteristics[:model_year].year, 1, 1
-              elsif characteristics[:year]
-                Date.new characteristics[:year].to_i, 1, 1
-              end
+            # Uses the first day of the client-input automobile [model year](http://data.brighterplanet.com/automobile_model_years)'s year.
+            quorum 'from model year', :needs => [:model_year] do |characteristics|
+              Date.new characteristics[:model_year].year, 1, 1
             end
             
             #### Acquisition from timeframe or retirement
