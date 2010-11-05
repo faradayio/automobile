@@ -52,3 +52,10 @@ Feature: Automobile Committee Calculations
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-08-31 | 2010-04-21/2010-08-31 |
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-01-31 | 2010-01-01/2010-01-01 |
 
+  Scenario: Fuel type committee from variant
+    Given an automobile emitter
+    And a characteristic "variant.row_hash" of "xxx1"
+    When the "fuel_type" committee is calculated
+    Then the committee should have used quorum "from variant"
+    And the conclusion of the committee should have "name" of "regular gasoline"
+
