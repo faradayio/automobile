@@ -36,3 +36,19 @@ Feature: Automobile Committee Calculations
       | timeframe             | retirement | acquisition_committee |
       | 2010-08-10/2010-09-16 | 2007-02-03 | 2007-02-03            |
       | 2010-08-10/2010-09-16 | 2010-09-01 | 2010-08-10            |
+
+  Scenario Outline: Active subtimeframe committee from acquisition and retirement
+    Given an automobile emitter
+    And a characteristic "acquisition" of "<acquisition>"
+    And a characteristic "retirement" of "<retirement>"
+    And a characteristic "timeframe" of "<timeframe>"
+    When the "active_subtimeframe" committee is calculated
+    Then the conclusion of the committee should be timeframe "<active_subtimeframe>"
+    Examples:
+      | acquisition | retirement | timeframe             | active_subtimeframe   |
+      | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-12-31 | 2010-04-21/2010-09-01 |
+      | 2010-04-21  | 2010-09-01 | 2010-05-01/2010-08-31 | 2010-05-01/2010-08-31 |
+      | 2010-04-21  | 2010-09-01 | 2010-05-01/2010-12-31 | 2010-05-01/2010-09-01 |
+      | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-08-31 | 2010-04-21/2010-08-31 |
+      | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-01-31 | 2010-01-01/2010-01-01 |
+
