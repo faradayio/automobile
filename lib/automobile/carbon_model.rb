@@ -380,9 +380,9 @@ module BrighterPlanet
             # **Complies:**
             #
             # Uses an artificial fuel type representing a mix of gasoline and diesel proprtional to the number of gasoline and diesel automobiles in the U.S.
-            quorum 'default' do
-              Automobile.automobile_model.fallback.fuel_type
-            end
+            # quorum 'default' do
+            #   Automobile.automobile_model.fallback.fuel_type
+            # end
           end
           
           ### Active subtimeframe calculation
