@@ -59,3 +59,14 @@ Feature: Automobile Committee Calculations
     Then the committee should have used quorum "from variant"
     And the conclusion of the committee should have "name" of "regular gasoline"
 
+  Scenario: Urbanity committee from default
+    Given an automobile emitter
+    When the "urbanity" committee is calculated
+    Then the conclusion of the committee should be "0.43"
+
+  Scenario: Speed committee from urbanity
+    Given an automobile emitter
+    When the "urbanity" committee is calculated
+    And the "speed" committee is calculated
+    Then the conclusion of the committee should be "50.94388"
+
