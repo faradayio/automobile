@@ -96,7 +96,8 @@ module BrighterPlanet
           end
           
           ### Annual distance calculation
-          # Returns the `annual distance` in *km*. This is the distance the automobile would travel if it were in use for the entire calendar year in which the `timeframe` falls.
+          # Returns the `annual distance` in *km*.
+          # This is the distance the automobile would travel if it were in use for the entire calendar year in which the `timeframe` falls.
           committee :annual_distance do
             #### Annual distance from annual distance estimate
             # **Complies:**
@@ -148,7 +149,12 @@ module BrighterPlanet
           end
           
           ### Annual distance estimate calculation
-          # Returns the client-input `annual distance estimate` in *km*. This is the distance that the automobile would travel if it were in use for the entire calendar year in which the `timeframe` falls. Note that if either `acquisition` or `retirement` is specified as occuring during this calendar year, `annual distance estimate` will NOT be the same as the total distance the automobile actually travels.
+          # Returns the client-input `annual distance estimate` in *km*.
+          # This is the distance that the automobile would travel if it were in use for the entire calendar year in which the `timeframe` falls. Note that if either `acquisition` or `retirement` is specified as occuring during this calendar year, `annual distance estimate` will NOT be the same as the total distance the automobile actually travels.
+          
+          ### Weekly distance estimate calculation
+          # Returns the client-input `weekly distance estimate` in *km*.
+          # This is the average distance the automobile travels each week.
           
           ### Daily distance calculation
           # Returns the `daily distance` the automobile travels in *km*.
@@ -337,7 +343,8 @@ module BrighterPlanet
           end
           
           ### Urbanity calculation
-          # Returns the `urbanity`. This is the fraction of the total distance driven that occurs on towns and city streets as opposed to highways (defined using a 45 miles per hour "speed cutpoint").
+          # Returns the `urbanity`.
+          # This is the fraction of the total distance driven that occurs on towns and city streets as opposed to highways (defined using a 45 miles per hour "speed cutpoint").
           committee :urbanity do
             #### Urbanity from client input
             # **Complies:** All
@@ -391,7 +398,8 @@ module BrighterPlanet
           end
           
           ### Acquisition calculation
-          # Returns the date of the automobile's `acquisition`. This is the date the automobile was put into use.
+          # Returns the date of the automobile's `acquisition`.
+          # This is the date the automobile was put into use.
           committee :acquisition do
             #### Acquisition from client input
             # **Complies:** All
@@ -420,7 +428,8 @@ module BrighterPlanet
           end
           
           ### Retirement calculation
-          # Returns the date of the automobile's `retirement`. This is the date the automobile was taken out of use.
+          # Returns the date of the automobile's `retirement`.
+          # This is the date the automobile was taken out of use.
           committee :retirement do
             #### Retirement from client input
             # **Complies:** All
