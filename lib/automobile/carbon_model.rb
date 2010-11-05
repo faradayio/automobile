@@ -144,7 +144,7 @@ module BrighterPlanet
             #
             # Uses an `annual distance` of 19,021 *km*, calculated from total US automobile vehicle miles travelled and number of automobiles.
             quorum 'default' do
-              Automobile.automobile_model.fallback.annual_distance_estimate
+              11819.miles.to(:kilometres)
             end
           end
           
@@ -322,7 +322,7 @@ module BrighterPlanet
             #
             # Uses a `nominal fuel efficiency` of 8.58 *km / l*, calculated from total US automobile vehicle miles travelled and gasoline and diesel consumption.
             quorum 'default' do
-              Automobile.automobile_model.fallback.fuel_efficiency
+              20.182.miles_per_gallon.to(:kilometres_per_litre)
             end
           end
           
@@ -356,7 +356,7 @@ module BrighterPlanet
             #
             # Uses an `urbanity` of 0.43 after [EPA (2009) Appendix A](http://www.epa.gov/otaq/cert/mpg/fetrends/420r09014-appx-a.pdf)
             quorum 'default' do
-              Automobile.automobile_model.fallback.urbanity
+              0.43
             end
           end
           
