@@ -144,7 +144,7 @@ GEM
     sinatra (1.0)
       rack (>= 1.0)
     slither (0.99.4)
-    sniff (0.2.5)
+    sniff (0.2.6)
       aaronh-chronic (~> 0.3.9)
       activerecord (~> 3.0.0)
       activesupport (~> 3.0.0)
@@ -191,4 +191,4 @@ DEPENDENCIES
   rake
   rdoc
   rspec (~> 2.0.0.beta.17)
-  sniff (~> 0.2.5)
+  sniff (~> 0.2.6)
