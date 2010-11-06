@@ -66,19 +66,19 @@ module BrighterPlanet
             #
             # Uses a default `emission factor` of 2.49 *kg CO<sub>2</sub>e / l*, calculated from [EPA (2010)](http://www.epa.gov/climatechange/emissions/usinventoryreport.html)
             quorum 'default' do
-              AutomobileFuelType.fallback.emission_factor
+              20.781.pounds_per_gallon.to(:kilograms_per_litre)
             end
           end
           
           ### Fuel consumed calculation
           # Returns the `fuel consumed` in *l*.
           committee :fuel_consumed do
-            #### Fuel consumed from adjusted fuel efficiency and distance
+            #### Fuel consumed from fuel efficiency and distance
             # **Complies:**
             #
             # Divides the `distance` in *km* by the `fuel efficiency` in *km / l* to give *l*.
-            quorum 'from adjusted fuel_efficiency and distance', :needs => [:adjusted_fuel_efficiency, :distance] do |characteristics|
-              characteristics[:distance] / characteristics[:adjusted_fuel_efficiency]
+            quorum 'from fuel efficiency and distance', :needs => [:fuel_efficiency, :distance] do |characteristics|
+              characteristics[:distance] / characteristics[:fuel_efficiency]
             end
           end
           
@@ -358,14 +358,6 @@ module BrighterPlanet
             quorum 'from make model year variant', :needs => :make_model_year_variant do |characteristics|
               characteristics[:make_model_year_variant].fuel_type
             end
-            
-            # Default fuel type
-            # **Complies:**
-            #
-            # Uses an artificial fuel type representing a mix of gasoline and diesel proprtional to the number of gasoline and diesel automobiles in the U.S.
-            # quorum 'default' do
-            #   Automobile.automobile_model.fallback.fuel_type
-            # end
           end
           
           ### Active subtimeframe calculation
