@@ -237,11 +237,32 @@ Feature: Automobile Committee Calculations
     Then the committee should have used quorum "default"
     And the conclusion of the committee should be "19020.83674"
 
-  Scenario: Distance committee from annual distance and active subtimeframe
+  Scenario Outline: Distance committee from annual distance and active subtimeframe
     Given an automobile emitter
-    And a characteristic "annual_distance" of "10000"
-    And a characteristic "active_subtimeframe" of "2010-06-01/2010-07-07"
-    And a characteristic "timeframe" of "2010-01-01/2010-12-31"
+    And a characteristic "annual_distance" of "<annual_distance>"
+    And a characteristic "active_subtimeframe" of "<active_subtimeframe>"
+    And a characteristic "timeframe" of "<timeframe>"
     When the "distance" committee is calculated
-    Then the conclusion of the committee should be "986.30137"
+    Then the conclusion of the committee should be "<distance>"
+    Examples:
+      | annual_distance | active_subtimeframe   | timeframe             | distance  |
+      | 10000           | 2010-06-01/2010-07-07 | 2010-01-01/2010-12-31 | 986.30137 |
+      | 10000           | 2010-06-01/2010-07-07 | 2010-06-01/2010-06-30 | 986.30137 |
 
+  Scenario: Fuel consumed committee from fuel efficiency and distance
+    Given an automobile emitter
+    And a characteristic "distance" of "100"
+    And a characteristic "fuel_efficiency" of "10"
+    When the "fuel_consumed" committee is calculated
+    Then the conclusion of the committee should be "10.0"
+
+  Scenario: Emission factor committee from fuel type
+    Given an automobile emitter
+    And a characteristic "fuel_type.code" of "P"
+    When the "emission_factor" committee is calculated
+    Then the conclusion of the committee should be "2.48"
+
+  Scenario: Emission factor committee from default
+    Given an automobile emitter
+    When the "emission_factor" committee is calculated
+    Then the conclusion of the committee should be "2.49011"
