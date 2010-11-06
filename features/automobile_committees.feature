@@ -18,12 +18,26 @@ Feature: Automobile Committee Calculations
       | 2009-03-04/2009-08-17 | 2010-04-21  | 2010-04-21 |
       | 2009-03-04/2009-08-17 | 2007-01-30  | 2009-08-17 |
 
-  Scenario: Acquisition committee from model year
+  Scenario: Acquisition committee from make model year variant
     Given an automobile emitter
-    And a characteristic "model_year.name" of "Honda FIT 2008"
+    And a characteristic "make_model_year_variant.row_hash" of "xxx1"
     When the "acquisition" committee is calculated
-    Then the committee should have used quorum "from model year"
-    And the conclusion of the committee should be "2008-01-01"
+    Then the committee should have used quorum "from make model year variant"
+    And the conclusion of the committee should be "2003-01-01"
+
+  Scenario: Acquisition committee from make model year
+    Given an automobile emitter
+    And a characteristic "make_model_year.name" of "Acura RSX 2003"
+    When the "acquisition" committee is calculated
+    Then the committee should have used quorum "from make model year"
+    And the conclusion of the committee should be "2003-01-01"
+
+  Scenario: Acquisition committee from make year
+    Given an automobile emitter
+    And a characteristic "make_year.name" of "Acura 2003"
+    When the "acquisition" committee is calculated
+    Then the committee should have used quorum "from make year"
+    And the conclusion of the committee should be "2003-01-01"
 
   Scenario Outline: Acquisition committee from retirement
     Given an automobile emitter
@@ -52,12 +66,12 @@ Feature: Automobile Committee Calculations
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-08-31 | 2010-04-21/2010-08-31 |
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-01-31 | 2010-01-01/2010-01-01 |
 
-  Scenario: Fuel type committee from variant
+  Scenario: Fuel type committee from make model year variant
     Given an automobile emitter
-    And a characteristic "variant.row_hash" of "xxx1"
+    And a characteristic "make_model_year_variant.row_hash" of "xxx1"
     When the "fuel_type" committee is calculated
-    Then the committee should have used quorum "from variant"
-    And the conclusion of the committee should have "name" of "regular gasoline"
+    Then the committee should have used quorum "from make model year variant"
+    And the conclusion of the committee should have "name" of "premium gasoline"
 
   Scenario: Urbanity committee from default
     Given an automobile emitter
@@ -69,4 +83,157 @@ Feature: Automobile Committee Calculations
     When the "urbanity" committee is calculated
     And the "speed" committee is calculated
     Then the conclusion of the committee should be "50.94388"
+
+  Scenario Outline: Hybridity multiplier committee from size class with hybridity multipliers
+    Given an automobile emitter
+    And a characteristic "hybridity" of "<hybridity>"
+    And a characteristic "size_class.name" of "<size_class>"
+    When the "urbanity" committee is calculated
+    And the "hybridity_multiplier" committee is calculated
+    Then the committee should have used quorum "from size class, hybridity, and urbanity"
+    And the conclusion of the committee should be "<multiplier>"
+    Examples:
+      | hybridity | size_class  | multiplier |
+      | true      | Midsize Car | 1.68067    |
+      | false     | Midsize Car | 0.87464    |
+
+  Scenario Outline: Hybridity multiplier committee from size class missing hybridity multipliers
+    Given an automobile emitter
+    And a characteristic "hybridity" of "<hybridity>"
+    And a characteristic "size_class.name" of "<size_class>"
+    When the "urbanity" committee is calculated
+    And the "hybridity_multiplier" committee is calculated
+    Then the committee should have used quorum "from hybridity and urbanity"
+    And the conclusion of the committee should be "<multiplier>"
+    Examples:
+      | hybridity | size_class    | multiplier |
+      | true      | Midsize Wagon | 1.36919    |
+      | false     | Midsize Wagon | 0.99211    |
+
+  Scenario Outline: Hybridity multiplier committee from hybridity and urbanity
+    Given an automobile emitter
+    And a characteristic "hybridity" of "<hybridity>"
+    When the "urbanity" committee is calculated
+    And the "hybridity_multiplier" committee is calculated
+    Then the committee should have used quorum "from hybridity and urbanity"
+    And the conclusion of the committee should be "<multiplier>"
+    Examples:
+      | hybridity | multiplier |
+      | true      | 1.36919    |
+      | false     | 0.99211    |
+
+  Scenario: Hybridity multiplier committee from default
+    Given an automobile emitter
+    When the "hybridity_multiplier" committee is calculated
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should be "1.0"
+
+  Scenario: Fuel efficiency committee from make model year variant and urbanity
+    Given an automobile emitter
+    And a characteristic "make_model_year_variant.row_hash" of "xxx1"
+    When the "urbanity" committee is calculated
+    And the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from make model year variant and urbanity"
+    And the conclusion of the committee should be "13.98601"
+
+  Scenario: Fuel efficiency committee from make model year and urbanity
+    Given an automobile emitter
+    And a characteristic "make_model_year.name" of "Acura RSX 2003"
+    When the "urbanity" committee is calculated
+    And the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from make model year and urbanity"
+    And the conclusion of the committee should be "19.43005"
+
+  Scenario: Fuel efficiency committee from make model and urbanity
+    Given an automobile emitter
+    And a characteristic "make_model.name" of "Acura RSX"
+    When the "urbanity" committee is calculated
+    And the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from make model and urbanity"
+    And the conclusion of the committee should be "6.99301"
+
+  Scenario: Fuel efficiency committee from size class, hybridity multiplier, and urbanity
+    Given an automobile emitter
+    And a characteristic "size_class.name" of "Midsize Car"
+    And a characteristic "hybridity_multiplier" of "2"
+    When the "urbanity" committee is calculated
+    And the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from size class, hybridity multiplier, and urbanity"
+    And the conclusion of the committee should be "27.97202797"
+
+  Scenario: Fuel efficiency committee from make year and hybridity multiplier
+    Given an automobile emitter
+    And a characteristic "make_year.name" of "Acura 2003"
+    And a characteristic "hybridity_multiplier" of "2"
+    When the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from make year and hybridity multiplier"
+    And the conclusion of the committee should be "30.0"
+
+  Scenario: Fuel efficiency committee from make with fuel efficiency and hybridity multiplier
+    Given an automobile emitter
+    And a characteristic "make.name" of "Acura"
+    And a characteristic "hybridity_multiplier" of "2"
+    When the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from make and hybridity multiplier"
+    And the conclusion of the committee should be "20.0"
+
+  Scenario: Fuel efficiency committee from make missing fuel efficiency and hybridity multiplier
+    Given an automobile emitter
+    And a characteristic "make.name" of "Honda"
+    And a characteristic "hybridity_multiplier" of "2"
+    When the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from hybridity multiplier"
+    And the conclusion of the committee should be "17.1605"
+
+  Scenario: Fuel efficiency committee from hybridity multiplier
+    Given an automobile emitter
+    And a characteristic "hybridity_multiplier" of "1"
+    When the "fuel_efficiency" committee is calculated
+    Then the committee should have used quorum "from hybridity multiplier"
+    And the conclusion of the committee should be "8.58025"
+
+  Scenario: Annual distance committee from weekly distance and timeframe
+    Given an automobile emitter
+    And a characteristic "weekly_distance" of "7"
+    And a characteristic "timeframe" of "2010-05-23/2010-11-24"
+    When the "annual_distance" committee is calculated
+    Then the committee should have used quorum "from weekly distance and timeframe"
+    And the conclusion of the committee should be "365.0"
+
+  Scenario: Annual distance committee from daily distance and timeframe
+    Given an automobile emitter
+    And a characteristic "daily_distance" of "2"
+    And a characteristic "timeframe" of "2010-05-23/2010-11-24"
+    When the "annual_distance" committee is calculated
+    Then the committee should have used quorum "from daily distance and timeframe"
+    And the conclusion of the committee should be "730.0"
+
+  Scenario: Annual distance committee from daily duration, speed and timeframe
+    Given an automobile emitter
+    And a characteristic "daily_duration" of "2"
+    And a characteristic "speed" of "5"
+    And a characteristic "timeframe" of "2010-05-23/2010-11-24"
+    When the "annual_distance" committee is calculated
+    Then the committee should have used quorum "from daily duration, speed, and timeframe"
+    And the conclusion of the committee should be "3650.0"
+
+  Scenario: Annual distance committee from size class
+    Given an automobile emitter
+    And a characteristic "size_class.name" of "Midsize Car"
+    When the "annual_distance" committee is calculated
+    Then the committee should have used quorum "from size class"
+    And the conclusion of the committee should be "10000.0"
+
+  Scenario: Annual distance committee from fuel type
+    Given an automobile emitter
+    And a characteristic "fuel_type.code" of "P"
+    When the "annual_distance" committee is calculated
+    Then the committee should have used quorum "from fuel type"
+    And the conclusion of the committee should be "18161.0"
+
+  Scenario: Annual distance committee from default
+    Given an automobile emitter
+    When the "annual_distance" committee is calculated
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should be "19020.83674"
 

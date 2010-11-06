@@ -98,29 +98,36 @@ module BrighterPlanet
           ### Annual distance calculation
           # Returns the `annual distance` in *km*.
           # This is the distance the automobile would travel if it were in use for the entire calendar year in which the `timeframe` falls.
+          # Note that if either `acquisition` or `retirement` occurs during the calendar year in which the `timeframe` falls then `annual distance` will be MORE THAN the distance the automobile actually travelled during that calendar year.
           committee :annual_distance do
-            #### Annual distance from annual distance estimate
-            # **Complies:**
+            #### Annual distance from client input
+            # **Complies:** All
             #
-            # Uses the `annual distance estimate` in *km*.
-            quorum 'from annual distance estimate', :needs => :annual_distance_estimate do |characteristics|
-              characteristics[:annual_distance_estimate]
-            end
+            # Uses the client-input `annual distance` in *km*.
             
-            #### Annual distance from weekly distance estimate
+            #### Annual distance from weekly distance
             # **Complies:**
             #
-            # Divides the `weekly distance estimate` in *km* by 7 and multiplies by the number of days in calendar year in which the `timeframe` falls.
-            quorum 'from weekly distance estimate', :needs => :weekly_distance_estimate do |characteristics, timeframe|
-              (characteristics[:weekly_distance_estimate] / 7 ) * timeframe.year.days
+            # Divides the `weekly distance` in *km* by 7 and multiplies by the number of days in the calendar year in which the `timeframe` falls.
+            quorum 'from weekly distance and timeframe', :needs => :weekly_distance do |characteristics, timeframe|
+              (characteristics[:weekly_distance] / 7 ) * timeframe.year.days
             end
             
             #### Annual distance from daily distance
             # **Complies:**
             #
             # Multiplies the `daily distance` in *km* by the number of days in the calendar year in which the `timeframe` falls.
-            quorum 'from daily distance', :needs => :daily_distance do |characteristics, timeframe|
+            quorum 'from daily distance and timeframe', :needs => :daily_distance do |characteristics, timeframe|
               characteristics[:daily_distance] * timeframe.year.days
+            end
+            
+            #### Annual distance from daily duration and speed
+            # **Complies:**
+            #
+            # * Multiplies the `daily duration` in *hours* by the `speed` in *km / hour* to give *km*
+            # * Multiplies the result by the number of days in the calendar year in which the `timeframe` falls.
+            quorum 'from daily duration, speed, and timeframe', :needs => [:daily_duration, :speed] do |characteristics, timeframe|
+              characteristics[:daily_duration] * characteristics[:speed] * timeframe.year.days
             end
             
             #### Annual distance from size class
@@ -148,83 +155,119 @@ module BrighterPlanet
             end
           end
           
-          ### Annual distance estimate calculation
-          # Returns the client-input `annual distance estimate` in *km*.
-          # This is the distance that the automobile would travel if it were in use for the entire calendar year in which the `timeframe` falls. Note that if either `acquisition` or `retirement` is specified as occuring during this calendar year, `annual distance estimate` will NOT be the same as the total distance the automobile actually travels.
-          
-          ### Weekly distance estimate calculation
-          # Returns the client-input `weekly distance estimate` in *km*.
+          ### Weekly distance calculation
+          # Returns the client-input `weekly distance` in *km*.
           # This is the average distance the automobile travels each week.
           
           ### Daily distance calculation
-          # Returns the `daily distance` the automobile travels in *km*.
-          committee :daily_distance do
-            #### Daily distance from daily distance estimate
-            # **Complies:**
-            #
-            # Uses the `daily distance estimate` in *km*.
-            quorum 'from daily distance estimate', :needs => :daily_distance_estimate do |characteristics|
-              characteristics[:daily_distance_estimate]
-            end
-            
-            #### Daily distance from daily duration
-            # **Complies:**
-            #
-            # Multiplies the `daily duration` in *hours* by the `speed` in *km / hour* to give `daily distance` in *km*.
-            quorum 'from daily duration', :needs => [:daily_duration, :speed] do |characteristics|
-              characteristics[:daily_duration] * characteristics[:speed]
-            end
-          end
-          
-          ### Daily distance estimate calculation
-          # Returns the client-input `daily distance estimate` in *km*.
+          # Returns the client-input `daily distance` in *km*.
+          # This is the average distance the automobile travels each day.
           
           ### Daily duration calculation
           # Returns the client-input `daily duration` in *hours*.
           
-          ### Adjusted fuel efficiency calculation
-          # Returns the `adjusted fuel efficiency` in *km / l*
-          committee :adjusted_fuel_efficiency do
-            #### Adjusted fuel efficiency from fuel efficiency
-            # **Complies:**
+          ### Fuel efficiency calculation
+          # Returns the `fuel efficiency` in *km / l*
+          committee :fuel_efficiency do
+            #### Fuel efficiency from client input
+            # **Complies:** All
             #
-            # Uses the `fuel efficiency` in *km / l*
-            quorum 'from fuel efficiency', :needs => :fuel_efficiency do |characteristics|
-              characteristics[:fuel_efficiency]
-            end
+            # Uses the client-input `fuel efficiency` in *km / l*.
             
-            #### Adjusted fuel efficiency from variant
+            #### Fuel efficiency from make model year variant and urbanity
             # **Complies:**
             #
-            # * Looks up the city and highway fuel efficiencies of the automobile [variant](http://data.brighterplanet.com/automobile_variants)
+            # * Looks up the city and highway fuel efficiencies of the automobile [make model year variant](http://data.brighterplanet.com/automobile_variants) in *km / l*
             # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
-            quorum 'from variant', :needs => [:variant, :urbanity] do |characteristics|
-              fuel_efficiencies = characteristics[:variant].attributes.symbolize_keys.slice(:fuel_efficiency_city, :fuel_efficiency_highway)
+            quorum 'from make model year variant and urbanity', :needs => [:make_model_year_variant, :urbanity] do |characteristics|
+              fuel_efficiency_city = characteristics[:make_model_year_variant].fuel_efficiency_city
+              fuel_efficiency_highway = characteristics[:make_model_year_variant].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
-              1.0 / ((urbanity / fuel_efficiencies[:fuel_efficiency_city].to_f) + ((1.0 - urbanity) / fuel_efficiencies[:fuel_efficiency_highway].to_f))
+              1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+              # fuel_efficiencies = characteristics[:make_model_year_variant].attributes.symbolize_keys.slice(:fuel_efficiency_city, :fuel_efficiency_highway)
+              # urbanity = characteristics[:urbanity]
+              # 1.0 / ((urbanity / fuel_efficiencies[:fuel_efficiency_city]) + ((1.0 - urbanity) / fuel_efficiencies[:fuel_efficiency_highway]))
             end
             
-            #### Adjusted fuel efficiency from nominal fuel efficiency and multiplier
+            #### Fuel efficiency from make model year and urbanity
             # **Complies:**
             #
-            # Multiplies the `nominal fuel efficiency` in *km / l* by the `fuel efficiency multiplier`. This increases the fuel efficiency if the automobile is a hybrid, or decreases it slightly the automobile is conventional.
-            quorum 'from nominal fuel efficiency and multiplier', :needs => [:nominal_fuel_efficiency, :fuel_efficiency_multiplier] do |characteristics|
-              characteristics[:nominal_fuel_efficiency] * characteristics[:fuel_efficiency_multiplier]
+            # * Looks up the city and highway fuel efficiencies of the automobile [make model year](http://data.brighterplanet.com/automobile_model_years) in *km / l*
+            # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
+            quorum 'from make model year and urbanity', :needs => [:make_model_year, :urbanity] do |characteristics|
+              fuel_efficiency_city = characteristics[:make_model_year].fuel_efficiency_city
+              fuel_efficiency_highway = characteristics[:make_model_year].fuel_efficiency_highway
+              urbanity = characteristics[:urbanity]
+              1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+            end
+            
+            #### Fuel efficiency from make model and urbanity
+            # **Complies:**
+            #
+            # * Looks up the city and highway fuel efficiencies of the automobile [make model](http://data.brighterplanet.com/automobile_models) in *km / l*
+            # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
+            quorum 'from make model and urbanity', :needs => [:make_model, :urbanity] do |characteristics|
+              fuel_efficiency_city = characteristics[:make_model].fuel_efficiency_city
+              fuel_efficiency_highway = characteristics[:make_model].fuel_efficiency_highway
+              urbanity = characteristics[:urbanity]
+              1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+            end
+            
+            #### Fuel efficiency from size class, hybridity multiplier, and urbanity
+            # **Complies:**
+            #
+            # * Looks up the automobile [size class](http://data.brighterplanet.com/automobile_makes)' city and highway fuel efficiency in *km / l*
+            # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
+            # * Multiplies the result by the `hybridity multiplie`r
+            quorum 'from size class, hybridity multiplier, and urbanity', :needs => [:size_class, :hybridity_multiplier, :urbanity] do |characteristics|
+              fuel_efficiency_city = characteristics[:size_class].fuel_efficiency_city
+              fuel_efficiency_highway = characteristics[:size_class].fuel_efficiency_highway
+              urbanity = characteristics[:urbanity]
+              (1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))) * characteristics[:hybridity_multiplier]
+            end
+            
+            #### Fuel efficiency from make year and hybridity multiplier
+            # **Complies:**
+            #
+            # * Looks up the automobile [make year](http://data.brighterplanet.com/automobile_make_years)' combined fuel efficiency in *km / l*
+            # * Multiplies the combined fuel efficiency by the `hybridity multiplier`
+            quorum 'from make year and hybridity multiplier', :needs => [:make_year, :hybridity_multiplier] do |characteristics|
+              characteristics[:make_year].fuel_efficiency * characteristics[:hybridity_multiplier]
+            end
+            
+            #### Fuel efficiency from make and hybridity multiplier
+            # **Complies:**
+            #
+            # * Looks up the automobile [make](http://data.brighterplanet.com/automobile_makes)' combined fuel efficiency in *km / l*
+            # * Multiplies the combined fuel efficiency by the `hybridity multiplier`
+            quorum 'from make and hybridity multiplier', :needs => [:make, :hybridity_multiplier] do |characteristics|
+              if characteristics[:make].fuel_efficiency.nil?
+                nil
+              else
+                characteristics[:make].fuel_efficiency * characteristics[:hybridity_multiplier]
+              end
+            end
+            
+            #### Fuel efficiency from hybridity multiplier
+            # **Complies:**
+            #
+            # * Takes a default `fuel efficiency` of 8.58 *km / l*, calculated from total US automobile vehicle miles travelled and gasoline and diesel consumption.
+            # * Multiplies the `fuel efficiency` by the `hybridity multiplier`
+            quorum 'from hybridity multiplier', :needs => :hybridity_multiplier do |characteristics|
+              20.182.miles_per_gallon.to(:kilometres_per_litre) * characteristics[:hybridity_multiplier]
             end
           end
           
-          ### Fuel efficiency calculation
-          # Returns the client-input `fuel efficiency` in *km / l*.
-          
-          ### Fuel efficiency multiplier calculation
-          # Returns the `fuel efficiency multiplier`. This value may be used to adjust the fuel efficiency based on whether the automobile is conventional or a hybrid.
-          committee :fuel_efficiency_multiplier do
-            #### Fuel efficiency multiplier from size class and hybridity
+          ### Hybridity multiplier calculation
+          # Returns the `hybridity multiplier`.
+          # This value may be used to adjust the fuel efficiency based on whether the automobile is a hybrid or conventional vehicle.
+          committee :hybridity_multiplier do
+            #### Hybridity multiplier from size class, hybridity, and urbanity
             # **Complies:**
             #
-            # * Looks up the appropriate city and highway fuel efficiency multipliers for the automobile [size class](http://data.brighterplanet.com/automobile_size_classes)
+            # * Looks up the appropriate city and highway hybridity multipliers for the automobile [size class](http://data.brighterplanet.com/automobile_size_classes)
             # * Calculates the harmonic mean of those multipliers, weighted by `urbanity`
-            quorum 'from_size_class_and_hybridity', :needs => [:size_class, :hybridity, :urbanity] do |characteristics|
+            quorum 'from size class, hybridity, and urbanity', :needs => [:size_class, :hybridity, :urbanity] do |characteristics|
               drivetrain = characteristics[:hybridity] ? :hybrid : :conventional
               urbanity = characteristics[:urbanity]
               size_class = characteristics[:size_class]
@@ -239,12 +282,12 @@ module BrighterPlanet
               end
             end
             
-            #### Fuel efficiency multiplier from size class and hybridity
+            #### Hybridity multiplier from hybridity and urbanity
             # **Complies:**
             #
-            # * Looks up the default city and highway fuel efficiency multipliers
+            # * Looks up the appropriate default city and highway hybridity multipliers
             # * Calculates the harmonic mean of those multipliers, weighted by `urbanity`
-            quorum 'from hybridity', :needs => [:hybridity, :urbanity] do |characteristics|
+            quorum 'from hybridity and urbanity', :needs => [:hybridity, :urbanity] do |characteristics|
               drivetrain = characteristics[:hybridity] ? :hybrid : :conventional
               urbanity = characteristics[:urbanity]
               fuel_efficiency_multipliers = {
@@ -254,10 +297,10 @@ module BrighterPlanet
               1.0 / ((urbanity / fuel_efficiency_multipliers[:city]) + ((1.0 - urbanity) / fuel_efficiency_multipliers[:highway]))
             end
             
-            #### Default fuel efficiency multiplier
+            #### Default hybridity multiplier
             # **Complies:**
             #
-            # Uses a default `fuel efficiency multiplier` of 1.
+            # Uses a default `hybridity multiplier` of 1.
             quorum 'default' do
               1.0
             end
@@ -265,66 +308,6 @@ module BrighterPlanet
           
           ### Hybridity calculation
           # Returns the client-input `hybridity`. This indicates whether the automobile is a hybrid electric vehicle or a conventional vehicle.
-          
-          ### Nominal fuel efficiency calculation
-          # Returns the `nominal fuel efficiency` in *km / l*
-          committee :nominal_fuel_efficiency do
-            #### Nominal fuel efficiency from model
-            # **Complies:**
-            #
-            # * Looks up the automobile [model](http://data.brighterplanet.com/automobile_models)'s city and highway fuel efficiencies in *km / l*
-            # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
-            quorum 'from model', :needs => [:model, :urbanity] do |characteristics|
-              fuel_efficiency_city = characteristics[:model].fuel_efficiency_city.to_f
-              fuel_efficiency_highway = characteristics[:model].fuel_efficiency_highway.to_f
-              urbanity = characteristics[:urbanity]
-              1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
-            end
-            
-            #### Nominal fuel efficiency from make and model_year
-            # **Complies:**
-            #
-            # * Looks up the automobile [model year](http://data.brighterplanet.com/automobile_model_years)'s `make year`
-            # * Looks up that [make year](http://data.brighterplanet.com/automobile_make_years)'s fuel efficiency in *km / l*
-            quorum 'from make and model year', :needs => [:model_year] do |characteristics|
-              characteristics[:model_year].make_year.andand.fuel_efficiency
-            end
-            
-            #### Nominal fuel efficiency from size class
-            # **Complies:**
-            #
-            # * Looks up the automobile [size class](http://data.brighterplanet.com/automobile_makes)' city and highway fuel efficiency in *km / l*
-            # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
-            quorum 'from size class', :needs => [:size_class, :urbanity] do |characteristics|
-              fuel_efficiencies = characteristics[:size_class].attributes.symbolize_keys.slice(:fuel_efficiency_city, :fuel_efficiency_highway)
-              urbanity = characteristics[:urbanity]
-              1.0 / ((urbanity / fuel_efficiencies[:fuel_efficiency_city].to_f) + ((1.0 - urbanity) / fuel_efficiencies[:fuel_efficiency_highway].to_f))
-            end
-            
-            #### Nominal fuel efficiency from model year
-            # **Complies:**
-            #
-            # Looks up the automobile [make](http://data.brighterplanet.com/automobile_makes)'s fuel efficiency in *km / l*.
-            quorum 'from model year', :needs => :model_year do |characteristics|
-              characteristics[:model_year].fuel_efficiency
-            end
-            
-            #### Nominal fuel efficiency from make
-            # **Complies:**
-            #
-            # Looks up the automobile [make](http://data.brighterplanet.com/automobile_makes)'s fuel efficiency in *km / l*.
-            quorum 'from make', :needs => :make do |characteristics|
-              characteristics[:make].fuel_efficiency
-            end
-            
-            #### Default nominal fuel efficiency
-            # **Complies:**
-            #
-            # Uses a `nominal fuel efficiency` of 8.58 *km / l*, calculated from total US automobile vehicle miles travelled and gasoline and diesel consumption.
-            quorum 'default' do
-              20.182.miles_per_gallon.to(:kilometres_per_litre)
-            end
-          end
           
           ### Size class calculation
           # Returns the client-input automobile [size class](http://data.brighterplanet.com/automobile_size_classes).
@@ -368,12 +351,12 @@ module BrighterPlanet
             #
             # Uses the client-input [fuel type](http://data.brighterplanet.com/fuel_types).
             
-            #### Fuel type from variant
+            #### Fuel type from make model year variant
             # **Complies:**
             #
             # Looks up the [variant](http://data.brighterplanet.com/automobile_variants)'s `fuel type`.
-            quorum 'from variant', :needs => :variant do |characteristics|
-              characteristics[:variant].fuel_type
+            quorum 'from make model year variant', :needs => :make_model_year_variant do |characteristics|
+              characteristics[:make_model_year_variant].fuel_type
             end
             
             # Default fuel type
@@ -406,12 +389,28 @@ module BrighterPlanet
             #
             # Uses the client-input `acquisition`.
             
-            #### Acquisition from model year
+            #### Acquisition from make model year variant
             # **Complies:** GHG Protocol, ISO 14064-1, Climate Registry Protocol
             #
-            # Uses the first day of the client-input automobile [model year](http://data.brighterplanet.com/automobile_model_years)'s year.
-            quorum 'from model year', :needs => [:model_year] do |characteristics|
-              Date.new characteristics[:model_year].year, 1, 1
+            # Uses the first day of the client-input automobile [make model year variant](http://data.brighterplanet.com/automobile_variants)'s year.
+            quorum 'from make model year variant', :needs => [:make_model_year_variant] do |characteristics|
+              Date.new characteristics[:make_model_year_variant].year, 1, 1
+            end
+            
+            #### Acquisition from make model year
+            # **Complies:** GHG Protocol, ISO 14064-1, Climate Registry Protocol
+            #
+            # Uses the first day of the client-input automobile [make model year](http://data.brighterplanet.com/automobile_model_years)'s year.
+            quorum 'from make model year', :needs => [:make_model_year] do |characteristics|
+              Date.new characteristics[:make_model_year].year, 1, 1
+            end
+            
+            #### Acquisition from make year
+            # **Complies:** GHG Protocol, ISO 14064-1, Climate Registry Protocol
+            #
+            # Uses the first day of the client-input automobile [make year](http://data.brighterplanet.com/automobile_make_years)'s year.
+            quorum 'from make year', :needs => [:make_year] do |characteristics|
+              Date.new characteristics[:make_year].year, 1, 1
             end
             
             #### Acquisition from timeframe or retirement
@@ -441,14 +440,17 @@ module BrighterPlanet
             end
           end
           
-          ### Variant calculation
-          # Returns the client-input automobile [variant](http://data.brighterplanet.com/automobile_variants).
+          ### Make model year variant calculation
+          # Returns the client-input automobile [make model year variant](http://data.brighterplanet.com/automobile_variants).
           
-          ### Model calculation
-          # Returns the client-input automobile [model](http://data.brighterplanet.com/automobile_models).
+          ### Make model year calculation
+          # Returns the client-input automobile [make model year](http://data.brighterplanet.com/automobile_model_years).
           
-          ### Model year calculation
-          # Returns the client-input automobile [model year](http://data.brighterplanet.com/automobile_years).
+          ### Make model calculation
+          # Returns the client-input automobile [make model](http://data.brighterplanet.com/automobile_models).
+          
+          ### Make year calculation
+          # Returns the client-input automobile [make year](http://data.brighterplanet.com/automobile_make_years).
           
           ### Make calculation
           # Returns the client-input automobile [make](http://data.brighterplanet.com/automobile_makes).

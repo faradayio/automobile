@@ -3,9 +3,9 @@ module BrighterPlanet
     module Summarization
       def self.included(base)
         base.summarize do |has|
-          has.adjective :model_year
+          has.adjective :make_model_year
           has.adjective :make
-          has.adjective :model
+          has.adjective :make_model
           has.identity 'automobile'
           has.verb :own
         end

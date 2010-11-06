@@ -1,19 +1,3 @@
-"name","fuel_efficiency_city","fuel_efficiency_city_units","fuel_efficiency_highway","fuel_efficiency_highway_units","annual_distance","annual_distance_units","emblem","hybrid_fuel_efficiency_city_multiplier","hybrid_fuel_efficiency_highway_multiplier","conventional_fuel_efficiency_city_multiplier","conventional_fuel_efficiency_highway_multiplier","created_at","updated_at"
-"Compact Car","8.93","kilometres_per_litre","12.33","kilometres_per_litre","16332","kilometres","","2.09","1.67","0.99","0.99","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Large Car","7.14","kilometres_per_litre","10.71","kilometres_per_litre","16332","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Large Pickup","5.65","kilometres_per_litre","7.53","kilometres_per_litre","20918","kilometres","","1.57","1.2","0.98","0.99","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Large SUV","5.65","kilometres_per_litre","7.74","kilometres_per_litre","20918","kilometres","","1.76","1.31","0.97","0.99","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Large Van","5.61","kilometres_per_litre","7.35","kilometres_per_litre","20918","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Large Wagon","6.29","kilometres_per_litre","9.27","kilometres_per_litre","16332","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Midsize Car","8.04","kilometres_per_litre","11.52","kilometres_per_litre","16332","kilometres","car","1.81","1.37","0.97","0.98","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Midsize Pickup","6.8","kilometres_per_litre","8.97","kilometres_per_litre","20918","kilometres","","1.57","1.2","0.98","0.99","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Midsize SUV","6.67","kilometres_per_litre","8.8","kilometres_per_litre","20918","kilometres","suv","1.76","1.31","0.97","0.99","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Midsize Van","6.84","kilometres_per_litre","9.65","kilometres_per_litre","20918","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Midsize Wagon","7.61","kilometres_per_litre","10.54","kilometres_per_litre","16332","kilometres","station_wagon","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Minicompact Car","7.82","kilometres_per_litre","11.05","kilometres_per_litre","16332","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Small Pickup","7.48","kilometres_per_litre","9.57","kilometres_per_litre","20918","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Small SUV","6.97","kilometres_per_litre","8.76","kilometres_per_litre","20918","kilometres","","1.76","1.31","0.97","0.99","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Small Van","7.61","kilometres_per_litre","10.2","kilometres_per_litre","20918","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Small Wagon","8.89","kilometres_per_litre","11.82","kilometres_per_litre","16332","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Subcompact Car","8.59","kilometres_per_litre","11.86","kilometres_per_litre","16332","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
-"Two-seater","7.35","kilometres_per_litre","10.46","kilometres_per_litre","16332","kilometres","","NULL","NULL","NULL","NULL","2010-05-14 22:55:43","2010-05-14 22:55:44"
+name,fuel_efficiency_city,fuel_efficiency_city_units,fuel_efficiency_highway,fuel_efficiency_highway_units,annual_distance,annual_distance_units,hybrid_fuel_efficiency_city_multiplier,hybrid_fuel_efficiency_highway_multiplier,conventional_fuel_efficiency_city_multiplier,conventional_fuel_efficiency_highway_multiplier
+Midsize Car,10,kilometres_per_litre,20,kilometres_per_litre,10000,kilometres,2,1.5,0.75,1
+Midsize Wagon,5,kilometres_per_litre,10,kilometres_per_litre,15000,kilometres
