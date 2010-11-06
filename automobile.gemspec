@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
-      s.add_development_dependency(%q<sniff>, ["~> 0.2.6"])
+      s.add_development_dependency(%q<sniff>, ["~> 0.2.7"])
       s.add_runtime_dependency(%q<emitter>, ["~> 0.1.7"])
     else
       s.add_dependency(%q<activerecord>, ["~> 3.0.0"])
@@ -60,7 +60,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
-      s.add_dependency(%q<sniff>, ["~> 0.2.6"])
+      s.add_dependency(%q<sniff>, ["~> 0.2.7"])
       s.add_dependency(%q<emitter>, ["~> 0.1.7"])
     end
   else
@@ -71,7 +71,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
-    s.add_dependency(%q<sniff>, ["~> 0.2.6"])
+    s.add_dependency(%q<sniff>, ["~> 0.2.7"])
     s.add_dependency(%q<emitter>, ["~> 0.1.7"])
   end
 end
