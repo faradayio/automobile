@@ -30,10 +30,10 @@ module BrighterPlanet
           # Returns the `emission` estimate (*kg CO<sub>2</sub>e*).
           committee :emission do
             #### Emission from fuel
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from fuel', :needs => [:fuel_consumed, :emission_factor], :appreciates => :fuel_type do |characteristics|
             # Multiplies `fuel consumed` (*l*) by the `emission factor` (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
+            quorum 'from fuel', :needs => [:fuel_consumed, :emission_factor], :appreciates => :fuel_type, :complies => [:ghg_protocol, :iso] do |characteristics|
               if characteristics[:fuel_type].andand.code == AutomobileFuelType::CODES[:electricity]
                 0.0
               else
@@ -54,18 +54,18 @@ module BrighterPlanet
           # Returns the `emission factor` (*kg CO<sub>2</sub>e / l*)
           committee :emission_factor do
             #### Emission factor from fuel type
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from fuel type', :needs => :fuel_type do |characteristics|
             # Looks up the automobile [fuel type](http://data.brighterplanet.com/fuel_types) `emission factor` (*kg CO2e / l*)
+            quorum 'from fuel type', :needs => :fuel_type, :complies => [:ghg_protocol, :iso] do |characteristics|
               characteristics[:fuel_type].emission_factor
             end
             
             #### Default emission factor
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # Uses a default `emission factor` of 2.49 *kg CO<sub>2</sub>e / l*, calculated from [EPA (2010)](http://www.epa.gov/climatechange/emissions/usinventoryreport.html)
-            quorum 'default' do
+            quorum 'default', :complies => [:ghg_protocol, :iso] do
               20.781.pounds_per_gallon.to(:kilograms_per_litre)
             end
           end
@@ -74,10 +74,10 @@ module BrighterPlanet
           # Returns the `fuel consumed` (*l*).
           committee :fuel_consumed do
             #### Fuel consumed from fuel efficiency and distance
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from fuel efficiency and distance', :needs => [:fuel_efficiency, :distance] do |characteristics|
             # Divides the `distance` (*km*) by the `fuel efficiency` (*km / l*) to give *l*.
+            quorum 'from fuel efficiency and distance', :needs => [:fuel_efficiency, :distance], :complies => [:ghg_protocol, :iso] do |characteristics|
               characteristics[:distance] / characteristics[:fuel_efficiency]
             end
           end
@@ -87,10 +87,10 @@ module BrighterPlanet
           # This is the distance the automobile travelled during the `active subtimeframe`.
           committee :distance do
             #### Distance from annual distance
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from annual distance', :needs => [:annual_distance, :active_subtimeframe] do |characteristics, timeframe|
             # Multiplies the `annual distance` (*km*) by the fraction of the calendar year in which the `timeframe` falls that overlaps with the `active subtimeframe`.
+            quorum 'from annual distance', :needs => [:annual_distance, :active_subtimeframe], :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
               characteristics[:annual_distance] * (characteristics[:active_subtimeframe] / timeframe.year)
             end
           end
@@ -106,51 +106,51 @@ module BrighterPlanet
             # Uses the client-input `annual distance` (*km*).
             
             #### Annual distance from weekly distance
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from weekly distance and timeframe', :needs => :weekly_distance do |characteristics, timeframe|
             # Divides the `weekly distance` (*km*) by 7 and multiplies by the number of days in the calendar year in which the `timeframe` falls.
+            quorum 'from weekly distance and timeframe', :needs => :weekly_distance, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
               (characteristics[:weekly_distance] / 7 ) * timeframe.year.days
             end
             
             #### Annual distance from daily distance
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from daily distance and timeframe', :needs => :daily_distance do |characteristics, timeframe|
             # Multiplies the `daily distance` (*km*) by the number of days in the calendar year in which the `timeframe` falls.
+            quorum 'from daily distance and timeframe', :needs => :daily_distance, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
               characteristics[:daily_distance] * timeframe.year.days
             end
             
             #### Annual distance from daily duration and speed
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Multiplies the `daily duration` (*hours*) by the `speed` (*km / hour*) to give *km*
             # * Multiplies the result by the number of days in the calendar year in which the `timeframe` falls.
-            quorum 'from daily duration, speed, and timeframe', :needs => [:daily_duration, :speed] do |characteristics, timeframe|
+            quorum 'from daily duration, speed, and timeframe', :needs => [:daily_duration, :speed], :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
               characteristics[:daily_duration] * characteristics[:speed] * timeframe.year.days
             end
             
             #### Annual distance from size class
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from size class', :needs => :size_class do |characteristics|
             # Looks up the automobile [size class](http://data.brighterplanet.com/automobile_size_classes) `annual distance` (*km*).
+            quorum 'from size class', :needs => :size_class, :complies => [:ghg_protocol, :iso] do |characteristics|
               characteristics[:size_class].annual_distance
             end
             
             #### Annual distance from fuel type
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from fuel type', :needs => :fuel_type do |characteristics|
             # Looks up the [fuel type](http://data.brighterplanet.com/fuel_types) `annual distance` (*km*).
+            quorum 'from fuel type', :needs => :fuel_type, :complies => [:ghg_protocol, :iso] do |characteristics|
               characteristics[:fuel_type].annual_distance
             end
             
             #### Default annual distance
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # Uses an `annual distance` of 19,021 *km*, calculated from total US automobile vehicle miles travelled and number of automobiles.
-            quorum 'default' do
+            quorum 'default', :complies => [:ghg_protocol, :iso] do
               11819.miles.to(:kilometres)
             end
           end
@@ -175,11 +175,11 @@ module BrighterPlanet
             # Uses the client-input `fuel efficiency` (*km / l*).
             
             #### Fuel efficiency from make model year variant and urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the city and highway fuel efficiencies of the automobile [make model year variant](http://data.brighterplanet.com/automobile_variants) (*km / l*)
             # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
-            quorum 'from make model year variant and urbanity', :needs => [:make_model_year_variant, :urbanity] do |characteristics|
+            quorum 'from make model year variant and urbanity', :needs => [:make_model_year_variant, :urbanity], :complies => [:ghg_protocol, :iso] do |characteristics|
               fuel_efficiency_city = characteristics[:make_model_year_variant].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:make_model_year_variant].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
@@ -187,11 +187,11 @@ module BrighterPlanet
             end
             
             #### Fuel efficiency from make model year and urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the city and highway fuel efficiencies of the automobile [make model year](http://data.brighterplanet.com/automobile_model_years) (*km / l*)
             # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
-            quorum 'from make model year and urbanity', :needs => [:make_model_year, :urbanity] do |characteristics|
+            quorum 'from make model year and urbanity', :needs => [:make_model_year, :urbanity], :complies => [:ghg_protocol, :iso] do |characteristics|
               fuel_efficiency_city = characteristics[:make_model_year].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:make_model_year].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
@@ -199,11 +199,11 @@ module BrighterPlanet
             end
             
             #### Fuel efficiency from make model and urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the city and highway fuel efficiencies of the automobile [make model](http://data.brighterplanet.com/automobile_models) (*km / l*)
             # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
-            quorum 'from make model and urbanity', :needs => [:make_model, :urbanity] do |characteristics|
+            quorum 'from make model and urbanity', :needs => [:make_model, :urbanity], :complies => [:ghg_protocol, :iso] do |characteristics|
               fuel_efficiency_city = characteristics[:make_model].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:make_model].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
@@ -211,12 +211,12 @@ module BrighterPlanet
             end
             
             #### Fuel efficiency from size class, hybridity multiplier, and urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the automobile [size class](http://data.brighterplanet.com/automobile_makes) city and highway fuel efficiency (*km / l*)
             # * Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`
             # * Multiplies the result by the `hybridity multiplie`r
-            quorum 'from size class, hybridity multiplier, and urbanity', :needs => [:size_class, :hybridity_multiplier, :urbanity] do |characteristics|
+            quorum 'from size class, hybridity multiplier, and urbanity', :needs => [:size_class, :hybridity_multiplier, :urbanity], :complies => [:ghg_protocol, :iso] do |characteristics|
               fuel_efficiency_city = characteristics[:size_class].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:size_class].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
@@ -224,20 +224,20 @@ module BrighterPlanet
             end
             
             #### Fuel efficiency from make year and hybridity multiplier
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the automobile [make year](http://data.brighterplanet.com/automobile_make_years) combined fuel efficiency (*km / l*)
             # * Multiplies the combined fuel efficiency by the `hybridity multiplier`
-            quorum 'from make year and hybridity multiplier', :needs => [:make_year, :hybridity_multiplier] do |characteristics|
+            quorum 'from make year and hybridity multiplier', :needs => [:make_year, :hybridity_multiplier], :complies => [:ghg_protocol, :iso] do |characteristics|
               characteristics[:make_year].fuel_efficiency * characteristics[:hybridity_multiplier]
             end
             
             #### Fuel efficiency from make and hybridity multiplier
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the automobile [make](http://data.brighterplanet.com/automobile_makes) combined fuel efficiency (*km / l*)
             # * Multiplies the combined fuel efficiency by the `hybridity multiplier`
-            quorum 'from make and hybridity multiplier', :needs => [:make, :hybridity_multiplier] do |characteristics|
+            quorum 'from make and hybridity multiplier', :needs => [:make, :hybridity_multiplier], :complies => [:ghg_protocol, :iso] do |characteristics|
               if characteristics[:make].fuel_efficiency.nil?
                 nil
               else
@@ -246,11 +246,11 @@ module BrighterPlanet
             end
             
             #### Fuel efficiency from hybridity multiplier
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Takes a default `fuel efficiency` of 8.58 *km / l*, calculated from total US automobile vehicle miles travelled and gasoline and diesel consumption.
             # * Multiplies the `fuel efficiency` by the `hybridity multiplier`
-            quorum 'from hybridity multiplier', :needs => :hybridity_multiplier do |characteristics|
+            quorum 'from hybridity multiplier', :needs => :hybridity_multiplier, :complies => [:ghg_protocol, :iso] do |characteristics|
               20.182.miles_per_gallon.to(:kilometres_per_litre) * characteristics[:hybridity_multiplier]
             end
           end
@@ -260,11 +260,11 @@ module BrighterPlanet
           # This value may be used to adjust the fuel efficiency based on whether the automobile is a hybrid or conventional vehicle.
           committee :hybridity_multiplier do
             #### Hybridity multiplier from size class, hybridity, and urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the appropriate city and highway hybridity multipliers for the automobile [size class](http://data.brighterplanet.com/automobile_size_classes)
             # * Calculates the harmonic mean of those multipliers, weighted by `urbanity`
-            quorum 'from size class, hybridity, and urbanity', :needs => [:size_class, :hybridity, :urbanity] do |characteristics|
+            quorum 'from size class, hybridity, and urbanity', :needs => [:size_class, :hybridity, :urbanity], :complies => [:ghg_protocol, :iso] do |characteristics|
               drivetrain = characteristics[:hybridity] ? :hybrid : :conventional
               urbanity = characteristics[:urbanity]
               size_class = characteristics[:size_class]
@@ -280,11 +280,11 @@ module BrighterPlanet
             end
             
             #### Hybridity multiplier from hybridity and urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Looks up the appropriate default city and highway hybridity multipliers
             # * Calculates the harmonic mean of those multipliers, weighted by `urbanity`
-            quorum 'from hybridity and urbanity', :needs => [:hybridity, :urbanity] do |characteristics|
+            quorum 'from hybridity and urbanity', :needs => [:hybridity, :urbanity], :complies => [:ghg_protocol, :iso] do |characteristics|
               drivetrain = characteristics[:hybridity] ? :hybrid : :conventional
               urbanity = characteristics[:urbanity]
               fuel_efficiency_multipliers = {
@@ -295,10 +295,10 @@ module BrighterPlanet
             end
             
             #### Default hybridity multiplier
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # Uses a default `hybridity multiplier` of 1.
-            quorum 'default' do
+            quorum 'default', :complies => [:ghg_protocol, :iso] do
               1.0
             end
           end
@@ -313,11 +313,11 @@ module BrighterPlanet
           # Returns the average `speed` at which the automobile travels (*km / hour*)
           committee :speed do
             #### Speed from urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Takes average city and highway driving speeds from [EPA (2006)](http://www.epa.gov/fueleconomy/420r06017.pdf) and converts from *miles / hour* to *km / hour*
             # * Calculates the harmonic mean of those speeds, weighted by `urbanity`
-            quorum 'from urbanity', :needs => :urbanity do |characteristics|
+            quorum 'from urbanity', :needs => :urbanity, :complies => [:ghg_protocol, :iso] do |characteristics|
               1 / (characteristics[:urbanity] / 19.9.miles.to(:kilometres) + (1 - characteristics[:urbanity]) / 57.1.miles.to(:kilometres)) 
             end
           end
@@ -332,10 +332,10 @@ module BrighterPlanet
             # Uses the client-input `urbanity`.
             
             #### Default urbanity
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # Uses an `urbanity` of 0.43 after [EPA (2009) Appendix A](http://www.epa.gov/otaq/cert/mpg/fetrends/420r09014-appx-a.pdf)
-            quorum 'default' do
+            quorum 'default', :complies => [:ghg_protocol, :iso] do
               0.43
             end
           end
@@ -349,10 +349,10 @@ module BrighterPlanet
             # Uses the client-input [fuel type](http://data.brighterplanet.com/fuel_types).
             
             #### Fuel type from make model year variant
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from make model year variant', :needs => :make_model_year_variant do |characteristics|
             # Looks up the [variant](http://data.brighterplanet.com/automobile_variants) `fuel type`.
+            quorum 'from make model year variant', :needs => :make_model_year_variant, :complies => [:ghg_protocol, :iso] do |characteristics|
               characteristics[:make_model_year_variant].fuel_type
             end
           end
@@ -361,10 +361,10 @@ module BrighterPlanet
           # Returns the portion of the `timeframe` that falls between the `acquisition` and `retirement`.
           committee :active_subtimeframe do
             #### Active subtimeframe from timeframe, acquisition, and retirement
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # Uses the portion of the `timeframe` that falls between `acquisition` and `retirement`.
-            quorum 'from acquisition and retirement', :needs => [:acquisition, :retirement] do |characteristics, timeframe|
+            quorum 'from acquisition and retirement', :needs => [:acquisition, :retirement], :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
               Timeframe.constrained_new characteristics[:acquisition].to_date, characteristics[:retirement].to_date, timeframe
             end
           end
@@ -379,34 +379,34 @@ module BrighterPlanet
             # Uses the client-input `acquisition`.
             
             #### Acquisition from make model year variant
-            # **Complies:** GHG Protocol, ISO 14064-1, Climate Registry Protocol
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from make model year variant', :needs => [:make_model_year_variant] do |characteristics|
             # Uses the first day of the client-input automobile [make model year variant](http://data.brighterplanet.com/automobile_variants) year.
+            quorum 'from make model year variant', :needs => [:make_model_year_variant], :complies => [:ghg_protocol, :iso] do |characteristics|
               Date.new characteristics[:make_model_year_variant].year, 1, 1
             end
             
             #### Acquisition from make model year
-            # **Complies:** GHG Protocol, ISO 14064-1, Climate Registry Protocol
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from make model year', :needs => [:make_model_year] do |characteristics|
             # Uses the first day of the client-input automobile [make model year](http://data.brighterplanet.com/automobile_model_years) year.
+            quorum 'from make model year', :needs => [:make_model_year], :complies => [:ghg_protocol, :iso] do |characteristics|
               Date.new characteristics[:make_model_year].year, 1, 1
             end
             
             #### Acquisition from make year
-            # **Complies:** GHG Protocol, ISO 14064-1, Climate Registry Protocol
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
-            quorum 'from make year', :needs => [:make_year] do |characteristics|
             # Uses the first day of the client-input automobile [make year](http://data.brighterplanet.com/automobile_make_years) year.
+            quorum 'from make year', :needs => [:make_year], :complies => [:ghg_protocol, :iso] do |characteristics|
               Date.new characteristics[:make_year].year, 1, 1
             end
             
             #### Acquisition from timeframe or retirement
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # Uses the first day of the `timeframe`, or the `retirement`, whichever is earlier.
-            quorum 'from retirement', :appreciates => :retirement do |characteristics, timeframe|
+            quorum 'from retirement', :appreciates => :retirement, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
               [ timeframe.from, characteristics[:retirement] ].compact.min
             end
           end
@@ -421,10 +421,10 @@ module BrighterPlanet
             # Uses the client-input `retirement`.
             
             #### Retirement from timeframe or acquisition
-            # **Complies:**
+            # **Complies:** GHG Protocol, ISO 14064-1
             #
             # Uses the last day of the `timeframe`, or the `acquisition`, whichever is later.
-            quorum 'from acquisition', :appreciates => :acquisition do |characteristics, timeframe|
+            quorum 'from acquisition', :appreciates => :acquisition, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
               [ timeframe.to, characteristics[:acquisition] ].compact.max
             end
           end
