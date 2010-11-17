@@ -61,9 +61,9 @@ Feature: Automobile Committee Calculations
     Examples:
       | acquisition | retirement | timeframe             | active_subtimeframe   |
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-12-31 | 2010-04-21/2010-09-01 |
-      | 2010-04-21  | 2010-09-01 | 2010-05-01/2010-08-31 | 2010-05-01/2010-08-31 |
+      | 2010-04-21  | 2010-09-01 | 2010-05-01/2010-08-01 | 2010-05-01/2010-08-01 |
       | 2010-04-21  | 2010-09-01 | 2010-05-01/2010-12-31 | 2010-05-01/2010-09-01 |
-      | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-08-31 | 2010-04-21/2010-08-31 |
+      | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-08-01 | 2010-04-21/2010-08-01 |
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-01-31 | 2010-01-01/2010-01-01 |
 
   Scenario: Fuel type committee from make model year variant
@@ -159,7 +159,7 @@ Feature: Automobile Committee Calculations
     When the "urbanity" committee is calculated
     And the "fuel_efficiency" committee is calculated
     Then the committee should have used quorum "from size class, hybridity multiplier, and urbanity"
-    And the conclusion of the committee should be "27.97202797"
+    And the conclusion of the committee should be "27.97203"
 
   Scenario: Fuel efficiency committee from make year and hybridity multiplier
     Given an automobile emitter
