@@ -54,7 +54,7 @@ end
 
 require_or_fail 'emitter', 'Emitter gem not found, emitter tasks unavailable' do
   require 'emitter/tasks'
-  Emitter::Tasks.define 
+  Emitter::Tasks.new.define('automobile')
 end
 
 require_or_fail('sniff', 'Sniff gem not found, sniff tasks unavailable') do
