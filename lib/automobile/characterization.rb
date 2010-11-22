@@ -21,9 +21,9 @@ module BrighterPlanet
           has :urbanity
           has :hybridity
           has :fuel_efficiency
-          has :annual_distance
-          has :weekly_distance
-          has :daily_distance
+          has :annual_distance_estimate
+          has :weekly_distance_estimate
+          has :daily_distance_estimate
           has :daily_duration
           has :acquisition
           has :retirement
