@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{automobile}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-11-19}
+  s.date = %q{2010-11-22}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of an automobile}
   s.email = %q{andy@rossmeissl.net}
   s.extra_rdoc_files = [
@@ -33,8 +33,8 @@ Gem::Specification.new do |s|
   s.summary = %q{A carbon model}
   s.test_files = [
     "features/support/env.rb",
-     "features/automobile_emissions.feature",
      "features/automobile_committees.feature",
+     "features/automobile_emissions.feature",
      "lib/test_support/automobile_record.rb"
   ]
 
