@@ -38,18 +38,23 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
     gem.test_files = Dir.glob(File.join('features', '**', '*.rb')) +
       Dir.glob(File.join('features', '**', '*.feature')) +
       Dir.glob(File.join('lib', 'test_support', '**/*.rb'))
-    gem.add_development_dependency 'activerecord', '~>3.0.0'
+    gem.add_development_dependency 'activerecord', '~>3'
     gem.add_development_dependency 'bundler', '~>1.0.0'
     gem.add_development_dependency 'cucumber', '~>0.8.3'
     gem.add_development_dependency 'jeweler', '~>1.4.0'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rdoc'
     gem.add_development_dependency 'rspec', '~>2.0.0.beta.17'
-    gem.add_development_dependency 'sniff', '~>0.2.7' unless ENV['LOCAL_SNIFF']
-    gem.add_dependency 'emitter', '~>0.1.7' unless ENV['LOCAL_EMITTER']
-    gem.add_dependency 'earth', '~>0.2.6' unless ENV['LOCAL_EARTH']
+    gem.add_development_dependency 'sniff' unless ENV['LOCAL_SNIFF']
+    gem.add_dependency 'emitter', '~>0.3' unless ENV['LOCAL_EMITTER']
+    gem.add_dependency 'earth', '~>0.3' unless ENV['LOCAL_EARTH']
   end
   Jeweler::GemcutterTasks.new
+end
+
+require_or_fail 'emitter', 'Emitter gem not found, emitter tasks unavailable' do
+  require 'emitter/tasks'
+  Emitter::Tasks.define 
 end
 
 require_or_fail('sniff', 'Sniff gem not found, sniff tasks unavailable') do

@@ -73,6 +73,14 @@ Feature: Automobile Emissions Calculations
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "26981.99"
   
+  Scenario: Automobile emission from multiple distances
+    Given an automobile has "daily_duration" of "5"
+    And it has "daily_distance" of "10"
+    And it has "weekly_distance" of "100"
+    And it has "annual_distance" of "1000"
+    When emissions are calculated
+    Then the emission value should be within "0.1" kgs of "290.21"
+
   Scenario: Automobile emission from make
     Given an automobile has "make.name" of "Acura"
     When emissions are calculated
