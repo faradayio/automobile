@@ -190,7 +190,9 @@ module BrighterPlanet
               fuel_efficiency_city = characteristics[:make_model_year_variant].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:make_model_year_variant].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
-              1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+              if fuel_efficiency_city.present? and fuel_efficiency_highway.present?
+                1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+              end
             end
             
             #### Fuel efficiency from make model year and urbanity
@@ -202,7 +204,9 @@ module BrighterPlanet
               fuel_efficiency_city = characteristics[:make_model_year].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:make_model_year].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
-              1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+              if fuel_efficiency_city.present? and fuel_efficiency_highway.present?
+                1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+              end
             end
             
             #### Fuel efficiency from make model and urbanity
@@ -214,7 +218,9 @@ module BrighterPlanet
               fuel_efficiency_city = characteristics[:make_model].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:make_model].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
-              1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+              if fuel_efficiency_city.present? and fuel_efficiency_highway.present?
+                1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
+              end
             end
             
             #### Fuel efficiency from size class, hybridity multiplier, and urbanity
@@ -227,7 +233,9 @@ module BrighterPlanet
               fuel_efficiency_city = characteristics[:size_class].fuel_efficiency_city
               fuel_efficiency_highway = characteristics[:size_class].fuel_efficiency_highway
               urbanity = characteristics[:urbanity]
-              (1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))) * characteristics[:hybridity_multiplier]
+              if fuel_efficiency_city.present? and fuel_efficiency_highway.present?
+                (1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))) * characteristics[:hybridity_multiplier]
+              end
             end
             
             #### Fuel efficiency from make year and hybridity multiplier
