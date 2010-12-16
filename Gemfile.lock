@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    automobile (0.1.1)
+    automobile (0.1.4)
       earth (~> 0.3)
       emitter (~> 0.3)
 
