@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{automobile}
-  s.version = "0.1.4"
+  s.version = "0.1.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
@@ -35,8 +35,8 @@ Gem::Specification.new do |s|
   s.summary = %q{A carbon model}
   s.test_files = [
     "features/support/env.rb",
-     "features/automobile_committees.feature",
      "features/automobile_emissions.feature",
+     "features/automobile_committees.feature",
      "lib/test_support/automobile_record.rb"
   ]
 
