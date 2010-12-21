@@ -121,7 +121,7 @@ module BrighterPlanet
               characteristics[:daily_distance] * timeframe.year.days
             end
             
-            #### Annual distance from daily duration and speed
+            #### Annual distance from daily duration, speed, and timeframe
             # **Complies:** GHG Protocol, ISO 14064-1
             #
             # * Multiplies the `daily duration` (*hours*) by the `speed` (*km / hour*) to give *km*

@@ -5,14 +5,16 @@ Feature: Automobile Committee Calculations
     Given an automobile emitter
     And a characteristic "timeframe" of "2009-03-04/2009-08-17"
     When the "retirement" committee is calculated
-    Then the conclusion of the committee should be "2009-08-17"
+    Then the committee should have used quorum "from acquisition"
+    And the conclusion of the committee should be "2009-08-17"
 
   Scenario Outline: Retirement committee from acquisition
     Given an automobile emitter
     And a characteristic "timeframe" of "<timeframe>"
     And a characteristic "acquisition" of "<acquisition>"
     When the "retirement" committee is calculated
-    Then the conclusion of the committee should be "<retirement>"
+    Then the committee should have used quorum "from acquisition"
+    And the conclusion of the committee should be "<retirement>"
     Examples:
       | timeframe             | acquisition | retirement |
       | 2009-03-04/2009-08-17 | 2010-04-21  | 2010-04-21 |
@@ -57,7 +59,8 @@ Feature: Automobile Committee Calculations
     And a characteristic "retirement" of "<retirement>"
     And a characteristic "timeframe" of "<timeframe>"
     When the "active_subtimeframe" committee is calculated
-    Then the conclusion of the committee should be timeframe "<active_subtimeframe>"
+    Then the committee should have used quorum "from acquisition and retirement"
+    And the conclusion of the committee should be timeframe "<active_subtimeframe>"
     Examples:
       | acquisition | retirement | timeframe             | active_subtimeframe   |
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-12-31 | 2010-04-21/2010-09-01 |
@@ -76,13 +79,15 @@ Feature: Automobile Committee Calculations
   Scenario: Urbanity committee from default
     Given an automobile emitter
     When the "urbanity" committee is calculated
-    Then the conclusion of the committee should be "0.43"
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should be "0.43"
 
   Scenario: Speed committee from urbanity
     Given an automobile emitter
     When the "urbanity" committee is calculated
     And the "speed" committee is calculated
-    Then the conclusion of the committee should be "50.94388"
+    Then the committee should have used quorum "from urbanity"
+    And the conclusion of the committee should be "50.94388"
 
   Scenario Outline: Hybridity multiplier committee from size class with hybridity multipliers
     Given an automobile emitter
@@ -243,7 +248,8 @@ Feature: Automobile Committee Calculations
     And a characteristic "active_subtimeframe" of "<active_subtimeframe>"
     And a characteristic "timeframe" of "<timeframe>"
     When the "distance" committee is calculated
-    Then the conclusion of the committee should be "<distance>"
+    Then the committee should have used quorum "from annual distance"
+    And the conclusion of the committee should be "<distance>"
     Examples:
       | annual_distance | active_subtimeframe   | timeframe             | distance  |
       | 10000           | 2010-06-01/2010-07-07 | 2010-01-01/2010-12-31 | 986.30137 |
@@ -254,15 +260,18 @@ Feature: Automobile Committee Calculations
     And a characteristic "distance" of "100"
     And a characteristic "fuel_efficiency" of "10"
     When the "fuel_consumed" committee is calculated
-    Then the conclusion of the committee should be "10.0"
+    Then the committee should have used quorum "from fuel efficiency and distance"
+    And the conclusion of the committee should be "10.0"
 
   Scenario: Emission factor committee from fuel type
     Given an automobile emitter
     And a characteristic "fuel_type.code" of "P"
     When the "emission_factor" committee is calculated
-    Then the conclusion of the committee should be "2.48"
+    Then the committee should have used quorum "from fuel type"
+    And the conclusion of the committee should be "2.48"
 
   Scenario: Emission factor committee from default
     Given an automobile emitter
     When the "emission_factor" committee is calculated
-    Then the conclusion of the committee should be "2.49011"
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should be "2.49011"
