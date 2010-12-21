@@ -66,7 +66,7 @@ module BrighterPlanet
             #
             # Uses a default `emission factor` of 2.49 *kg CO<sub>2</sub>e / l*, calculated from [EPA (2010)](http://www.epa.gov/climatechange/emissions/usinventoryreport.html)
             quorum 'default', :complies => [:ghg_protocol, :iso] do
-              20.781.pounds_per_gallon.to(:kilograms_per_litre)
+              AutomobileFuelType.fallback.emission_factor
             end
           end
           
@@ -154,7 +154,7 @@ module BrighterPlanet
             #
             # Uses an `annual distance` of 19,021 *km*, calculated from total US automobile vehicle miles travelled and number of automobiles.
             quorum 'default', :complies => [:ghg_protocol, :iso] do
-              11819.miles.to(:kilometres)
+              base.fallback.annual_distance_estimate
             end
           end
           
@@ -266,7 +266,7 @@ module BrighterPlanet
             # * Takes a default `fuel efficiency` of 8.58 *km / l*, calculated from total US automobile vehicle miles travelled and gasoline and diesel consumption.
             # * Multiplies the `fuel efficiency` by the `hybridity multiplier`
             quorum 'from hybridity multiplier', :needs => :hybridity_multiplier, :complies => [:ghg_protocol, :iso] do |characteristics|
-              20.182.miles_per_gallon.to(:kilometres_per_litre) * characteristics[:hybridity_multiplier]
+              base.fallback.fuel_efficiency * characteristics[:hybridity_multiplier]
             end
           end
           
@@ -314,7 +314,7 @@ module BrighterPlanet
             #
             # Uses a default `hybridity multiplier` of 1.
             quorum 'default', :complies => [:ghg_protocol, :iso] do
-              1.0
+              base.fallback.hybridity_multiplier
             end
           end
           
@@ -351,7 +351,7 @@ module BrighterPlanet
             #
             # Uses an `urbanity` of 0.43 after [EPA (2009) Appendix A](http://www.epa.gov/otaq/cert/mpg/fetrends/420r09014-appx-a.pdf)
             quorum 'default', :complies => [:ghg_protocol, :iso] do
-              0.43
+              base.fallback.urbanity
             end
           end
           
