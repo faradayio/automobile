@@ -100,28 +100,25 @@ module BrighterPlanet
           # This is the distance the automobile would travel if it were in use for the entire calendar year in which the `timeframe` falls.
           # Note that if either `acquisition` or `retirement` occurs during the calendar year in which the `timeframe` falls then `annual distance` will be MORE THAN the distance the automobile actually travelled during that calendar year.
           committee :annual_distance do
-            #### Annual distance from annual distance estimate
+            #### Annual distance from client input
+            # **Complies:** All
+            #
+            # Uses the client-input `annual distance` (*km*).
+            
+            #### Annual distance from weekly distance and timeframe
             # **Complies:** GHG Protocol, ISO 14064-1
             #
-            # Uses the `annual distance estimate` (*km*).
-            quorum 'from annual distance estimate', :needs => :annual_distance_estimate, :complies => [:ghg_protocol, :iso] do |characteristics|
-              characteristics[:annual_distance_estimate]
+            # Divides the `weekly distance` (*km*) by 7 and multiplies by the number of days in the calendar year in which the `timeframe` falls.
+            quorum 'from weekly distance and timeframe', :needs => :weekly_distance, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
+              (characteristics[:weekly_distance] / 7 ) * timeframe.year.days
             end
             
-            #### Annual distance from weekly distance
+            #### Annual distance from daily distance and timeframe
             # **Complies:** GHG Protocol, ISO 14064-1
             #
-            # Divides the `weekly distance estimate` (*km*) by 7 and multiplies by the number of days in the calendar year in which the `timeframe` falls.
-            quorum 'from weekly distance estimate and timeframe', :needs => :weekly_distance_estimate, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
-              (characteristics[:weekly_distance_estimate] / 7 ) * timeframe.year.days
-            end
-            
-            #### Annual distance from daily distance
-            # **Complies:** GHG Protocol, ISO 14064-1
-            #
-            # Multiplies the `daily distance estimate` (*km*) by the number of days in the calendar year in which the `timeframe` falls.
-            quorum 'from daily distance estimate and timeframe', :needs => :daily_distance_estimate, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
-              characteristics[:daily_distance_estimate] * timeframe.year.days
+            # Multiplies the `daily distance` (*km*) by the number of days in the calendar year in which the `timeframe` falls.
+            quorum 'from daily distance and timeframe', :needs => :daily_distance, :complies => [:ghg_protocol, :iso] do |characteristics, timeframe|
+              characteristics[:daily_distance] * timeframe.year.days
             end
             
             #### Annual distance from daily duration and speed
@@ -154,20 +151,16 @@ module BrighterPlanet
             #
             # Uses an `annual distance` of 19,021 *km*, calculated from total US automobile vehicle miles travelled and number of automobiles.
             quorum 'default', :complies => [:ghg_protocol, :iso] do
-              base.fallback.annual_distance_estimate
+              base.fallback.annual_distance
             end
           end
           
-          ### Annual distance estimate calculation
-          # Returns the client-input `annual distance estimate` (*km*).
+          ### Weekly distance calculation
+          # Returns the client-input `weekly distance` (*km*).
           # This is the average distance the automobile travels each week.
           
-          ### Weekly distance estimate calculation
-          # Returns the client-input `weekly distance estimate` (*km*).
-          # This is the average distance the automobile travels each week.
-          
-          ### Daily distance estimate calculation
-          # Returns the client-input `daily distance estimate` (*km*).
+          ### Daily distance calculation
+          # Returns the client-input `daily distance` (*km*).
           # This is the average distance the automobile travels each day.
           
           ### Daily duration calculation

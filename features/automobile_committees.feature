@@ -192,27 +192,20 @@ Feature: Automobile Committee Calculations
     Then the committee should have used quorum "from hybridity multiplier"
     And the conclusion of the committee should be "8.58025"
 
-  Scenario: Annual distance committee from annual distance estimate
+  Scenario: Annual distance committee from weekly distance and timeframe
     Given an automobile emitter
-    And a characteristic "annual_distance_estimate" of "100"
-    When the "annual_distance" committee is calculated
-    Then the committee should have used quorum "from annual distance estimate"
-    And the conclusion of the committee should be "100.0"
-
-  Scenario: Annual distance committee from weekly distance estimate and timeframe
-    Given an automobile emitter
-    And a characteristic "weekly_distance_estimate" of "7"
+    And a characteristic "weekly_distance" of "7"
     And a characteristic "timeframe" of "2010-05-23/2010-11-24"
     When the "annual_distance" committee is calculated
-    Then the committee should have used quorum "from weekly distance estimate and timeframe"
+    Then the committee should have used quorum "from weekly distance and timeframe"
     And the conclusion of the committee should be "365.0"
 
-  Scenario: Annual distance committee from daily distance estimate and timeframe
+  Scenario: Annual distance committee from daily distance and timeframe
     Given an automobile emitter
-    And a characteristic "daily_distance_estimate" of "2"
+    And a characteristic "daily_distance" of "2"
     And a characteristic "timeframe" of "2010-05-23/2010-11-24"
     When the "annual_distance" committee is calculated
-    Then the committee should have used quorum "from daily distance estimate and timeframe"
+    Then the committee should have used quorum "from daily distance and timeframe"
     And the conclusion of the committee should be "730.0"
 
   Scenario: Annual distance committee from daily duration, speed and timeframe

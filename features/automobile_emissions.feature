@@ -34,11 +34,11 @@ Feature: Automobile Emissions Calculations
       | true      | 4031.66  |
       | false     | 5564.02  |
 
-  Scenario: Calculation with multiple distance estimates
+  Scenario: Calculation with multiple distances
     Given an automobile has "daily_duration" of "5"
-    And it has "daily_distance_estimate" of "10"
-    And it has "weekly_distance_estimate" of "100"
-    And it has "annual_distance_estimate" of "1000"
+    And it has "daily_distance" of "10"
+    And it has "weekly_distance" of "100"
+    And it has "annual_distance" of "1000"
     When emissions are calculated
     Then the emission value should be within "0.1" kgs of "290.21"
 
@@ -61,18 +61,18 @@ Feature: Automobile Emissions Calculations
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "2368.20"
   
-  Scenario: Automobile emission from annual distance estimate
-    Given an automobile has "annual_distance_estimate" of "1000"
+  Scenario: Automobile emission from annual distance
+    Given an automobile has "annual_distance" of "1000"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "290.21"
 
-  Scenario: Automobile emission from weekly distance estimate
-    Given an automobile has "weekly_distance_estimate" of "100"
+  Scenario: Automobile emission from weekly distance
+    Given an automobile has "weekly_distance" of "100"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "1513.26"
 
-  Scenario: Automobile emission from daily distance estimate
-    Given an automobile has "daily_distance_estimate" of "10"
+  Scenario: Automobile emission from daily distance
+    Given an automobile has "daily_distance" of "10"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "1059.28"
 
