@@ -326,7 +326,7 @@ module BrighterPlanet
             # * Takes average city and highway driving speeds from [EPA (2006)](http://www.epa.gov/fueleconomy/420r06017.pdf) and converts from *miles / hour* to *km / hour*
             # * Calculates the harmonic mean of those speeds, weighted by `urbanity`
             quorum 'from urbanity', :needs => :urbanity, :complies => [:ghg_protocol, :iso] do |characteristics|
-              1 / (characteristics[:urbanity] / 19.9.miles.to(:kilometres) + (1 - characteristics[:urbanity]) / 57.1.miles.to(:kilometres)) 
+              1 / (characteristics[:urbanity] / base.fallback.speed_city + (1 - characteristics[:urbanity]) / base.fallback.speed_highway)
             end
           end
           
