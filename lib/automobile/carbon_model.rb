@@ -34,11 +34,7 @@ module BrighterPlanet
             #
             # Multiplies `fuel consumed` (*l*) by the `emission factor` (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
             quorum 'from fuel', :needs => [:fuel_consumed, :emission_factor], :appreciates => :fuel_type, :complies => [:ghg_protocol, :iso] do |characteristics|
-              if characteristics[:fuel_type].andand.code == AutomobileFuelType::CODES[:electricity]
-                0.0
-              else
-                characteristics[:fuel_consumed] * characteristics[:emission_factor]
-              end
+              characteristics[:fuel_consumed] * characteristics[:emission_factor]
             end
             
             #### Emission from default
