@@ -11,6 +11,7 @@ module BrighterPlanet
             string   'make_model_year_variant_row_hash'
             string   'size_class_name'
             string   'fuel_type_code'
+            boolean  'hybridity'
             float    'urbanity'
             float    'speed_city'
             float    'speed_highway'
