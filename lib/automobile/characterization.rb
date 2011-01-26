@@ -20,6 +20,9 @@ module BrighterPlanet
           has :fuel_type
           has :urbanity
           has :hybridity
+          has :hybridity_multiplier
+          has :speed_city
+          has :speed_highway
           has :fuel_efficiency
           has :annual_distance
           has :weekly_distance
