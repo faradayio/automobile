@@ -58,33 +58,10 @@ require_or_fail 'emitter', 'Emitter gem not found, emitter tasks unavailable' do
 end
 
 require_or_fail('sniff', 'Sniff gem not found, sniff tasks unavailable') do
-  require 'sniff/rake_task'
-  Sniff::RakeTask.new(:console) do |t|
+  require 'sniff/rake_tasks'
+  Sniff::RakeTasks.define_tasks do |t|
     t.earth_domains = :hospitality
   end
-end
-
-require_or_fail('cucumber', 'Cucumber gem not found, cucumber tasks unavailable') do
-  require 'cucumber/rake/task'
-
-  desc 'Run all cucumber tests'
-  Cucumber::Rake::Task.new(:features) do |t|
-    if ENV['CUCUMBER_FORMAT']
-      t.cucumber_opts = "features --format #{ENV['CUCUMBER_FORMAT']}"
-    else
-      t.cucumber_opts = 'features --format pretty'
-    end
-  end
-
-  desc "Run all tests with RCov"
-  Cucumber::Rake::Task.new(:features_with_coverage) do |t|
-    t.cucumber_opts = "features --format pretty"
-    t.rcov = true
-    t.rcov_opts = ['--exclude', 'features']
-  end
-
-  task :test => :features
-  task :default => :test
 end
 
 require 'rake/rdoctask'

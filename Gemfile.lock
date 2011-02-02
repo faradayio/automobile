@@ -64,18 +64,17 @@ GEM
       geokit (>= 1.5.0)
       loose_tight_dictionary (>= 0.0.8)
       weighted_average (>= 0.0.4)
-    emitter (0.3.0)
-      activesupport (>= 3.0.0)
-      characterizable (~> 0.1.2)
-      cohort_scope (~> 0.1.0)
-      data_miner (~> 0.5.5)
-      earth (~> 0.3.1)
-      falls_back_on (= 0.0.3)
-      fast_timestamp (>= 0.0.4)
-      leap (~> 0.4.4)
-      summary_judgement (>= 1.3.8)
-      timeframe (>= 0.0.8)
-      weighted_average (>= 0.0.4)
+    emitter (0.4.0)
+      activesupport
+      characterizable
+      cohort_scope
+      data_miner
+      earth
+      falls_back_on
+      leap
+      summary_judgement
+      timeframe
+      weighted_average
     errata (0.2.4)
       activesupport (>= 2.3.4)
       remote_table (>= 0.2.31)
@@ -98,10 +97,11 @@ GEM
       git (>= 1.2.5)
       rubyforge (>= 2.0.0)
     json_pure (1.4.6)
-    leap (0.4.5)
-      activesupport (~> 3.0.0)
+    leap (0.4.6)
+      activesupport (>= 2.3.4)
       blockenspiel (>= 0.3.2)
-      builder (~> 2.1.2)
+      builder
+      i18n
     libxml-ruby (1.1.4)
     log4r (1.1.9)
     loose_tight_dictionary (0.0.9)
@@ -187,8 +187,6 @@ DEPENDENCIES
   automobile!
   bundler (~> 1.0.0)
   cucumber (~> 0.8.3)
-  earth (~> 0.3.6)
-  emitter (~> 0.3)
   jeweler (~> 1.4.0)
   rake
   rdoc
