@@ -7,7 +7,7 @@ module BrighterPlanet
         target.belongs_to :make_model,              :class_name => 'AutomobileMakeModel',            :foreign_key => 'make_model_name'
         target.belongs_to :make_model_year,         :class_name => 'AutomobileMakeModelYear',        :foreign_key => 'make_model_year_name'
         target.belongs_to :make_model_year_variant, :class_name => 'AutomobileMakeModelYearVariant', :foreign_key => 'make_model_year_variant_row_hash'
-        target.belongs_to :fuel_type,               :class_name => 'AutomobileFuelType',             :foreign_key => 'fuel_type_code'
+        target.belongs_to :automobile_fuel,         :class_name => 'AutomobileFuel',                 :foreign_key => 'automobile_fuel_name'
         target.belongs_to :size_class,              :class_name => 'AutomobileSizeClass'
       end
     end

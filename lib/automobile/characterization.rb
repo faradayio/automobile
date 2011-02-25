@@ -17,12 +17,14 @@ module BrighterPlanet
           #   end
           # end
           has :size_class
-          has :fuel_type
-          has :urbanity
+          has :automobile_fuel
+          has :urbanity # DEPRECATED
+          has :urbanity_estimate
           has :hybridity
           has :hybridity_multiplier
-          has :speed_city
-          has :speed_highway
+          has :speed
+          has :city_speed
+          has :highway_speed
           has :fuel_efficiency
           has :annual_distance
           has :weekly_distance

@@ -60,7 +60,7 @@ end
 require_or_fail('sniff', 'Sniff gem not found, sniff tasks unavailable') do
   require 'sniff/rake_tasks'
   Sniff::RakeTasks.define_tasks do |t|
-    t.earth_domains = :hospitality
+    t.earth_domains = [:automobile, :fuel]
   end
 end
 
@@ -105,15 +105,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title = "automobile #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
-begin
-  require 'cucumber'
-  require 'cucumber/rake/task'
-
-  Cucumber::Rake::Task.new(:features) do |t|
-    t.cucumber_opts = "features --format pretty"
-  end
-rescue LoadError
-  puts 'Cucumber not available. `gem install cucumber`'
 end
