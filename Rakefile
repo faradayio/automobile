@@ -1,9 +1,7 @@
 require 'rubygems'
 
 require 'bundler'
-Bundler.with_clean_env do
-  Bundler.setup
-end
+Bundler.setup
 Bundler::GemHelper.install_tasks
 
 require 'bueller'
