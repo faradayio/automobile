@@ -5,7 +5,7 @@ require "automobile/version"
 
 Gem::Specification.new do |s|
   s.name = "automobile"
-  s.version = Automobile::VERSION
+  s.version = BrighterPlanet::Automobile::VERSION
   s.platform = Gem::Platform::RUBY
   s.authors = ['Derek Kastner', 'Seamus Abshere', 'Andy Rossmeissl', 'Ian Hough', 'Matt Kling']
   s.email = ['derek.kastner@brighterplanet.com']
