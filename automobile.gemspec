@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 $:.push File.expand_path("../lib", __FILE__)
 require "automobile/version"
 
@@ -20,14 +19,6 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   
-  s.add_development_dependency(%q<activerecord>, ["~> 3"])
-  s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-  s.add_development_dependency(%q<rake>, [">= 0"])
-  s.add_development_dependency(%q<cucumber>, [">= 0"])
-  s.add_development_dependency(%q<jeweler>, ["~> 1.4.0"])
-  s.add_development_dependency(%q<rdoc>, [">= 0"])
-  s.add_development_dependency(%q<rspec>, ["~> 2"])
-  s.add_development_dependency(%q<sniff>, ["~> 0.6"])
-  s.add_runtime_dependency(%q<emitter>, ["~> 0.4"])
-  s.add_runtime_dependency(%q<earth>, ["~> 0.4"])
+  s.add_runtime_dependency 'emitter'
+  s.add_development_dependency 'sniff'
 end
