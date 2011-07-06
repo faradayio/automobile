@@ -22,14 +22,14 @@ module BrighterPlanet
           has :urbanity_estimate
           has :hybridity
           has :hybridity_multiplier
-          has :speed
-          has :city_speed
-          has :highway_speed
-          has :fuel_efficiency
-          has :annual_distance
-          has :weekly_distance
-          has :daily_distance
-          has :daily_duration
+          has :speed, :measures => Measurement::BigSpeed
+          has :city_speed, :measures => Measurement::BigSpeed
+          has :highway_speed, :measures => Measurement::BigSpeed
+          has :fuel_efficiency, :measures => Measurement::BigLengthPerVolume
+          has :annual_distance, :measures => Measurement::BigLength
+          has :weekly_distance, :measures => Measurement::BigLength
+          has :daily_distance, :measures => Measurement::BigLength
+          has :daily_duration, :measures => :time
           has :acquisition
           has :retirement
           # has :annual_fuel_cost, :trumps => [:annual_distance_estimate, :weekly_distance_estimate, :daily_distance_estimate, :daily_duration, :weekly_fuel_cost], :measures => :cost

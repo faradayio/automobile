@@ -234,8 +234,8 @@ module BrighterPlanet
               :needs => [:daily_duration, :speed],
               # **Complies:** GHG Protocol Scope 3, ISO 14064-1
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
-                # Multiplies the `daily duration` (*hours*) by the `speed` (*km / hour*) to give *km*. Multiplies the result by the number of days in the calendar year in which the `timeframe` falls.
-                characteristics[:daily_duration] * characteristics[:speed] * timeframe.year.days
+                # Multiplies the `daily duration` (*seconds*) by the `speed` (*km / hour*) to give *km*. Multiplies the result by the number of days in the calendar year in which the `timeframe` falls.
+                characteristics[:daily_duration] / 3600.0 * characteristics[:speed] * timeframe.year.days
             end
             
             #### Annual distance from size class
@@ -266,7 +266,7 @@ module BrighterPlanet
           # This is the average distance the automobile travels each day.
           
           ### Daily duration calculation
-          # Returns the client-input `daily duration` (*hours*).
+          # Returns the client-input `daily duration` (*seconds*).
           
           ### Automobile fuel calculation
           # Returns the type of `automobile fuel` used.

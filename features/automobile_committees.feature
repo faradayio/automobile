@@ -243,7 +243,7 @@ Feature: Automobile Committee Calculations
 
   Scenario: Annual distance committee from daily duration, speed and timeframe
     Given an automobile emitter
-    And a characteristic "daily_duration" of "1"
+    And a characteristic "daily_duration" of "3600.0"
     And a characteristic "speed" of "10"
     And a characteristic "timeframe" of "2010-01-01/2010-01-31"
     When the "annual_distance" committee is calculated

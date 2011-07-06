@@ -66,7 +66,7 @@ Feature: Automobile Emissions Calculations
     Then the emission value should be within "0.01" kgs of "84.79"
 
   Scenario: Automobile emission from daily duration
-    Given an automobile has "daily_duration" of "1"
+    Given an automobile has "daily_duration" of "3600.0"
     And it is the year "2010"
     And it has "speed" of "10"
     And it has "acquisition" of "2010-01-01"
@@ -75,7 +75,7 @@ Feature: Automobile Emissions Calculations
     Then the emission value should be within "0.01" kgs of "84.79"
   
   Scenario: Automobile emission from multiple distances
-    Given an automobile has "daily_duration" of "1"
+    Given an automobile has "daily_duration" of "3600.0"
     And it is the year "2010"
     And it has "daily_distance" of "10"
     And it has "weekly_distance" of "70"
