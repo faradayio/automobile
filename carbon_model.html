@@ -68,7 +68,7 @@ Contact Brighter Planet for dual-license arrangements.</p>
 
 <h4>Collaboration</h4>
 
-<p>Contributions to this carbon model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see <a href="http://github.com/brighterplanet/sniff#readme">sniff</a>, our emitter testing framework, for more information.</p>
+<p>Contributions to this carbon model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see <a href="https://github.com/brighterplanet/sniff#readme">sniff</a>, our emitter testing framework, for more information.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">module</span> <span class="nn">BrighterPlanet</span>
@@ -882,10 +882,10 @@ Note that if either <code>acquisition</code> or <code>retirement</code> occurs d
         <div class="pilwrap">
           <a class="pilcrow" href="#section-67">&#182;</a>
         </div>
-        <p>Multiplies the <code>daily duration</code> (<em>hours</em>) by the <code>speed</code> (<em>km / hour</em>) to give <em>km</em>. Multiplies the result by the number of days in the calendar year in which the <code>timeframe</code> falls.</p>
+        <p>Multiplies the <code>daily duration</code> (<em>seconds</em>) by the <code>speed</code> (<em>km / hour</em>) to give <em>km</em>. Multiplies the result by the number of days in the calendar year in which the <code>timeframe</code> falls.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">characteristics</span><span class="o">[</span><span class="ss">:daily_duration</span><span class="o">]</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:speed</span><span class="o">]</span> <span class="o">*</span> <span class="n">timeframe</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">days</span>
+        <div class='highlight'><pre>                <span class="n">characteristics</span><span class="o">[</span><span class="ss">:daily_duration</span><span class="o">]</span> <span class="o">/</span> <span class="mi">3600</span><span class="o">.</span><span class="mi">0</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:speed</span><span class="o">]</span> <span class="o">*</span> <span class="n">timeframe</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">days</span>
             <span class="k">end</span>
             </pre></div>
       </td>
@@ -998,7 +998,7 @@ This is the average distance the automobile travels each day.</p>
         </div>
         <h2>Daily duration calculation</h2>
 
-<p>Returns the client-input <code>daily duration</code> (<em>hours</em>).</p>
+<p>Returns the client-input <code>daily duration</code> (<em>seconds</em>).</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          </pre></div>
