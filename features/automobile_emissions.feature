@@ -31,7 +31,7 @@ Feature: Automobile Emissions Calculations
     Examples:
       | hybridity | emission |
       | true      | 3699.90  |
-      | false     | 5106.17  |
+      | false     | 5065.88  |
 
   Scenario Outline: Automobile emission from size class and hybridity
     Given an automobile has "size_class.name" of "<size_class>"
