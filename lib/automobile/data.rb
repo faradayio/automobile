@@ -2,7 +2,7 @@ module BrighterPlanet
   module Automobile
     module Data
       def self.included(base)
-        base.create_table do
+        base.force_schema do
           string   'make_name'
           string   'make_year_name'
           string   'make_model_name'
