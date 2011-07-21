@@ -11,8 +11,7 @@ module BrighterPlanet
           string   'size_class_name'
           string   'automobile_fuel_name'
           boolean  'hybridity'
-          float    'urbanity' # DEPRECATED
-          float    'urbanity_estimate'
+          float    'urbanity'
           float    'speed'
           float    'city_speed'
           float    'highway_speed'

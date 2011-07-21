@@ -18,8 +18,7 @@ module BrighterPlanet
           # end
           has :size_class
           has :automobile_fuel
-          has :urbanity # DEPRECATED
-          has :urbanity_estimate
+          has :urbanity
           has :hybridity
           has :hybridity_multiplier
           has :speed, :measures => Measurement::BigSpeed

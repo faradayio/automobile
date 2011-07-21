@@ -19,8 +19,8 @@ Feature: Automobile Emissions Calculations
       | 2010-03-01  | 2010-03-31 | 2010-01-01/2011-01-01 | 416.37   |
       | 2010-03-01  | 2010-03-31 | 2010-04-01/2011-01-01 | 0.0      |
 
-  Scenario: Automobile emission from urbanity estimate
-    Given an automobile has "urbanity_estimate" of "0.5"
+  Scenario: Automobile emission from urbanity
+    Given an automobile has "urbanity" of "0.5"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "5065.88"
 
@@ -85,32 +85,32 @@ Feature: Automobile Emissions Calculations
     When emissions are calculated
     Then the emission value should be within "0.1" kgs of "232.31"
 
-  Scenario: Automobile emission from make and urbanity estimate
+  Scenario: Automobile emission from make and urbanity
     Given an automobile has "make.name" of "Toyota"
-    And it has "urbanity_estimate" of "0.5"
+    And it has "urbanity" of "0.5"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "4346.65"
 
-  Scenario: Automobile emission from make year and urbanity estimate
+  Scenario: Automobile emission from make year and urbanity
     Given an automobile has "make_year.name" of "Toyota 2003"
-    And it has "urbanity_estimate" of "0.5"
+    And it has "urbanity" of "0.5"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "2897.77"
 
-  Scenario: Automobile emission from make model and urbanity estimate
+  Scenario: Automobile emission from make model and urbanity
     Given an automobile has "make_model.name" of "Toyota Prius"
-    And it has "urbanity_estimate" of "0.5"
+    And it has "urbanity" of "0.5"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "1811.11"
 
-  Scenario: Automobile emission from make model year and urbanity estimate
+  Scenario: Automobile emission from make model year and urbanity
     Given an automobile has "make_model_year.name" of "Toyota Prius 2003"
-    And it has "urbanity_estimate" of "0.5"
+    And it has "urbanity" of "0.5"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "1267.77"
 
-  Scenario: Automobile emission from make model year variant and urbanity estimate
+  Scenario: Automobile emission from make model year variant and urbanity
     Given an automobile has "make_model_year_variant.row_hash" of "xxx1"
-    And it has "urbanity_estimate" of "0.5"
+    And it has "urbanity" of "0.5"
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "1460.44"
