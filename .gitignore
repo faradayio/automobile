@@ -20,6 +20,7 @@ docs
 coverage
 rdoc
 pkg
+log
 
 ## PROJECT::SPECIFIC
 Gemfile.lock
