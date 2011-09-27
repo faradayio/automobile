@@ -2,29 +2,27 @@ module BrighterPlanet
   module Automobile
     module Data
       def self.included(base)
-        base.force_schema do
-          string   'make_name'
-          string   'make_year_name'
-          string   'make_model_name'
-          string   'make_model_year_name'
-          string   'make_model_year_variant_row_hash'
-          string   'size_class_name'
-          string   'automobile_fuel_name'
-          boolean  'hybridity'
-          float    'urbanity'
-          float    'speed'
-          float    'city_speed'
-          float    'highway_speed'
-          boolean  'hybridity'
-          float    'hybridity_multiplier'
-          float    'fuel_efficiency'
-          float    'annual_distance'
-          float    'weekly_distance'
-          float    'daily_distance'
-          float    'daily_duration'
-          date     'acquisition'
-          date     'retirement'
-        end
+        base.col :make_name
+        base.col :make_year_name
+        base.col :make_model_name
+        base.col :make_model_year_name
+        base.col :make_model_year_variant_row_hash
+        base.col :size_class_name
+        base.col :automobile_fuel_name
+        base.col :hybridity, :type => :boolean
+        base.col :urbanity, :type => :float
+        base.col :speed, :type => :float
+        base.col :city_speed, :type => :float
+        base.col :highway_speed, :type => :float
+        base.col :hybridity, :type => :boolean
+        base.col :hybridity_multiplier, :type => :float
+        base.col :fuel_efficiency, :type => :float
+        base.col :annual_distance, :type => :float
+        base.col :weekly_distance, :type => :float
+        base.col :daily_distance, :type => :float
+        base.col :daily_duration, :type => :float
+        base.col :acquisition, :type => :date
+        base.col :retirement, :type => :date
         
         base.data_miner do
           process "pull orphans" do
