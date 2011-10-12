@@ -66,10 +66,14 @@ Feature: Automobile Committee Calculations
       | 2010-04-21  | 2010-09-01 | 2010-01-01/2010-01-31 | 2010-01-01/2010-01-01 |
 
   Scenario: Urbanity committee from default
-    Given the conclusion of the committee should be "0.43"
+    When the "urbanity" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should be "0.43"
 
   Scenario: Hybridity multiplier committee from default
-    Given the conclusion of the committee should be "1.0"
+    When the "hybridity_multiplier" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should be "1.0"
 
   Scenario Outline: Hybridity multiplier committee from hybridity and urbanity
     Given a characteristic "hybridity" of "<hybridity>"
@@ -160,12 +164,15 @@ Feature: Automobile Committee Calculations
     And the conclusion of the committee should be "44.44444"
 
   Scenario: Speed committee from default urbanity
-    Given the "speed" committee reports
+    When the "urbanity" committee reports
+    And the "speed" committee reports
     Then the committee should have used quorum "from urbanity"
     And the conclusion of the committee should be "50.94388"
 
   Scenario: Automobile fuel committee from default
-    Given the conclusion of the committee should have "annual_distance" of "17923.24"
+    When the "automobile_fuel" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should have "annual_distance" of "17923.24"
     And the conclusion of the committee should have "co2_emission_factor" of "2.30958"
     And the conclusion of the committee should have "co2_biogenic_emission_factor" of "0.0"
     And the conclusion of the committee should have "ch4_emission_factor" of "0.00226"
@@ -232,7 +239,8 @@ Feature: Automobile Committee Calculations
     And the conclusion of the committee should be "1000.0"
 
   Scenario: HFC emission factor committee from default automobile fuel
-    Given the "hfc_emission_factor" committee reports
+    When the "automobile_fuel" committee reports
+    And the "hfc_emission_factor" committee reports
     Then the committee should have used quorum "from automobile fuel"
     And the conclusion of the committee should be "0.10627"
 
@@ -248,7 +256,8 @@ Feature: Automobile Committee Calculations
       | B20              | 0.12 |
 
   Scenario: N2O emission factor committee from default automobile fuel
-    Given the "n2o_emission_factor" committee reports
+    When the "automobile_fuel" committee reports
+    And the "n2o_emission_factor" committee reports
     Then the committee should have used quorum "from automobile fuel"
     And the conclusion of the committee should be "0.00705"
 
@@ -264,7 +273,8 @@ Feature: Automobile Committee Calculations
       | B20              | 0.002 |
 
   Scenario: CH4 emission factor committee from default automobile fuel
-    Given the "ch4_emission_factor" committee reports
+    When the "automobile_fuel" committee reports
+    And the "ch4_emission_factor" committee reports
     Then the committee should have used quorum "from automobile fuel"
     And the conclusion of the committee should be "0.00226"
 
@@ -280,7 +290,8 @@ Feature: Automobile Committee Calculations
       | B20              | 0.0001 |
 
   Scenario: CO2 biogenic emission factor committee from default automobile fuel
-    Given the "co2_biogenic_emission_factor" committee reports
+    When the "automobile_fuel" committee reports
+    And the "co2_biogenic_emission_factor" committee reports
     Then the committee should have used quorum "from automobile fuel"
     And the conclusion of the committee should be "0.0"
 
@@ -296,7 +307,8 @@ Feature: Automobile Committee Calculations
       | B20              | 0.5 |
 
   Scenario: CO2 emission factor committee from default automobile fuel
-    Given the "co2_emission_factor" committee reports
+    When the "automobile_fuel" committee reports
+    And the "co2_emission_factor" committee reports
     Then the committee should have used quorum "from automobile fuel"
     And the conclusion of the committee should be "2.30958"
 
