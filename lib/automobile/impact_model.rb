@@ -48,130 +48,50 @@ module BrighterPlanet
           ### CO<sub>2</sub> emission calculation
           # Returns the `co2 emission` (*kg CO<sub>2</sub>*).
           committee :co2_emission do
-            #### CO<sub>2</sub> emission from fuel use and CO<sub>2</sub> emission factor
-            quorum 'from fuel use and co2 emission factor',
-              :needs => [:fuel_use, :co2_emission_factor],
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
+            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Multiplies `fuel use` (*l*) by the `co2 emission factor` (*kg CO<sub>2</sub> / l*) to give *kg CO<sub>2</sub>*.
-                characteristics[:fuel_use] * characteristics[:co2_emission_factor]
+                characteristics[:fuel_use] * characteristics[:automobile_fuel].co2_emission_factor
             end
           end
           
           ### CO<sub>2</sub> biogenic emission calculation
           # Returns the `co2 biogenic emission` (*kg CO<sub>2</sub>*).
           committee :co2_biogenic_emission do
-            #### CO<sub>2</sub> biogenic emission from fuel use and CO<sub>2</sub> biogenic emission factor
-            quorum 'from fuel use and co2 biogenic emission factor',
-              :needs => [:fuel_use, :co2_biogenic_emission_factor],
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
+            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Multiplies `fuel use` (*l*) by the `co2 biogenic emission factor` (*kg CO<sub>2</sub> / l*) to give *kg CO<sub>2</sub>*.
-                characteristics[:fuel_use] * characteristics[:co2_biogenic_emission_factor]
+                characteristics[:fuel_use] * characteristics[:automobile_fuel].co2_biogenic_emission_factor
             end
           end
           
           ### CH<sub>4</sub> emission calculation
           # Returns the `ch4 emission` (*kg CO<sub>2</sub>e*).
           committee :ch4_emission do
-            #### CH<sub>4</sub> emission from fuel use and CH<sub>4</sub> emission factor
-            quorum 'from fuel use and ch4 emission factor',
-              :needs => [:fuel_use, :ch4_emission_factor],
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
+            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Multiplies `fuel use` (*l*) by the `ch4 emission factor` (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
-                characteristics[:fuel_use] * characteristics[:ch4_emission_factor]
+                characteristics[:fuel_use] * characteristics[:automobile_fuel].ch4_emission_factor
             end
           end
           
           ### N<sub>2</sub>O emission calculation
           # Returns the `n2o emission` (*kg CO<sub>2</sub>e*).
           committee :n2o_emission do
-            #### N<sub>2</sub>O emission from fuel use and N<sub>2</sub>O emission factor
-            quorum 'from fuel use and n2o emission factor',
-              :needs => [:fuel_use, :n2o_emission_factor],
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
+            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Multiplies `fuel use` (*l*) by the `n2o emission factor` (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
-                characteristics[:fuel_use] * characteristics[:n2o_emission_factor]
+                characteristics[:fuel_use] * characteristics[:automobile_fuel].n2o_emission_factor
             end
           end
           
           ### HFC emission calculation
           # Returns the `hfc emission` (*kg CO<sub>2</sub>e*).
           committee :hfc_emission do
-            #### HFC emission from fuel use and HFC emission factor
-            quorum 'from fuel use and hfc emission factor',
-              :needs => [:fuel_use, :hfc_emission_factor],
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
+            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Multiplies `fuel use` (*l*) by the `hfc emission factor` (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
-                characteristics[:fuel_use] * characteristics[:hfc_emission_factor]
-            end
-          end
-          
-          ### CO<sub>2</sub> emission factor calculation
-          # Returns the `co2 emission factor` (*kg / l*).
-          committee :co2_emission_factor do
-            #### CO<sub>2</sub> emission factor from automobile fuel
-            quorum 'from automobile fuel',
-              :needs => :automobile_fuel,
-              # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Looks up the [fuel](http://data.brighterplanet.com/fuels) `co2 emission factor` (*kg / l*).
-                characteristics[:automobile_fuel].co2_emission_factor
-            end
-          end
-          
-          ### CO<sub>2</sub> biogenic emission factor calculation
-          # Returns the `co2 biogenic emission factor` (*kg / l*).
-          committee :co2_biogenic_emission_factor do
-            #### CO<sub>2</sub> biogenic emission factor from automobile fuel
-            quorum 'from automobile fuel',
-              :needs => :automobile_fuel,
-              # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Looks up the [fuel](http://data.brighterplanet.com/fuels) `co2 biogenic emission factor` (*kg / l*).
-                characteristics[:automobile_fuel].co2_biogenic_emission_factor
-            end
-          end
-          
-          ### CH<sub>4</sub> emission factor calculation
-          # Returns the `ch4 emission factor` (*kg CO<sub>2</sub>e / l*).
-          committee :ch4_emission_factor do
-            #### CH<sub>4</sub> emission factor from automobile fuel
-            quorum 'from automobile fuel',
-              :needs => :automobile_fuel,
-              # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Looks up the [fuel](http://data.brighterplanet.com/fuels) `ch4 emission factor` (*kg CO</sub>2</sub>e / l*).
-                characteristics[:automobile_fuel].ch4_emission_factor
-            end
-          end
-          
-          ### N<sub>2</sub>O emission factor calculation
-          # Returns the `n2o emission factor` (*kg CO<sub>2</sub>e / l*).
-          committee :n2o_emission_factor do
-            #### N<sub>2</sub>O emission factor from automobile fuel
-            quorum 'from automobile fuel',
-              :needs => :automobile_fuel,
-              # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Looks up the [fuel](http://data.brighterplanet.com/fuels) `n2o emission factor` (*kg CO</sub>2</sub>e / l*).
-                characteristics[:automobile_fuel].n2o_emission_factor
-            end
-          end
-          
-          ### HFC emission factor calculation
-          # Returns the `hfc emission factor` (*kg CO<sub>2</sub>e / l*).
-          committee :hfc_emission_factor do
-            #### HFC emission factor from automobile fuel
-            quorum 'from automobile fuel',
-              :needs => :automobile_fuel,
-              # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Looks up the [fuel](http://data.brighterplanet.com/fuels) `hfc emission factor` (*kg CO</sub>2</sub>e / l*).
-                characteristics[:automobile_fuel].hfc_emission_factor
+                characteristics[:fuel_use] * characteristics[:automobile_fuel].hfc_emission_factor
             end
           end
           
