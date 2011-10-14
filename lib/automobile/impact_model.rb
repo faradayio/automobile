@@ -195,7 +195,6 @@ module BrighterPlanet
             # Calculate the harmonic mean of those speeds weighted by `urbanity` to give *km / hr*.
             quorum 'from urbanity', :needs => :urbanity,
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Takes default [United States](http://data.brighterplanet.com/countries) city and highway driving speeds (*km / hr*) and calculates the harmonic mean of those speeds weighted by `urbanity` to give *km / hr*.
                 1 / (characteristics[:urbanity] / Country.united_states.automobile_city_speed + (1 - characteristics[:urbanity]) / Country.united_states.automobile_highway_speed)
             end
           end
@@ -301,7 +300,6 @@ module BrighterPlanet
             # Otherwise use a multiplier of 1.0.
             quorum 'default',
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do
-                # Uses a default `hybridity multiplier` of 1.
                 1.0
             end
           end
