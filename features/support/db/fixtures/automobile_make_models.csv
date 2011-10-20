@@ -1,3 +1,2 @@
-name,make_name,model_name,fuel_efficiency_city,fuel_efficiency_city_units,fuel_efficiency_highway,fuel_efficiency_highway_units
-Toyota Prius,Toyota,Prius,20,kilometres_per_litre,20,kilometres_per_litre
-Ford Focus,Ford,Focus,10,kilometres_per_litre,15,kilometres_per_litre
+name,make_name,fuel_efficiency_city,fuel_efficiency_city_units,fuel_efficiency_highway,fuel_efficiency_highway_units
+Toyota Prius,Toyota,30,kilometres_per_litre,20,kilometres_per_litre
