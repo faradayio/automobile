@@ -270,107 +270,122 @@ Feature: Automobile Committee Calculations
     Then the committee should have used quorum "from fuel efficiency and distance"
     And the conclusion of the committee should be "1000.0"
 
-  Scenario: HFC emission from fuel use and default automobile fuel
-    Given a characteristic "fuel_use" of "1"
+  Scenario: HFC emission factor committee from default automobile fuel
     When the "automobile_fuel" committee reports
-    And the "hfc_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "0.1091"
+    And the "hfc_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "0.10627"
 
-  Scenario Outline: HFC emission from fuel use and automobile fuel
-    Given a characteristic "fuel_use" of "1"
-    And a characteristic "automobile_fuel.name" of "<fuel>"
-    And the "hfc_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "<emission>"
+  Scenario Outline: HFC emission factor committee from automobile fuel
+    Given a characteristic "automobile_fuel.name" of "<fuel>"
+    When the "hfc_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "<ef>"
     Examples:
-      | fuel             | emission |
-      | regular gasoline | 0.1      |
-      | diesel           | 0.125    |
-      | B20              | 0.125    |
+      | fuel             | ef   |
+      | regular gasoline | 0.1  |
+      | diesel           | 0.12 |
+      | B20              | 0.12 |
 
-  Scenario: N2O emission from fuel use and default automobile fuel
-    Given a characteristic "fuel_use" of "1"
+  Scenario: N2O emission factor committee from default automobile fuel
     When the "automobile_fuel" committee reports
-    And the "n2o_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "0.00782"
+    And the "n2o_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "0.00705"
 
-  Scenario Outline: N2O emission from fuel use and automobile fuel
-    Given a characteristic "fuel_use" of "1"
-    And a characteristic "automobile_fuel.name" of "<fuel>"
-    And the "n2o_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "<emission>"
+  Scenario Outline: N2O emission factor committee from automobile fuel
+    Given a characteristic "automobile_fuel.name" of "<fuel>"
+    When the "n2o_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "<ef>"
     Examples:
-      | fuel             | emission |
-      | regular gasoline | 0.008    |
-      | diesel           | 0.002    |
-      | B20              | 0.002    |
+      | fuel             | ef    |
+      | regular gasoline | 0.008 |
+      | diesel           | 0.002 |
+      | B20              | 0.002 |
 
-  Scenario: CH4 emission from fuel use and default automobile fuel
-    Given a characteristic "fuel_use" of "1"
+  Scenario: CH4 emission factor committee from default automobile fuel
     When the "automobile_fuel" committee reports
-    And the "ch4_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "0.00206"
+    And the "ch4_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "0.00226"
 
-  Scenario Outline: CH4 emission from fuel use and automobile fuel
-    Given a characteristic "fuel_use" of "1"
-    And a characteristic "automobile_fuel.name" of "<fuel>"
-    And the "ch4_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "<emission>"
+  Scenario Outline: CH4 emission factor committee from automobile fuel
+    Given a characteristic "automobile_fuel.name" of "<fuel>"
+    When the "ch4_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "<ef>"
     Examples:
-      | fuel             | emission |
-      | regular gasoline | 0.0025   |
-      | diesel           | 0.0001   |
-      | B20              | 0.0001   |
+      | fuel             | ef     |
+      | regular gasoline | 0.002  |
+      | diesel           | 0.0001 |
+      | B20              | 0.0001 |
 
-  Scenario: CO2 biogenic emission from fuel use and default automobile fuel
-    Given a characteristic "fuel_use" of "1"
+  Scenario: CO2 biogenic emission factor committee from default automobile fuel
     When the "automobile_fuel" committee reports
-    And the "co2_biogenic_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
+    And the "co2_biogenic_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
     And the conclusion of the committee should be "0.0"
 
-  Scenario Outline: CO2 biogenic emission from fuel use and automobile fuel
-    Given a characteristic "fuel_use" of "1"
-    And a characteristic "automobile_fuel.name" of "<fuel>"
-    And the "co2_biogenic_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "<emission>"
+  Scenario Outline: CO2 biogenic emission factor committee from automobile fuel
+    Given a characteristic "automobile_fuel.name" of "<fuel>"
+    When the "co2_biogenic_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "<ef>"
     Examples:
-      | fuel             | emission |
-      | regular gasoline | 0.0      |
-      | diesel           | 0.0      |
-      | B20              | 0.5      |
+      | fuel             | ef  |
+      | regular gasoline | 0.0 |
+      | diesel           | 0.0 |
+      | B20              | 0.5 |
 
-  Scenario: CO2 emission from fuel use and default automobile fuel
-    Given a characteristic "fuel_use" of "1"
+  Scenario: CO2 emission factor committee from default automobile fuel
     When the "automobile_fuel" committee reports
-    And the "co2_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "2.30997"
+    And the "co2_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "2.30958"
 
-  Scenario Outline: CO2 emission from fuel use and automobile fuel
-    Given a characteristic "fuel_use" of "1"
-    And a characteristic "automobile_fuel.name" of "<fuel>"
-    And the "co2_emission" committee reports
-    Then the committee should have used quorum "from fuel use and automobile fuel"
-    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "<emission>"
+  Scenario Outline: CO2 emission factor committee from automobile fuel
+    Given a characteristic "automobile_fuel.name" of "<fuel>"
+    When the "co2_emission_factor" committee reports
+    Then the committee should have used quorum "from automobile fuel"
+    And the conclusion of the committee should be "<ef>"
     Examples:
-      | fuel             | emission |
-      | regular gasoline | 2.3      |
-      | diesel           | 2.7      |
-      | B20              | 2.2      |
+      | fuel             | ef  |
+      | regular gasoline | 2.3 |
+      | diesel           | 2.7 |
+      | B20              | 2.2 |
+
+  Scenario: HFC emission from fuel use and hfc emission factor
+    Given a characteristic "fuel_use" of "1000"
+    And a characteristic "hfc_emission_factor" of "0.1"
+    When the "hfc_emission" committee reports
+    Then the committee should have used quorum "from fuel use and hfc emission factor"
+    And the conclusion of the committee should be "100.0"
+
+  Scenario: N2O emission from fuel use and n2o emission factor
+    Given a characteristic "fuel_use" of "1000"
+    And a characteristic "n2o_emission_factor" of "0.008"
+    When the "n2o_emission" committee reports
+    Then the committee should have used quorum "from fuel use and n2o emission factor"
+    And the conclusion of the committee should be "8.0"
+
+  Scenario: CH4 emission from fuel use and ch4 emission factor
+    Given a characteristic "fuel_use" of "1000"
+    And a characteristic "ch4_emission_factor" of "0.002"
+    When the "ch4_emission" committee reports
+    Then the committee should have used quorum "from fuel use and ch4 emission factor"
+    And the conclusion of the committee should be "2.0"
+
+  Scenario: CO2 biogenic emission from fuel use and co2 biogenic emission factor
+    Given a characteristic "fuel_use" of "1000"
+    And a characteristic "co2_biogenic_emission_factor" of "0.0"
+    When the "co2_biogenic_emission" committee reports
+    Then the committee should have used quorum "from fuel use and co2 biogenic emission factor"
+    And the conclusion of the committee should be "0.0"
+
+  Scenario: CO2 emission from fuel use and co2 emission factor
+    Given a characteristic "fuel_use" of "1000"
+    And a characteristic "co2_emission_factor" of "2.3"
+    When the "co2_emission" committee reports
+    Then the committee should have used quorum "from fuel use and co2 emission factor"
+    And the conclusion of the committee should be "2300.0"
