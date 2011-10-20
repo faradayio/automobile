@@ -298,7 +298,8 @@ module BrighterPlanet
               :needs => :urbanity,
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                1 / (characteristics[:urbanity] / Country.united_states.automobile_city_speed + (1 - characteristics[:urbanity]) / Country.united_states.automobile_highway_speed)
+                # Takes average city and highway driving speeds from [EPA (2006)](http://www.epa.gov/fueleconomy/420r06017.pdf) and converts from *miles / hour* to *km / hour*, then calculates the harmonic mean of those speeds weighted by `urbanity`.
+                1 / (characteristics[:urbanity] / base.fallback.city_speed + (1 - characteristics[:urbanity]) / base.fallback.highway_speed)
             end
           end
           
@@ -380,7 +381,8 @@ module BrighterPlanet
               :needs => :hybridity_multiplier,
               # **Complies:** GHG Protocol Scope 3, ISO 14064-1
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
-                Country.united_states.automobile_fuel_efficiency * characteristics[:hybridity_multiplier]
+                # Takes a default `fuel efficiency` of 8.58 *km / l*, calculated from total US automobile vehicle miles travelled and gasoline and diesel use, and multiplies it by the `hybridity multiplier`.
+                base.fallback.fuel_efficiency * characteristics[:hybridity_multiplier]
             end
           end
           
@@ -433,7 +435,7 @@ module BrighterPlanet
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do
                 # Uses a default `hybridity multiplier` of 1.
-                1.0
+                base.fallback.hybridity_multiplier
             end
           end
           
@@ -448,7 +450,8 @@ module BrighterPlanet
             quorum 'default',
               # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do
-                Country.united_states.automobile_urbanity
+                # Uses an `urbanity` of 0.43 after [EPA (2009) Appendix A](http://www.epa.gov/otaq/cert/mpg/fetrends/420r09014-appx-a.pdf).
+                base.fallback.urbanity
             end
           end
           

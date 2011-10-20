@@ -9,5 +9,5 @@ Bueller::Tasks.new
 require 'sniff'
 require 'sniff/rake_tasks'
 Sniff::RakeTasks.define_tasks do |t|
-  t.earth_domains = [:automobile, :fuel, :locality]
+  t.earth_domains = [:automobile, :fuel]
 end
