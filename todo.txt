@@ -1,1 +1,0 @@
-Figure out a way for a user to specify an automobile variant - as of now they have to provide a row hash
