@@ -4,94 +4,51 @@ Feature: Automobile Committee Calculations
   Background:
     Given a Automobile
 
-  Scenario Outline: Make model committee from valid make model combination
-    Given a characteristic "make.name" of "<make>"
-    And a characteristic "model.name" of "<model>"
-    When the "make_model" committee reports
-    Then the committee should have used quorum "from make and model"
-    And the conclusion of the committee should have "name" of "<make_model>"
-    Examples:
-      | make   | model | make_model   |
-      | Toyota | Prius | Toyota Prius |
-      | Ford   | Focus | Ford Focus   |
-
-  Scenario Outline: Make model committee from invalid make model combination
-    Given a characteristic "make.name" of "<make>"
-    And a characteristic "model.name" of "<model>"
-    When the "make_model" committee reports
-    Then the conclusion of the committee should be nil
-    Examples:
-      | make   | model |
-      | Toyota | Focus |
-      | Ford   | Prius |
-
-  Scenario: Make year committee from valid make year combination
-    Given a characteristic "make.name" of "Toyota"
-    And a characteristic "year.year" of "2003"
-    When the "make_year" committee reports
-    Then the committee should have used quorum "from make and year"
-    And the conclusion of the committee should have "name" of "Toyota 2003"
-
-  Scenario: Make year committee from invalid make year combination
-    Given a characteristic "make.name" of "Toyota"
-    And a characteristic "year.year" of "2010"
-    When the "make_year" committee reports
-    Then the conclusion of the committee should be nil
-
-  Scenario: Make model year committee from valid make model year combination
-    Given a characteristic "make.name" of "Toyota"
-    And a characteristic "model.name" of "Prius"
-    And a characteristic "year.year" of "2003"
-    When the "make_model_year" committee reports
-    Then the committee should have used quorum "from make, model, and year"
-    And the conclusion of the committee should have "name" of "Toyota Prius 2003"
-
-  Scenario: Make model year committee from invalid make model year combination
-    Given a characteristic "make.name" of "Toyota"
-    And a characteristic "model.name" of "Focus"
-    And a characteristic "year.year" of "2003"
-    When the "make_model_year" committee reports
-    Then the conclusion of the committee should be nil
-
   Scenario: Retirement committee from default
     Given a characteristic "timeframe" of "2009-03-04/2009-08-17"
     When the "retirement" committee reports
-    Then the committee should have used quorum "default"
+    Then the committee should have used quorum "from acquisition"
     And the conclusion of the committee should be "2009-08-17"
 
   Scenario Outline: Retirement committee from acquisition
     Given a characteristic "timeframe" of "<timeframe>"
     And a characteristic "acquisition" of "<acquisition>"
     When the "retirement" committee reports
-    Then the committee should have used quorum "default"
+    Then the committee should have used quorum "from acquisition"
     And the conclusion of the committee should be "<retirement>"
     Examples:
       | timeframe             | acquisition | retirement |
       | 2009-03-04/2009-08-17 | 2010-04-21  | 2010-04-21 |
       | 2009-03-04/2009-08-17 | 2007-01-30  | 2009-08-17 |
 
-  Scenario: Acquisition committee from default
-    Given a characteristic "timeframe" of "2009-03-04/2009-08-17"
+  Scenario: Acquisition committee from make model year variant
+    Given a characteristic "make_model_year_variant.row_hash" of "xxx1"
     When the "acquisition" committee reports
-    Then the committee should have used quorum "default"
-    And the conclusion of the committee should be "2009-03-04"
+    Then the committee should have used quorum "from make model year variant"
+    And the conclusion of the committee should be "2003-01-01"
+
+  Scenario: Acquisition committee from make model year
+    Given a characteristic "make_model_year.name" of "Toyota Prius 2003"
+    When the "acquisition" committee reports
+    Then the committee should have used quorum "from make model year"
+    And the conclusion of the committee should be "2003-01-01"
+
+  Scenario: Acquisition committee from make year
+    Given a characteristic "make_year.name" of "Toyota 2003"
+    When the "acquisition" committee reports
+    Then the committee should have used quorum "from make year"
+    And the conclusion of the committee should be "2003-01-01"
 
   Scenario Outline: Acquisition committee from retirement
     Given a characteristic "timeframe" of "<timeframe>"
     And a characteristic "retirement" of "<retirement>"
     When the "acquisition" committee reports
-    Then the committee should have used quorum "default"
-    And the conclusion of the committee should be "<acquisition>"
+    Then the committee should have used quorum "from retirement"
+    And the conclusion of the committee should be "<acquisition_committee>"
     Examples:
-      | timeframe             | retirement | acquisition |
-      | 2010-08-10/2010-09-16 | 2007-02-03 | 2007-02-03  |
-      | 2010-08-10/2010-09-16 | 2010-09-01 | 2010-08-10  |
-
-  Scenario: Acquisition committee from year
-    Given a characteristic "year.year" of "2003"
-    When the "acquisition" committee reports
-    Then the committee should have used quorum "from year"
-    And the conclusion of the committee should be "2003-01-01"
+      | timeframe             | retirement | acquisition_committee |
+      | 2010-08-10/2010-09-16 | 2007-02-03 | 2007-02-03            |
+      | 2010-08-10/2010-09-16 | 2010-09-01 | 2010-08-10            |
 
   Scenario Outline: Active subtimeframe committee from acquisition and retirement
     Given a characteristic "acquisition" of "<acquisition>"
@@ -199,6 +156,12 @@ Feature: Automobile Committee Calculations
     Then the committee should have used quorum "from make model year and urbanity"
     And the conclusion of the committee should be "34.28571"
 
+  Scenario: Fuel efficiency committee from make model year variant and urbanity
+    Given a characteristic "make_model_year_variant.row_hash" of "xxx1"
+    And a characteristic "urbanity" of "0.5"
+    When the "fuel_efficiency" committee reports
+    Then the committee should have used quorum "from make model year variant and urbanity"
+    And the conclusion of the committee should be "44.44444"
 
   Scenario: Speed committee from default urbanity
     When the "urbanity" committee reports
@@ -216,6 +179,11 @@ Feature: Automobile Committee Calculations
     And the conclusion of the committee should have "n2o_emission_factor" of "0.00705"
     And the conclusion of the committee should have "hfc_emission_factor" of "0.10627"
 
+  Scenario: Automobile fuel committee from make model year variant
+    Given a characteristic "make_model_year_variant.row_hash" of "xxx1"
+    When the "automobile_fuel" committee reports
+    Then the committee should have used quorum "from make model year variant"
+    And the conclusion of the committee should have "name" of "diesel"
 
   Scenario: Annual distance committee from automobile fuel
     Given a characteristic "automobile_fuel.code" of "R"
