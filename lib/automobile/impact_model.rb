@@ -276,15 +276,6 @@ module BrighterPlanet
             #
             # Uses the client-input [automobile fuel](http://data.brighterplanet.com/automobile_fuels).
             
-            #### Automobile fuel from make model year variant
-            quorum 'from make model year variant',
-              :needs => :make_model_year_variant,
-              # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Looks up the [variant](http://data.brighterplanet.com/automobile_make_model_year_variants) `automobile fuel`.
-                characteristics[:make_model_year_variant].fuel
-            end
-            
             #### Default automobile fuel
             quorum 'default',
               # **Complies:** GHG Protocol Scope 3, ISO 14064-1
@@ -319,21 +310,6 @@ module BrighterPlanet
             # **Complies:** All
             #
             # Uses the client-input `fuel efficiency` (*km / l*).
-            
-            #### Fuel efficiency from make model year variant and urbanity
-            quorum 'from make model year variant and urbanity',
-              :needs => [:make_model_year_variant, :urbanity],
-              # **Complies:** GHG Protocol Scope 1, GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                # Looks up the city and highway fuel efficiencies of the automobile [make model year variant](http://data.brighterplanet.com/automobile_make_model_year_variants) (*km / l*).
-                fuel_efficiency_city = characteristics[:make_model_year_variant].fuel_efficiency_city
-                fuel_efficiency_highway = characteristics[:make_model_year_variant].fuel_efficiency_highway
-                urbanity = characteristics[:urbanity]
-                if fuel_efficiency_city.present? and fuel_efficiency_highway.present?
-                  # Calculates the harmonic mean of those fuel efficiencies, weighted by `urbanity`.
-                  1.0 / ((urbanity / fuel_efficiency_city) + ((1.0 - urbanity) / fuel_efficiency_highway))
-                end
-            end
             
             #### Fuel efficiency from make model year and urbanity
             quorum 'from make model year and urbanity',
@@ -500,37 +476,14 @@ module BrighterPlanet
             #
             # Uses the client-input `acquisition`.
             
-            #### Acquisition from make model year variant
-            quorum 'from make model year variant',
-              :needs => [:make_model_year_variant],
-              # **Complies:** GHG Protocol Scope 3, ISO 14064-1
+            quorum 'from year', :needs => :year,
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
-                # Uses the first day of the client-input automobile [make model year variant](http://data.brighterplanet.com/automobile_variants) year.
-                Date.new characteristics[:make_model_year_variant].year, 1, 1
-            end
-            
-            #### Acquisition from make model year
-            quorum 'from make model year',
-              :needs => [:make_model_year],
-              # **Complies:** GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
-                # Uses the first day of the client-input automobile [make model year](http://data.brighterplanet.com/automobile_model_years) year.
-                Date.new characteristics[:make_model_year].year, 1, 1
-            end
-            
-            #### Acquisition from make year
-            quorum 'from make year',
-              :needs => [:make_year],
-              # **Complies:** GHG Protocol Scope 3, ISO 14064-1
-              :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
-                # Uses the first day of the client-input automobile [make year](http://data.brighterplanet.com/automobile_make_years) year.
-                Date.new characteristics[:make_year].year, 1, 1
+                Date.new characteristics[:year].year, 1, 1
             end
             
             #### Acquisition from timeframe or retirement
-            quorum 'from retirement',
-              :appreciates => :retirement,
               # **Complies:** GHG Protocol Scope 3, ISO 14064-1
+            quorum 'default', :appreciates => :retirement,
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 # Uses the first day of the `timeframe`, or the `retirement`, whichever is earlier.
                 [ timeframe.from, characteristics[:retirement] ].compact.min
@@ -546,26 +499,36 @@ module BrighterPlanet
             # Uses the client-input `retirement`.
             
             #### Retirement from timeframe or acquisition
-            quorum 'from acquisition',
-              :appreciates => :acquisition,
               # **Complies:** GHG Protocol Scope 3, ISO 14064-1
+            quorum 'default', :appreciates => :acquisition,
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 # Uses the last day of the `timeframe`, or the `acquisition`, whichever is later.
                 [ timeframe.to, characteristics[:acquisition] ].compact.max
             end
           end
           
-          ### Make model year variant calculation
-          # Returns the client-input automobile [make model year variant](http://data.brighterplanet.com/automobile_make_model_year_variants).
+          committee :make_model_year do
+            quorum 'from make, model, and year', :needs => [:make, :model, :year],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileMakeModelYear.find_by_make_name_and_model_name_and_year(characteristics[:make].name, characteristics[:model].name, characteristics[:year].year)
+            end
+          end
           
-          ### Make model year calculation
-          # Returns the client-input automobile [make model year](http://data.brighterplanet.com/automobile_make_model_years).
+          committee :make_year do
+            quorum 'from make and year', :needs => [:make, :year],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileMakeYear.find_by_make_name_and_year(characteristics[:make].name, characteristics[:year].year)
+            end
+          end
           
           ### Make model calculation
-          # Returns the client-input automobile [make model](http://data.brighterplanet.com/automobile_make_models).
+          committee :make_model do
+            quorum 'from make and model', :needs => [:make, :model],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileMakeModel.find_by_make_name_and_model_name(characteristics[:make].name, characteristics[:model].name)
+            end
+          end
           
-          ### Make year calculation
-          # Returns the client-input automobile [make year](http://data.brighterplanet.com/automobile_make_years).
           
           ### Make calculation
           # Returns the client-input automobile [make](http://data.brighterplanet.com/automobile_makes).
