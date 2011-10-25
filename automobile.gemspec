@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_runtime_dependency 'emitter', '~>0.11.0' unless ENV['LOCAL_EMITTER']
-  s.add_development_dependency 'sniff', '~>0.11.0' unless ENV['LOCAL_SNIFF']
+  s.add_development_dependency 'sniff', '~>0.11.2' unless ENV['LOCAL_SNIFF']
 end

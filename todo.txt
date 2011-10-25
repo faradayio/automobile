@@ -1,1 +1,5 @@
+Look up fuel type from AutomobileMakeModelYear
+
+Calculate hybridity multipliers in earth automatically
+
 Figure out a way for a user to specify an automobile variant - as of now they have to provide a row hash

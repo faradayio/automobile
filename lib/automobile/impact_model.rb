@@ -99,6 +99,15 @@ module BrighterPlanet
             end
           end
           
+          #### Energy use (*MJ*)
+          # The automobile's energy use during `active subtimeframe`.
+          committee :energy do
+            # Multiply `fuel use` (*l*) by the `automobile fuel`'s energy content (*MJ / l*) to give *MJ*.
+            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel] do |characteristics|
+              characteristics[:fuel_use] * characteristics[:automobile_fuel].energy_content
+            end
+          end
+          
           #### Fuel use (*l*)
           # The automobile's fuel use during `active subtimeframe`.
           committee :fuel_use do

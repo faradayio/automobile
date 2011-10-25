@@ -238,6 +238,7 @@ Feature: Automobile Committee Calculations
     Then the committee should have used quorum "default"
     And the conclusion should comply with standards "ghg_protocol_scope_3, iso"
     And the conclusion of the committee should have "annual_distance" of "27000"
+    And the conclusion of the committee should have "energy_content" of "35.09967"
     And the conclusion of the committee should have "co2_emission_factor" of "2.30997"
     And the conclusion of the committee should have "co2_biogenic_emission_factor" of "0.0"
     And the conclusion of the committee should have "ch4_emission_factor" of "0.00206"
@@ -305,6 +306,27 @@ Feature: Automobile Committee Calculations
     Then the committee should have used quorum "from fuel efficiency and distance"
     And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
     And the conclusion of the committee should be "1000.0"
+
+  Scenario: Energy use committee from fuel use and default automobile fuel
+    Given a characteristic "fuel_use" of "1"
+    When the "automobile_fuel" committee reports
+    And the "energy" committee reports
+    Then the committee should have used quorum "from fuel use and automobile fuel"
+    And the conclusion should comply with standards ""
+    And the conclusion of the committee should be "35.09967"
+
+  Scenario Outline: Energy use committee from default fuel use and automobile fuel
+    Given a characteristic "fuel_use" of "1"
+    And a characteristic "automobile_fuel.name" of "<fuel>"
+    When the "energy" committee reports
+    Then the committee should have used quorum "from fuel use and automobile fuel"
+    And the conclusion should comply with standards ""
+    And the conclusion of the committee should be "<energy>"
+    Examples:
+      | fuel             | energy |
+      | regular gasoline | 35.0   |
+      | diesel           | 39.0   |
+      | B20              | 35.8   |
 
   Scenario: HFC emission from fuel use and default automobile fuel
     Given a characteristic "fuel_use" of "1"
@@ -410,3 +432,13 @@ Feature: Automobile Committee Calculations
       | regular gasoline | 2.3      |
       | diesel           | 2.7      |
       | B20              | 2.2      |
+
+  Scenario: Carbon impact from co2 emisison, ch4 emission, n2o emission, and hfc emission
+    Given a characteristic "co2_emission" of "1"
+    And a characteristic "ch4_emission" of "2"
+    And a characteristic "n2o_emission" of "3"
+    And a characteristic "hfc_emission" of "4"
+    When the "carbon" committee reports
+    Then the committee should have used quorum "from co2 emission, ch4 emission, n2o emission, and hfc emission"
+    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
+    And the conclusion of the committee should be "10.0"
