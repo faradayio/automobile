@@ -7,7 +7,7 @@ Feature: Automobile Impact Calculations
   Scenario: Automobile emission from nothing
     Given an automobile has nothing
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "6558.18"
 
   Scenario Outline: Automobile emission from acquisition, retirement, and timeframe
@@ -15,7 +15,7 @@ Feature: Automobile Impact Calculations
     And it has "retirement" of "<retirement>"
     And it has "timeframe" of "<timeframe>"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "<emission>"
     Examples:
       | acquisition | retirement | timeframe             | emission |
@@ -27,13 +27,13 @@ Feature: Automobile Impact Calculations
   Scenario: Automobile emission from urbanity
     Given it has "urbanity" of "0.5"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "6558.18"
 
   Scenario Outline: Automobile emission from hybridity
     Given it has "hybridity" of "<hybridity>"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "<emission>"
     Examples:
       | hybridity | emission |
@@ -44,7 +44,7 @@ Feature: Automobile Impact Calculations
     Given it has "size_class.name" of "<size_class>"
     And it has "hybridity" of "<hybridity>"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "<emission>"
     Examples:
       | hybridity | size_class    | emission |
@@ -57,7 +57,7 @@ Feature: Automobile Impact Calculations
     Given it has "fuel_efficiency" of "10"
     And it has "annual_distance" of "10000"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "2428.96"
   
   Scenario: Automobile emission from daily duration
@@ -67,7 +67,7 @@ Feature: Automobile Impact Calculations
     And it has "acquisition" of "2010-01-01"
     And it has "retirement" of "2010-02-01"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "75.30"
 
   Scenario: Automobile emission from daily distance
@@ -76,7 +76,7 @@ Feature: Automobile Impact Calculations
     And it has "acquisition" of "2010-01-01"
     And it has "retirement" of "2010-02-01"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "75.30"
 
   Scenario: Automobile emission from weekly distance
@@ -85,7 +85,7 @@ Feature: Automobile Impact Calculations
     And it has "acquisition" of "2010-01-01"
     And it has "retirement" of "2010-02-01"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "75.30"
 
   Scenario: Automobile emission from multiple distances
@@ -97,14 +97,14 @@ Feature: Automobile Impact Calculations
     And it has "acquisition" of "2010-01-01"
     And it has "retirement" of "2010-02-01"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.1" kgs of "206.29"
 
   Scenario Outline: Automobile emission from make and urbanity
     Given it has "make.name" of "<make>"
     And it has "urbanity" of "0.5"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "<emission>"
     Examples:
       | make   | emission |
@@ -116,7 +116,7 @@ Feature: Automobile Impact Calculations
     And it has "year.year" of "<year>"
     And it has "urbanity" of "0.5"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "<emission>"
     Examples:
       | make   | year | emission |
@@ -130,7 +130,7 @@ Feature: Automobile Impact Calculations
     And it has "model.name" of "<model>"
     And it has "urbanity" of "0.5"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "<emission>"
     Examples:
       | make   | model | emission |
@@ -145,7 +145,7 @@ Feature: Automobile Impact Calculations
     And it has "year.year" of "<year>"
     And it has "urbanity" of "0.5"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "<emission>"
     Examples:
       | make   | model | year | emission |
@@ -157,5 +157,5 @@ Feature: Automobile Impact Calculations
     Given it has "automobile_fuel.name" of "regular gasoline"
     And it has "fuel_use" of "1000"
     When impacts are calculated
-    Then the calculation should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
+    # Then the calculation should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "2410.50"
