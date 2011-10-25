@@ -60,9 +60,10 @@ Feature: Automobile Impact Calculations
     Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "2428.96"
   
-  Scenario: Automobile emission from weekly distance
-    Given it has "weekly_distance" of "70"
+  Scenario: Automobile emission from daily duration
+    Given it has "daily_duration" of "3600.0"
     And it is the year "2010"
+    And it has "speed" of "10"
     And it has "acquisition" of "2010-01-01"
     And it has "retirement" of "2010-02-01"
     When impacts are calculated
@@ -78,16 +79,15 @@ Feature: Automobile Impact Calculations
     Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "75.30"
 
-  Scenario: Automobile emission from daily duration
-    Given it has "daily_duration" of "3600.0"
+  Scenario: Automobile emission from weekly distance
+    Given it has "weekly_distance" of "70"
     And it is the year "2010"
-    And it has "speed" of "10"
     And it has "acquisition" of "2010-01-01"
     And it has "retirement" of "2010-02-01"
     When impacts are calculated
     Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     And the amount of "carbon" should be within "0.01" kgs of "75.30"
-  
+
   Scenario: Automobile emission from multiple distances
     Given it has "daily_duration" of "3600.0"
     And it is the year "2010"
