@@ -1,2 +1,2 @@
-name,make_name,model_name,year,fuel_efficiency_city,fuel_efficiency_city_units,fuel_efficiency_highway,fuel_efficiency_highway_units
-Toyota Prius 2003,Toyota,Prius,2003,18,kilometres_per_litre,18,kilometres_per_litre
+name,make_name,model_name,year,fuel_efficiency_city,fuel_efficiency_highway
+Toyota Prius 2003,Toyota,Prius,2003,18,18

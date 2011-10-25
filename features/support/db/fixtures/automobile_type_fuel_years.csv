@@ -1,5 +1,5 @@
-name,fuel_common_name,type_year_name,total_travel,total_travel_units,fuel_consumption,fuel_consumption_units,ch4_emission_factor,ch4_emission_factor_units,n2o_emission_factor,n2o_emission_factor_units
-Light-duty trucks diesel 2008,diesel,Light-duty trucks 2008,700000,kilometres,10000,litres,0.000005,kilograms_per_litre,0.000005,kilograms_per_litre
-Passenger cars diesel 2008,diesel,Passenger cars 2008,125000,kilometres,1500,litres,0.000003,kilograms_per_litre,0.000007,kilograms_per_litre
-Light-duty trucks gasoline 2008,gasoline,Light-duty trucks 2008,1700000,kilometres,200000,litres,0.00008,kilograms_per_litre,0.000025,kilograms_per_litre
-Passenger cars gasoline 2008,gasoline,Passenger cars 2008,2500000,kilometres,250000,litres,0.00011,kilograms_per_litre,0.000034,kilograms_per_litre
+name,fuel_common_name,type_year_name,total_travel,fuel_consumption,ch4_emission_factor,ch4_emission_factor_units,n2o_emission_factor,n2o_emission_factor_units
+Light-duty trucks diesel 2008,diesel,Light-duty trucks 2008,700000,10000,0.000005,kilograms_per_litre,0.000005,kilograms_per_litre
+Passenger cars diesel 2008,diesel,Passenger cars 2008,125000,1500,0.000003,kilograms_per_litre,0.000007,kilograms_per_litre
+Light-duty trucks gasoline 2008,gasoline,Light-duty trucks 2008,1700000,200000,0.00008,kilograms_per_litre,0.000025,kilograms_per_litre
+Passenger cars gasoline 2008,gasoline,Passenger cars 2008,2500000,250000,0.00011,kilograms_per_litre,0.000034,kilograms_per_litre

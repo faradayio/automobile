@@ -1,2 +1,2 @@
-name,fuel_name,co2_emission_factor,co2_biogenic_emission_factor
-Motor Gasoline 2008,Motor Gasoline,2.3,0
+name,fuel_name,energy_content,co2_emission_factor,co2_biogenic_emission_factor
+Motor Gasoline 2008,Motor Gasoline,35,2.3,0

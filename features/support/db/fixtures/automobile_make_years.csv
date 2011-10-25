@@ -1,3 +1,3 @@
-name,make_name,year,fuel_efficiency,fuel_efficiency_units
-Toyota 2003,Toyota,2003,12,kilometres_per_litre
-Ford 2010,Ford,2010,11.5,kilometres_per_litre
+name,make_name,year,fuel_efficiency
+Toyota 2003,Toyota,2003,12
+Ford 2010,Ford,2010,11.5
