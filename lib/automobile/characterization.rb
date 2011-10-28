@@ -12,8 +12,6 @@ module BrighterPlanet
           has :retirement
           has :hybridity
           has :urbanity
-          has :city_speed,      :measures => Measurement::BigSpeed
-          has :highway_speed,   :measures => Measurement::BigSpeed
           has :speed,           :measures => Measurement::BigSpeed
           has :daily_duration,  :measures => :time
           has :daily_distance,  :measures => Measurement::BigLength

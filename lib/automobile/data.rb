@@ -11,8 +11,6 @@ module BrighterPlanet
         base.col :retirement,      :type => :date
         base.col :hybridity,       :type => :boolean
         base.col :urbanity,        :type => :float
-        base.col :city_speed,      :type => :float
-        base.col :highway_speed,   :type => :float
         base.col :speed,           :type => :float
         base.col :daily_duration,  :type => :float
         base.col :daily_distance,  :type => :float
