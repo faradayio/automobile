@@ -27,7 +27,7 @@
 ##### Standard compliance
 # When compliance with a particular standard is requested, all methods that do not comply with that standard are ignored.
 # Thus any `values` a method needs will have been calculated using a compliant method or will be unknown.
-# To see which standards a method complies with, check the `:complies =>` section of the code in the right column.
+# To see which standards a method complies with, look at the `:complies =>` section of the code in the right column.
 # Client input complies with all standards.
 
 ##### Collaboration
@@ -39,7 +39,7 @@ module BrighterPlanet
         base.decide :impact, :with => :characteristics do
           # * * *
           
-          #### Greenhouse gas emissions (*kg CO<sub>2</sub>e*)
+          #### Carbon (*kg CO<sub>2</sub>e*)
           # The automobile's total greenhouse gas emissions from anthropogenic sources during `active subtimeframe`.
           committee :carbon do
             # Sum `co2 emission` (*kg*), `ch4 emission` (*kg CO<sub>2</sub>e*), `n2o emission` (*kg CO<sub>2</sub>e*), and `hfc emission` (*kg CO<sub>2</sub>e*), to give *kg CO<sub>2</sub>e*.
@@ -99,7 +99,7 @@ module BrighterPlanet
             end
           end
           
-          #### Energy use (*MJ*)
+          #### Energy (*MJ*)
           # The automobile's energy use during `active subtimeframe`.
           committee :energy do
             # Multiply `fuel use` (*l*) by the `automobile fuel`'s energy content (*MJ / l*) to give *MJ*.
@@ -327,7 +327,7 @@ module BrighterPlanet
           # The fraction of the total distance driven that is in towns and cities rather than highways.
           # Highways are defined as all driving at speeds of 45 miles per hour or greater.
           committee :urbanity do
-            # Look up the [United States](http://data.brighterplanet.com/countries)'s average `automobile urbanity` (*%*).
+            # Look up the [United States](http://data.brighterplanet.com/countries)'s average automobile urbanity (*%*).
             quorum 'default',
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do
                 Country.united_states.automobile_urbanity
