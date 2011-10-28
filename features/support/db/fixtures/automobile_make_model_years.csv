@@ -1,2 +1,4 @@
-name,make_name,model_name,year,fuel_efficiency_city,fuel_efficiency_highway
-Toyota Prius 2003,Toyota,Prius,2003,18,18
+name,make_name,model_name,year,fuel_code,fuel_efficiency_city,fuel_efficiency_highway
+Toyota Prius 2003,Toyota,Prius,2003,R,18,18
+Ford Focus 2010,Ford,Focus,2010,D,10,14
+Volkswagen Jetta 2011,Volkswagen,Jetta,2011,BP-B20,10,15

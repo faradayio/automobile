@@ -167,10 +167,11 @@ Feature: Automobile Impact Calculations
     And the amount of "energy" should be within "0.01" of "<energy>"
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     Examples:
-      | make   | model | year | energy   | carbon  |
-      | Toyota | Prius | 2003 | 52649.51 | 3643.44 |
-      | Toyota | Prius | 2010 | 47384.56 | 3279.09 |
-      | Ford   | Focus | 2003 | 78974.27 | 5465.15 |
+      | make       | model | year | energy   | carbon  |
+      | Toyota     | Prius | 2003 | 35000.0  | 2410.5  |
+      | Toyota     | Prius | 2010 | 47384.56 | 3279.09 |
+      | Ford       | Focus | 2010 | 76885.71 | 5573.43 |
+      | Volkswagen | Jetta | 2011 | 68616.67 | 4460.28 |
 
   Scenario: Automobile emission from fuel and fuel use
     Given it has "automobile_fuel.name" of "regular gasoline"

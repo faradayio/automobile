@@ -188,6 +188,12 @@ module BrighterPlanet
           committee :automobile_fuel do
             # Use client input, if available.
             
+            # Otherwise look up the `make model year`'s automobile fuel
+            quorum 'from make model year', :needs => :make_model_year,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:make_model_year].automobile_fuel
+            end
+            
             # Otherwise look up the average [automobile fuel](http://data.brighterplanet.com/automobile_fuels).
             quorum 'default',
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
