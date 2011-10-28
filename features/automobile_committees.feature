@@ -167,16 +167,12 @@ Feature: Automobile Committee Calculations
       | true      | Midsize Car | 1.47059    |
       | false     | Midsize Car | 0.88235    |
 
-  Scenario Outline: Fuel efficiency committee from hybridity multiplier
-    Given a characteristic "hybridity_multiplier" of "<multiplier>"
+  Scenario: Fuel efficiency committee from hybridity multiplier
+    Given a characteristic "hybridity_multiplier" of "10"
     When the "fuel_efficiency" committee reports
     Then the committee should have used quorum "from hybridity multiplier"
     And the conclusion should comply with standards "ghg_protocol_scope_3, iso"
-    And the conclusion of the committee should be "<fe>"
-    Examples:
-      | multiplier | fe    |
-      | 1          |  10.0 |
-      | 10         | 100.0 |
+    And the conclusion of the committee should be "100.0"
 
   Scenario: Fuel efficiency committee from make
     Given a characteristic "make.name" of "Toyota"

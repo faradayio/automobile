@@ -37,6 +37,18 @@ Feature: Automobile Impact Calculations
       | true      | 69837.15 | 4832.85 |
       | false     | 95496.77 | 6608.54 |
 
+  Scenario Outline: Calculations from hybridity and urbanity
+    Given it has "hybridity" of "<hybridity>"
+    And it has "urbanity" of "0.5"
+    When impacts are calculated
+    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
+    And the amount of "energy" should be within "0.01" of "<energy>"
+    And the amount of "carbon" should be within "0.01" of "<carbon>"
+    Examples:
+      | hybridity | energy   | carbon  |
+      | true      | 67764.46 | 4689.42 |
+      | false     | 95583.53 | 6614.54 |
+
   Scenario Outline: Automobile emission from size class and hybridity
     Given it has "size_class.name" of "<size_class>"
     And it has "hybridity" of "<hybridity>"
