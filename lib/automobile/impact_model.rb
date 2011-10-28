@@ -279,7 +279,7 @@ module BrighterPlanet
             # If it does, calculate the harmonic mean of those multipliers, weighted by `urbanity`.
             quorum 'from size class, hybridity, and urbanity', :needs => [:size_class, :hybridity, :urbanity],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                drivetrain = characteristics[:hybridity] ? :hybrid : :conventional
+                drivetrain = (characteristics[:hybridity] == true) ? :hybrid : :conventional
                 city_multiplier    = characteristics[:size_class].send(:"#{drivetrain}_fuel_efficiency_city_multiplier")
                 highway_multiplier = characteristics[:size_class].send(:"#{drivetrain}_fuel_efficiency_highway_multiplier")
                 
@@ -292,7 +292,7 @@ module BrighterPlanet
             # Calculate the harmonic mean of those multipliers, weighted by `urbanity`.
             quorum 'from hybridity and urbanity', :needs => [:hybridity, :urbanity],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                drivetrain = characteristics[:hybridity] ? :hybrid : :conventional
+                drivetrain = (characteristics[:hybridity] == true) ? :hybrid : :conventional
                 urbanity = characteristics[:urbanity]
                 fuel_efficiency_multipliers = {
                   :city => AutomobileSizeClass.fallback.send(:"#{drivetrain}_fuel_efficiency_city_multiplier"),
