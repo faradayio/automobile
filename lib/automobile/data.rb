@@ -4,7 +4,7 @@ module BrighterPlanet
       def self.included(base)
         base.col :make_name
         base.col :model_name
-        base.col :year_name
+        base.col :year_name,       :type => :integer
         base.col :size_class_name
         base.col :automobile_fuel_name
         base.col :acquisition,     :type => :date
