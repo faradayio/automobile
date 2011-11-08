@@ -66,7 +66,7 @@ Contact Brighter Planet for dual-license arrangements.</p>
         </div>
         <h2>Automobile impact model</h2>
 
-<p>This model is used by <a href="http://brighterplanet.com">Brighter Planet</a>&rsquo;s <a href="http://carbon.brighterplanet.com">CM1 web service</a> to calculate the impacts of an automobile, such as energy use and greenhouse gas emissions.</p>
+<p>This model is used by the <a href="http://brighterplanet.com">Brighter Planet</a> <a href="http://impact.brighterplanet.com">CM1 web service</a> to calculate the impacts of an automobile, such as energy use and greenhouse gas emissions.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -101,14 +101,14 @@ An automobile put into use in March 2010 or taken out of use in January 2010 wil
 <p>Each calculation listing shows:</p>
 
 <ul>
-<li><strong>value returned</strong> (<strong><em>units of measurement</em></strong>)</li>
-<li>a description of the value</li>
+<li>value returned (<em>units of measurement</em>)</li>
+<li>description of the value</li>
 <li>calculation methods, listed from most to least preferred</li>
 </ul>
 
 
-<p>Some methods need <code>values</code> returned by prior calculations. If any of these <code>values</code> are unknown the method is skipped.
-If all of the methods for a calculation are skipped, the value the calculation would return is unknown.</p>
+<p>Some methods use <code>values</code> returned by prior calculations. If any of these <code>values</code> are unknown the method is skipped.
+If all the methods for a calculation are skipped, the value the calculation would return is unknown.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -123,8 +123,9 @@ If all of the methods for a calculation are skipped, the value the calculation w
 
 <p>When compliance with a particular standard is requested, all methods that do not comply with that standard are ignored.
 Thus any <code>values</code> a method needs will have been calculated using a compliant method or will be unknown.
-To see which standards a method complies with, look at the <code>:complies =&gt;</code> section of the code in the right column.
-Client input complies with all standards.</p>
+To see which standards a method complies with, look at the <code>:complies =&gt;</code> section of the code in the right column.</p>
+
+<p>Client input complies with all standards.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -137,7 +138,7 @@ Client input complies with all standards.</p>
         </div>
         <h4>Collaboration</h4>
 
-<p>Contributions to this carbon model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see <a href="https://github.com/brighterplanet/sniff#readme">sniff</a>, our emitter testing framework, for more information.</p>
+<p>Contributions to this impact model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see <a href="https://github.com/brighterplanet/sniff#readme">sniff</a>, our emitter testing framework, for more information.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">module</span> <span class="nn">BrighterPlanet</span>
@@ -165,7 +166,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>Carbon (<em>kg CO<sub>2</sub>e</em>)</h3>
 
-<p>The automobile&rsquo;s total greenhouse gas emissions from anthropogenic sources during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s total anthropogenic greenhouse gas emissions during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:carbon</span> <span class="k">do</span></pre></div>
@@ -176,7 +177,7 @@ Client input complies with all standards.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-9">&#182;</a>
         </div>
-        <p>Sum <code>co2 emission</code> (<em>kg</em>), <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>), <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>), and <code>hfc emission</code> (<em>kg CO<sub>2</sub>e</em>), to give <em>kg CO<sub>2</sub>e</em>.</p>
+        <p>Sum <code>co2 emission</code> (<em>kg</em>), <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>), <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>), and <code>hfc emission</code> (<em>kg CO<sub>2</sub>e</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from co2 emission, ch4 emission, n2o emission, and hfc emission&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:co2_emission</span><span class="p">,</span> <span class="ss">:ch4_emission</span><span class="p">,</span> <span class="ss">:n2o_emission</span><span class="p">,</span> <span class="ss">:hfc_emission</span><span class="o">]</span><span class="p">,</span>
@@ -194,7 +195,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>CO<sub>2</sub> emission (<em>kg</em>)</h3>
 
-<p>The automobile&rsquo;s CO<sub>2</sub> emissions from anthropogenic sources during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s CO<sub>2</sub> emissions from anthropogenic sources during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:co2_emission</span> <span class="k">do</span></pre></div>
@@ -205,7 +206,7 @@ Client input complies with all standards.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-11">&#182;</a>
         </div>
-        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code>&rsquo;s co2 emission factor (<em>kg / l</em>) to give <em>kg</em>.</p>
+        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code> co2 emission factor (<em>kg / l</em>) to give <em>kg</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from fuel use and automobile fuel&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:fuel_use</span><span class="p">,</span> <span class="ss">:automobile_fuel</span><span class="o">]</span><span class="p">,</span>
@@ -223,7 +224,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>CO<sub>2</sub> biogenic emission (<em>kg</em>)</h3>
 
-<p>The automobile&rsquo;s CO<sub>2</sub> emissions from biogenic sources during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s CO<sub>2</sub> emissions from biogenic sources during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:co2_biogenic_emission</span> <span class="k">do</span></pre></div>
@@ -234,7 +235,7 @@ Client input complies with all standards.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-13">&#182;</a>
         </div>
-        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code>&rsquo;s co2 biogenic emission factor (<em>kg / l</em>) to give <em>kg</em>.</p>
+        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code> co2 biogenic emission factor (<em>kg / l</em>) to give <em>kg</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from fuel use and automobile fuel&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:fuel_use</span><span class="p">,</span> <span class="ss">:automobile_fuel</span><span class="o">]</span><span class="p">,</span>
@@ -252,7 +253,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>CH<sub>4</sub> emission (<em>kg CO<sub>2</sub>e</em>)</h3>
 
-<p>The automobile&rsquo;s CH<sub>4</sub> emissions during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s CH<sub>4</sub> emissions during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:ch4_emission</span> <span class="k">do</span></pre></div>
@@ -263,7 +264,7 @@ Client input complies with all standards.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-15">&#182;</a>
         </div>
-        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code>&rsquo;s ch4 emission factor (<em>kg CO<sub>2</sub>e / l</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
+        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code> ch4 emission factor (<em>kg CO<sub>2</sub>e / l</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from fuel use and automobile fuel&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:fuel_use</span><span class="p">,</span> <span class="ss">:automobile_fuel</span><span class="o">]</span><span class="p">,</span>
@@ -281,7 +282,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>N<sub>2</sub>O emission (<em>kg CO<sub>2</sub>e</em>)</h3>
 
-<p>The automobile&rsquo;s N<sub>2</sub>O emissions during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s N<sub>2</sub>O emissions during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:n2o_emission</span> <span class="k">do</span></pre></div>
@@ -292,7 +293,7 @@ Client input complies with all standards.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-17">&#182;</a>
         </div>
-        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code>&rsquo;s n2o emission factor (<em>kg CO<sub>2</sub>e / l</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
+        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code> n2o emission factor (<em>kg CO<sub>2</sub>e / l</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from fuel use and automobile fuel&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:fuel_use</span><span class="p">,</span> <span class="ss">:automobile_fuel</span><span class="o">]</span><span class="p">,</span>
@@ -310,7 +311,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>HFC emission (<em>kg CO<sub>2</sub>e</em>)</h3>
 
-<p>The automobile&rsquo;s HFC emissions during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s HFC emissions during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:hfc_emission</span> <span class="k">do</span></pre></div>
@@ -321,7 +322,7 @@ Client input complies with all standards.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-19">&#182;</a>
         </div>
-        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code>&rsquo;s hfc emission factor (<em>kg CO<sub>2</sub>e / l</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
+        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code> hfc emission factor (<em>kg CO<sub>2</sub>e / l</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from fuel use and automobile fuel&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:fuel_use</span><span class="p">,</span> <span class="ss">:automobile_fuel</span><span class="o">]</span><span class="p">,</span>
@@ -339,7 +340,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>Energy (<em>MJ</em>)</h3>
 
-<p>The automobile&rsquo;s energy use during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s energy use during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:energy</span> <span class="k">do</span></pre></div>
@@ -350,7 +351,7 @@ Client input complies with all standards.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-21">&#182;</a>
         </div>
-        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code>&rsquo;s energy content (<em>MJ / l</em>) to give <em>MJ</em>.</p>
+        <p>Multiply <code>fuel use</code> (<em>l</em>) by the <code>automobile fuel</code> energy content (<em>MJ / l</em>) to give <em>MJ</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from fuel use and automobile fuel&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:fuel_use</span><span class="p">,</span> <span class="ss">:automobile_fuel</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
@@ -367,7 +368,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>Fuel use (<em>l</em>)</h3>
 
-<p>The automobile&rsquo;s fuel use during <code>active subtimeframe</code>.</p>
+<p><em>The automobile&rsquo;s fuel use during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:fuel_use</span> <span class="k">do</span></pre></div>
@@ -407,7 +408,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>Distance (<em>km</em>)</h3>
 
-<p>The distance the automobile travelled during <code>active subtimeframe</code>.</p>
+<p><em>The distance the automobile travelled during <code>active subtimeframe</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:distance</span> <span class="k">do</span></pre></div>
@@ -436,7 +437,7 @@ Client input complies with all standards.</p>
         </div>
         <h3>Annual distance (<em>km</em>)</h3>
 
-<p>The distance the automobile would travel if it were used for the entire calendar year in which <code>timeframe</code> falls.
+<p><em>The distance the automobile would travel if it were used for the entire calendar year in which <code>timeframe</code> falls.</em>
 Note that this will be <strong>more</strong> than the actual distance traveled if the automobile was not in use for the entire calendar year (if either <code>acquisition</code> or <code>retirement</code> occurs during the calendar year in which <code>timeframe</code> falls).</p>
       </td>
       <td class=code>
@@ -489,7 +490,7 @@ Note that this will be <strong>more</strong> than the actual distance traveled i
         <div class="pilwrap">
           <a class="pilcrow" href="#section-31">&#182;</a>
         </div>
-        <p>Otherwise multiply <code>daily duration</code> (<em>seconds</em>) by <code>speed</code> (<em>km / hour</em>) to give <em>km</em>.
+        <p>Otherwise divide <code>daily duration</code> (<em>seconds</em>) by 3600 (<em>seconds / hour</em>) and multiply by <code>speed</code> (<em>km / hour</em>) to give <em>km</em>.
 Multiply by the number of days in the calendar year in which <code>timeframe</code> falls to give <em>km</em>.</p>
       </td>
       <td class=code>
@@ -505,7 +506,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         <div class="pilwrap">
           <a class="pilcrow" href="#section-32">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>size class</code>&lsquo; annual distance (<em>km</em>).</p>
+        <p>Otherwise use the <code>size class</code> annual distance (<em>km</em>).</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from size class&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:size_class</span><span class="p">,</span>
@@ -520,7 +521,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         <div class="pilwrap">
           <a class="pilcrow" href="#section-33">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>automobile fuel</code>&rsquo;s annual distance (<em>km</em>).</p>
+        <p>Otherwise use the <code>automobile fuel</code> annual distance (<em>km</em>).</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from automobile fuel&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:automobile_fuel</span><span class="p">,</span>
@@ -538,7 +539,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         </div>
         <h3>Weekly distance (<em>km</em>)</h3>
 
-<p>The average distance the automobile is driven each week.</p>
+<p><em>The average distance the automobile is driven each week.</em></p>
 
 <p>Use client input if available.</p>
       </td>
@@ -553,7 +554,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         </div>
         <h3>Daily distance (<em>km</em>)</h3>
 
-<p>The average distance the automobile is driven each day.</p>
+<p><em>The average distance the automobile is driven each day.</em></p>
 
 <p>Use client input if available.</p>
       </td>
@@ -568,7 +569,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         </div>
         <h3>Daily duration (<em>seconds</em>)</h3>
 
-<p>The average time the automobile is driven each day.</p>
+<p><em>The average time the automobile is driven each day.</em></p>
 
 <p>Use client input, if available.</p>
       </td>
@@ -583,7 +584,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         </div>
         <h3>Automobile fuel</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_fuels">fuel type</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_fuels">fuel type</a>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:automobile_fuel</span> <span class="k">do</span></pre></div>
@@ -605,7 +606,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         <div class="pilwrap">
           <a class="pilcrow" href="#section-39">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>make model year</code>&rsquo;s automobile fuel</p>
+        <p>Otherwise use the <code>make model year</code> <a href="http://data.brighterplanet.com/automobile_fuels">automobile fuel</a>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from make model year&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:make_model_year</span><span class="p">,</span>
@@ -620,7 +621,7 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         <div class="pilwrap">
           <a class="pilcrow" href="#section-40">&#182;</a>
         </div>
-        <p>Otherwise look up the average <a href="http://data.brighterplanet.com/automobile_fuels">automobile fuel</a>.</p>
+        <p>Otherwise use the average <a href="http://data.brighterplanet.com/automobile_fuels">automobile fuel</a>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
@@ -631,14 +632,14 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
           </pre></div>
       </td>
     </tr>
-    <tr id='section-Speed_(&lt;em&gt;km_/_hr&lt;/em&gt;)'>
+    <tr id='section-Speed_(&lt;em&gt;km_/_hour&lt;/em&gt;)'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-Speed_(&lt;em&gt;km_/_hr&lt;/em&gt;)">&#182;</a>
+          <a class="pilcrow" href="#section-Speed_(&lt;em&gt;km_/_hour&lt;/em&gt;)">&#182;</a>
         </div>
-        <h3>Speed (<em>km / hr</em>)</h3>
+        <h3>Speed (<em>km / hour</em>)</h3>
 
-<p>The automobile&rsquo;s average speed.</p>
+<p><em>The automobile&rsquo;s average speed.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:speed</span> <span class="k">do</span></pre></div>
@@ -660,8 +661,8 @@ Multiply by the number of days in the calendar year in which <code>timeframe</co
         <div class="pilwrap">
           <a class="pilcrow" href="#section-43">&#182;</a>
         </div>
-        <p>Otherwise look up the <a href="http://data.brighterplanet.com/countries">United States</a>&lsquo; average automobile city speed (<em>km / hr</em>) and automobile highway speed (<em>km / hr</em>).
-Calculate the harmonic mean of those speeds weighted by <code>urbanity</code> to give <em>km / hr</em>.</p>
+        <p>Otherwise look up the <a href="http://data.brighterplanet.com/countries">United States</a> average automobile city speed (<em>km / hour</em>) and automobile highway speed (<em>km / hour</em>).
+Calculate the harmonic mean of those speeds weighted by <code>urbanity</code> to give <em>km / hour</em>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from urbanity&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:urbanity</span><span class="p">,</span>
@@ -679,7 +680,7 @@ Calculate the harmonic mean of those speeds weighted by <code>urbanity</code> to
         </div>
         <h3>Fuel efficiency (<em>km / l</em>)</h3>
 
-<p>The automobile&rsquo;s fuel efficiency.</p>
+<p><em>The automobile&rsquo;s fuel efficiency.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:fuel_efficiency</span> <span class="k">do</span></pre></div>
@@ -701,7 +702,7 @@ Calculate the harmonic mean of those speeds weighted by <code>urbanity</code> to
         <div class="pilwrap">
           <a class="pilcrow" href="#section-46">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>make model year</code>&rsquo;s fuel efficiency city (<em>km / l</em>) and fuel efficiency highway (<em>km / l</em>).
+        <p>Otherwise look up the <code>make model year</code> fuel efficiency city (<em>km / l</em>) and fuel efficiency highway (<em>km / l</em>).
 Calculate the harmonic mean of those fuel efficiencies, weighted by <code>urbanity</code>, to give <em>km / l</em>.</p>
       </td>
       <td class=code>
@@ -720,7 +721,7 @@ Calculate the harmonic mean of those fuel efficiencies, weighted by <code>urbani
         <div class="pilwrap">
           <a class="pilcrow" href="#section-47">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>make model</code>&rsquo;s fuel efficiency city (<em>km / l</em>) and fuel efficiency highway (<em>km / l</em>).
+        <p>Otherwise look up the <code>make model</code> fuel efficiency city (<em>km / l</em>) and fuel efficiency highway (<em>km / l</em>).
 Calculate the harmonic mean of those fuel efficiencies, weighted by <code>urbanity</code>, to give <em>km / l</em>.</p>
       </td>
       <td class=code>
@@ -739,7 +740,7 @@ Calculate the harmonic mean of those fuel efficiencies, weighted by <code>urbani
         <div class="pilwrap">
           <a class="pilcrow" href="#section-48">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>size class</code>&lsquo; <code>fuel efficiency city</code>(<em>km / l</em>) and <code>fuel efficiency highway</code> (<em>km / l</em>).
+        <p>Otherwise look up the <code>size class</code> fuel efficiency city (<em>km / l</em>) and fuel efficiency highway (<em>km / l</em>).
 Calculate the harmonic mean of those fuel efficiencies, weighted by <code>urbanity</code>, to give <em>km / l</em>.
 Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
       </td>
@@ -759,7 +760,7 @@ Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-49">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>make year</code>&rsquo;s <code>fuel efficiency</code> (<em>km / l</em>).
+        <p>Otherwise look up the <code>make year</code> fuel efficiency (<em>km / l</em>).
 Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
       </td>
       <td class=code>
@@ -775,7 +776,7 @@ Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-50">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>make</code>&rsquo;s <code>fuel efficiency</code> (<em>km / l</em>).
+        <p>Otherwise look up the <code>make</code> fuel efficiency (<em>km / l</em>).
 Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
       </td>
       <td class=code>
@@ -791,7 +792,7 @@ Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-51">&#182;</a>
         </div>
-        <p>Otherwise look up the <a href="http://data.brighterplanet.com/countries">United States</a>&lsquo; average <code>automobile fuel efficiency</code> (<em>km / l</em>).
+        <p>Otherwise look up the <a href="http://data.brighterplanet.com/countries">United States</a> average automobile fuel efficiency (<em>km / l</em>).
 Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
       </td>
       <td class=code>
@@ -810,7 +811,7 @@ Multiply by <code>hybridity multiplier</code> to give <em>km / l</em>.</p>
         </div>
         <h3>Hybridity multiplier (<em>dimensionless</em>)</h3>
 
-<p>A multiplier used to adjust fuel efficiency if we know the automobile is a hybrid or conventional vehicle.</p>
+<p><em>A multiplier used to adjust fuel efficiency if we know the automobile is a hybrid or conventional vehicle.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:hybridity_multiplier</span> <span class="k">do</span></pre></div>
@@ -843,7 +844,7 @@ If it does, calculate the harmonic mean of those multipliers, weighted by <code>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-54">&#182;</a>
         </div>
-        <p>Otherwise look up the <code>hybridity</code>&rsquo;s average city and highway fuel efficiency multipliers.
+        <p>Otherwise look up the average <a href="http://data.brighterplanet.com/automobile_size_classes">size class</a> <code>hybridity</code> multipliers for city and highway fuel efficiency.
 Calculate the harmonic mean of those multipliers, weighted by <code>urbanity</code>.</p>
       </td>
       <td class=code>
@@ -883,7 +884,7 @@ Calculate the harmonic mean of those multipliers, weighted by <code>urbanity</co
         </div>
         <h3>Hybridity (<em>boolean</em>)</h3>
 
-<p>True if the automobile is a hybrid vehicle. False if the automobile is a conventional vehicle.</p>
+<p><em>True if the automobile is a hybrid vehicle. False if the automobile is a conventional vehicle.</em></p>
 
 <p>Use client input, if available.</p>
       </td>
@@ -898,7 +899,7 @@ Calculate the harmonic mean of those multipliers, weighted by <code>urbanity</co
         </div>
         <h3>Size class</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_size_classes">size class</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_size_classes">size class</a>.</em></p>
 
 <p>Use client input, if available.</p>
       </td>
@@ -913,7 +914,7 @@ Calculate the harmonic mean of those multipliers, weighted by <code>urbanity</co
         </div>
         <h3>Urbanity (<em>%</em>)</h3>
 
-<p>The fraction of the total distance driven that is in towns and cities rather than highways.
+<p><em>The fraction of the total distance driven that is in towns and cities rather than highways.</em>
 Highways are defined as all driving at speeds of 45 miles per hour or greater.</p>
       </td>
       <td class=code>
@@ -925,7 +926,7 @@ Highways are defined as all driving at speeds of 45 miles per hour or greater.</
         <div class="pilwrap">
           <a class="pilcrow" href="#section-59">&#182;</a>
         </div>
-        <p>Look up the <a href="http://data.brighterplanet.com/countries">United States</a>&rsquo;s average automobile urbanity (<em>%</em>).</p>
+        <p>Use the <a href="http://data.brighterplanet.com/countries">United States</a> average automobile urbanity (<em>%</em>).</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
@@ -943,7 +944,7 @@ Highways are defined as all driving at speeds of 45 miles per hour or greater.</
         </div>
         <h3>Active subtimeframe (<em>date range</em>)</h3>
 
-<p>The portion of <code>timeframe</code> that falls between <code>acquisition</code> and <code>retirement</code>.</p>
+<p><em>The portion of <code>timeframe</code> that falls between <code>acquisition</code> and <code>retirement</code>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:active_subtimeframe</span> <span class="k">do</span></pre></div>
@@ -955,7 +956,7 @@ Highways are defined as all driving at speeds of 45 miles per hour or greater.</
           <a class="pilcrow" href="#section-61">&#182;</a>
         </div>
         <p>Calculate the portion of <code>timeframe</code> that falls between <code>acqusition</code> and <code>retirement</code> (<em>date range</em>).
-If there is no overlap then we don&rsquo;t know <code>active subtimeframe</code>.</p>
+If there is no overlap then we don&rsquo;t know active subtimeframe.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from acquisition and retirement&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:acquisition</span><span class="p">,</span> <span class="ss">:retirement</span><span class="o">]</span><span class="p">,</span>
@@ -973,7 +974,7 @@ If there is no overlap then we don&rsquo;t know <code>active subtimeframe</code>
         </div>
         <h3>Acquisition (<em>date</em>)</h3>
 
-<p>The date the automobile was put into use.</p>
+<p><em>The date the automobile was put into use.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:acquisition</span> <span class="k">do</span></pre></div>
@@ -1028,7 +1029,7 @@ If there is no overlap then we don&rsquo;t know <code>active subtimeframe</code>
         </div>
         <h3>Retirement (<em>date</em>)</h3>
 
-<p>The date the automobile was taken out of use.</p>
+<p><em>The date the automobile was taken out of use.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:retirement</span> <span class="k">do</span></pre></div>
@@ -1068,7 +1069,7 @@ If there is no overlap then we don&rsquo;t know <code>active subtimeframe</code>
         </div>
         <h3>Make model year</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_make_model_years">make, model, and year</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_make_model_years">make, model, and year</a>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:make_model_year</span> <span class="k">do</span></pre></div>
@@ -1080,7 +1081,7 @@ If there is no overlap then we don&rsquo;t know <code>active subtimeframe</code>
           <a class="pilcrow" href="#section-70">&#182;</a>
         </div>
         <p>Check whether the <code>make</code>, <code>model</code>, and <code>year</code> combination matches any automobiles in our database.
-If it doesn&rsquo;t then we don&rsquo;t know <code>make model year</code>.</p>
+If it doesn&rsquo;t then we don&rsquo;t know make model year.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from make, model, and year&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:make</span><span class="p">,</span> <span class="ss">:model</span><span class="p">,</span> <span class="ss">:year</span><span class="o">]</span><span class="p">,</span>
@@ -1098,7 +1099,7 @@ If it doesn&rsquo;t then we don&rsquo;t know <code>make model year</code>.</p>
         </div>
         <h3>Make year</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_make_years">make and year</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_make_years">make and year</a>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:make_year</span> <span class="k">do</span></pre></div>
@@ -1110,7 +1111,7 @@ If it doesn&rsquo;t then we don&rsquo;t know <code>make model year</code>.</p>
           <a class="pilcrow" href="#section-72">&#182;</a>
         </div>
         <p>Check whether the <code>make</code> and <code>year</code> combination matches any automobiles in our database.
-If it doesn&rsquo;t then we don&rsquo;t know <code>make year</code>.</p>
+If it doesn&rsquo;t then we don&rsquo;t know make year.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from make and year&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:make</span><span class="p">,</span> <span class="ss">:year</span><span class="o">]</span><span class="p">,</span>
@@ -1128,7 +1129,7 @@ If it doesn&rsquo;t then we don&rsquo;t know <code>make year</code>.</p>
         </div>
         <h3>Make model</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_make_models">make and model</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_make_models">make and model</a>.</em></p>
       </td>
       <td class=code>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:make_model</span> <span class="k">do</span></pre></div>
@@ -1140,7 +1141,7 @@ If it doesn&rsquo;t then we don&rsquo;t know <code>make year</code>.</p>
           <a class="pilcrow" href="#section-74">&#182;</a>
         </div>
         <p>Check whether the <code>make</code> and <code>model</code> combination matches any automobiles in our database.
-If it doesn&rsquo;t then we don&rsquo;t know <code>make model</code>.</p>
+If it doesn&rsquo;t then we don&rsquo;t know make model.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from make and model&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:make</span><span class="p">,</span> <span class="ss">:model</span><span class="o">]</span><span class="p">,</span>
@@ -1158,7 +1159,7 @@ If it doesn&rsquo;t then we don&rsquo;t know <code>make model</code>.</p>
         </div>
         <h3>Year</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_years">year of manufacture</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_years">year of manufacture</a>.</em></p>
 
 <p>Use client input, if available.</p>
       </td>
@@ -1173,7 +1174,7 @@ If it doesn&rsquo;t then we don&rsquo;t know <code>make model</code>.</p>
         </div>
         <h3>Model</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_models">model</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_models">model</a>.</em></p>
 
 <p>Use client input, if available.</p>
       </td>
@@ -1188,7 +1189,7 @@ If it doesn&rsquo;t then we don&rsquo;t know <code>make model</code>.</p>
         </div>
         <h3>Make</h3>
 
-<p>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_makes">make</a>.</p>
+<p><em>The automobile&rsquo;s <a href="http://data.brighterplanet.com/automobile_makes">make</a>.</em></p>
 
 <p>Use client input, if available.</p>
 
