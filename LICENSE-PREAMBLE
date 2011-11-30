@@ -1,5 +1,5 @@
 BRIGHTER PLANET ADDITIONAL PREAMBLE TO THE GNU AFFERO GENERAL PUBLIC LICENSE
-January 7, 2011
+August 3, 2011
 
 This preamble is meant to help the licensee understand exactly what
 software is being received under the license and set expectations as to
@@ -7,15 +7,15 @@ what is not covered.
 
 IDENTITY OF THE SOFTWARE MODULE COVERED BY LICENSE:
 
-This license covers the Brighter Planet carbon model referred to as
+This license covers the Brighter Planet impact model referred to as
 'Automobile,' officially distributed from
 https://github.com/brighterplanet/automobile.
 
 SCOPE OF THE SOFTWARE MODULE COVERED BY LICENSE:
 
 The scope of the license includes only those files included in the
-official Brighter Planet distribution package for the particular carbon
-model identified above, including only the carbon model execution files,
+official Brighter Planet distribution package for the particular impact
+model identified above, including only the impact model execution files,
 reference data classes, input characterization, fallbacks, summarization
 helpers, tests, and test fixtures.
 
@@ -39,13 +39,14 @@ This license does not extend to the following:
     license including but not limited to other forms of open source
     license, commercial license, and the like;
 
-  * Any element of any Brighter Planet Carbon Middleware web service,
+  * Any element of any Brighter Planet CM1 web service,
     including but not limited to the copyrights, trademarks, graphic
     design, text, documentation, method of interaction with clients,
     runtime environment, technical infrastructure, and software code, is
     not covered by the license; and
 
-  * Any aspect or use of http://carbon.brighterplanet.com.
+  * Any aspect or use of http://carbon.brighterplanet.com or any
+    subdomain of brighterplanet.com.
 
 If you have any questions, please contact licensing@brighterplanet.com
 

@@ -2,6 +2,7 @@ module BrighterPlanet
   module Automobile
     module Data
       def self.included(base)
+        base.col :country_iso_3166_code
         base.col :make_name
         base.col :model_name
         base.col :year_name,       :type => :integer
