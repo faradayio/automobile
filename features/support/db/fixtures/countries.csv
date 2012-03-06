@@ -1,2 +1,4 @@
-iso_3166_code,automobile_urbanity,automobile_fuel_efficiency,automobile_city_speed,automobile_highway_speed
-US,0.4,10,30,90
+iso_3166_code,name,automobile_urbanity,automobile_fuel_efficiency,automobile_city_speed,automobile_highway_speed
+US,United States,0.4,10,30,90
+GB,United Kingdom
+

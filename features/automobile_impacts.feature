@@ -8,8 +8,8 @@ Feature: Automobile Impact Calculations
     Given an automobile has nothing
     When impacts are calculated
     # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
-    And the amount of "energy" should be within "0.01" of "94769.12"
-    And the amount of "carbon" should be within "0.01" of "6558.18"
+    And the amount of "energy" should be within "0.01" of "115199.38"
+    And the amount of "carbon" should be within "0.01" of "7971.99"
 
   Scenario Outline: Automobile emission from acquisition, retirement, and timeframe
     Given it has "acquisition" of "<acquisition>"
@@ -20,11 +20,11 @@ Feature: Automobile Impact Calculations
     And the amount of "energy" should be within "0.01" of "<energy>"
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     Examples:
-      | acquisition | retirement | timeframe             | energy   | carbon   |
-      | 2010-03-01  | 2010-05-30 | 2010-01-01/2011-01-01 | 23367.73 | 1617.09  |
-      | 2010-03-01  | 2010-04-30 | 2010-01-01/2011-01-01 | 15578.49 | 1078.06  |
-      | 2010-03-01  | 2010-03-31 | 2010-01-01/2011-01-01 |  7789.24 |  539.03  |
-      | 2010-03-01  | 2010-03-31 | 2010-04-01/2011-01-01 |     0.0  |    0.0   |
+      | acquisition | retirement | timeframe             | energy   | carbon  |
+      | 2010-03-01  | 2010-05-30 | 2010-01-01/2011-01-01 | 28405.33 | 1965.70 |
+      | 2010-03-01  | 2010-04-30 | 2010-01-01/2011-01-01 | 18936.88 | 1310.46 |
+      | 2010-03-01  | 2010-03-31 | 2010-01-01/2011-01-01 |  9468.44 |  655.23 |
+      | 2010-03-01  | 2010-03-31 | 2010-04-01/2011-01-01 |     0.0  |    0.0  |
 
   Scenario Outline: Automobile emission from hybridity
     Given it has "hybridity" of "<hybridity>"
@@ -33,9 +33,9 @@ Feature: Automobile Impact Calculations
     And the amount of "energy" should be within "0.01" of "<energy>"
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     Examples:
-      | hybridity | energy   | carbon  |
-      | true      | 69837.15 | 4832.85 |
-      | false     | 95496.77 | 6608.54 |
+      | hybridity | energy    | carbon  |
+      | true      |  84892.59 | 5874.71 |
+      | false     | 116083.89 | 8033.20 |
 
   Scenario Outline: Calculations from hybridity and urbanity
     Given it has "hybridity" of "<hybridity>"
@@ -45,9 +45,9 @@ Feature: Automobile Impact Calculations
     And the amount of "energy" should be within "0.01" of "<energy>"
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     Examples:
-      | hybridity | energy   | carbon  |
-      | true      | 67764.46 | 4689.42 |
-      | false     | 95583.53 | 6614.54 |
+      | hybridity | energy    | carbon  |
+      | true      |  82373.07 | 5700.36 |
+      | false     | 116189.36 | 8040.50 |
 
   Scenario Outline: Automobile emission from size class and hybridity
     Given it has "size_class.name" of "<size_class>"
@@ -71,49 +71,25 @@ Feature: Automobile Impact Calculations
     And the amount of "energy" should be within "0.01" of "35099.67"
     And the amount of "carbon" should be within "0.01" of "2428.96"
   
-  Scenario: Automobile emission from daily duration
-    Given it has "daily_duration" of "3600.0"
-    And it is the year "2010"
-    And it has "speed" of "10"
-    And it has "acquisition" of "2010-01-01"
-    And it has "retirement" of "2010-02-01"
-    When impacts are calculated
-    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
-    And the amount of "energy" should be within "0.01" of "1088.09"
-    And the amount of "carbon" should be within "0.01" of "75.30"
-
-  Scenario: Automobile emission from daily distance
-    Given it has "daily_distance" of "10"
+  Scenario Outline: Automobile emission from various distances
+    Given it has "daily_duration" of "<d_dur>"
+    And it has "speed" of "<speed>"
+    And it has "daily_distance" of "<d_dist>"
+    And it has "weekly_distance" of "<w_dist>"
+    And it has "annual_distance" of "<a_dist>"
     And it is the year "2010"
     And it has "acquisition" of "2010-01-01"
     And it has "retirement" of "2010-02-01"
     When impacts are calculated
     # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
-    And the amount of "energy" should be within "0.01" of "1088.09"
-    And the amount of "carbon" should be within "0.01" of "75.30"
-
-  Scenario: Automobile emission from weekly distance
-    Given it has "weekly_distance" of "70"
-    And it is the year "2010"
-    And it has "acquisition" of "2010-01-01"
-    And it has "retirement" of "2010-02-01"
-    When impacts are calculated
-    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
-    And the amount of "energy" should be within "0.01" of "1088.09"
-    And the amount of "carbon" should be within "0.01" of "75.30"
-
-  Scenario: Automobile emission from multiple distances
-    Given it has "daily_duration" of "3600.0"
-    And it is the year "2010"
-    And it has "daily_distance" of "10"
-    And it has "weekly_distance" of "70"
-    And it has "annual_distance" of "10000"
-    And it has "acquisition" of "2010-01-01"
-    And it has "retirement" of "2010-02-01"
-    When impacts are calculated
-    # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
-    And the amount of "energy" should be within "0.01" of "2981.07"
-    And the amount of "carbon" should be within "0.1" of "206.29"
+    And the amount of "energy" should be within "0.01" of "<energy>"
+    And the amount of "carbon" should be within "0.01" of "<carbon>"
+    Examples:
+      | d_dur  | speed | d_dist | w_dist | a_dist  | energy  | carbon |
+      | 3600.0 | 10.0  |        |        |         | 1322.66 |  91.53 |
+      |        |       | 10.0   |        |         | 1322.66 |  91.53 |
+      |        |       |        | 70.0   |         | 1322.66 |  91.53 |
+      | 3600.0 | 10.0  | 10.0   | 70.0   | 10000.0 | 3623.72 | 250.77 |
 
   Scenario Outline: Automobile emission from make and urbanity
     Given it has "make.name" of "<make>"
