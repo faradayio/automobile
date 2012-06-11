@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   
-  s.add_runtime_dependency 'earth',     '~>0.11.0'
+  s.add_runtime_dependency 'earth',     '~>0.12.0'
   s.add_runtime_dependency 'emitter',   '~>0.11.0'
   s.add_development_dependency 'sniff', '~>0.11.3'
   s.add_development_dependency 'sqlite3'

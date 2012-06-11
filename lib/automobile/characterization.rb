@@ -19,7 +19,7 @@ module BrighterPlanet
           has :weekly_distance, :measures => Measurement::BigLength
           has :annual_distance, :measures => Measurement::BigLength
           has :fuel_efficiency, :measures => Measurement::BigLengthPerVolume
-          has :fuel_use,        :measures => Measurement::Volume
+          has :annual_fuel_use, :measures => Measurement::Volume
         end
       end
     end

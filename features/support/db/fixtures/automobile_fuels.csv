@@ -1,4 +1,10 @@
-name,code,distance_key,ef_key,blend_portion,energy_content,co2_emission_factor,co2_biogenic_emission_factor,ch4_emission_factor,n2o_emission_factor,hfc_emission_factor,annual_distance
-regular gasoline,R,gasoline,gasoline,,35,2.3,0,0.0025,0.008,0.1,18000
-diesel,D,diesel,diesel,,39,2.7,0,0.0001,0.002,0.125,23000
-B20,BP-B20,diesel,diesel,0.2,35.8,2.2,0.5,0.0001,0.002,0.125,23000
+name,code,common_name,distance_key,base_fuel_name,blend_fuel_name,blend_portion,annual_distance,energy_content,energy_content_units,co2_emission_factor,co2_biogenic_emission_factor,ch4_emission_factor,n2o_emission_factor,total_consumption
+B20,BP-B20,b20,diesel,Distillate Fuel Oil No. 2,Biodiesel,0.2,22000,38,megajoules_per_litre,2.2,0.5,0.00001,0.0002
+CNG,C,cng,gasoline,Pipeline Natural Gas,,,18000,38,megajoules_per_cubic_metre,1.9,0,0.01,0.01
+diesel,D,diesel,diesel,Distillate Fuel Oil No. 2,,,22000,38.5,megajoules_per_litre,2.7,0,0.00001,0.0003,5800
+E85,E,e85,gasoline,Motor Gasoline,Ethanol,0.85,18000,25,megajoules_per_litre,0.4,1.3,0.001,0.01
+gasoline,G,gasoline,gasoline,Motor Gasoline,,,18000,35,megajoules_per_litre,2.3,0,0.0004,0.006,460000
+premium gasoline,P,gasoline,gasoline,Motor Gasoline,,,18000,35,megajoules_per_litre,2.3,0,0.0004,0.006
+regular gasoline,R,gasoline,gasoline,Motor Gasoline,,,18000,35,megajoules_per_litre,2.3,0,0.0004,0.006
+electricity,EL,electricity,gasoline,,,,18000,3.6,megajoules_per_kilowatt_hour,,,0,0
+hydrogen,H,hydrogen,gasoline,Hydrogen,,,18000,120,megajoules_per_kilogram,0,0,0,0

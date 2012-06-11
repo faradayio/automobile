@@ -18,7 +18,7 @@ module BrighterPlanet
         base.col :weekly_distance, :type => :float
         base.col :annual_distance, :type => :float
         base.col :fuel_efficiency, :type => :float
-        base.col :fuel_use,        :type => :float
+        base.col :annual_fuel_use, :type => :float
       end
     end
   end

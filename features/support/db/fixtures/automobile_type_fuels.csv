@@ -1,0 +1,5 @@
+name,type_name,fuel_common_name,annual_distance,ch4_emission_factor,n2o_emission_factor
+Light-duty trucks diesel,Light-duty trucks,diesel,23500,0.000015,0.0003
+Light-duty trucks gasoline,Light-duty trucks,gasoline,19500,0.0005,0.0075
+Passenger cars diesel,Passenger cars,diesel,18000,0.000008,0.0002
+Passenger cars gasoline,Passenger cars,gasoline,16500,0.0004,0.005

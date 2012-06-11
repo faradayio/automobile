@@ -53,71 +53,204 @@ module BrighterPlanet
           #### CO<sub>2</sub> emission (*kg*)
           # *The automobile's CO<sub>2</sub> emissions from anthropogenic sources during `active subtimeframe`.*
           committee :co2_emission do
-            # Multiply `fuel use` (*l*) by the `automobile fuel` co2 emission factor (*kg / l*) to give *kg*.
-            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
+            # Multiply `fuel use` (*various*) by `co2 emission factor` (*kg / various*) to give *kg*.
+            quorum 'from fuel use and co2 emission factor', :needs => [:fuel_use, :co2_emission_factor],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:fuel_use] * characteristics[:automobile_fuel].co2_emission_factor
+                characteristics[:fuel_use] * characteristics[:co2_emission_factor]
             end
           end
           
           #### CO<sub>2</sub> biogenic emission (*kg*)
           # *The automobile's CO<sub>2</sub> emissions from biogenic sources during `active subtimeframe`.*
           committee :co2_biogenic_emission do
-            # Multiply `fuel use` (*l*) by the `automobile fuel` co2 biogenic emission factor (*kg / l*) to give *kg*.
-            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
+            # Multiply `fuel use` (*various*) by `co2 biogenic emission factor` (*kg / various*) to give *kg*.
+            quorum 'from fuel use and co2 biogenic emission factor', :needs => [:fuel_use, :co2_biogenic_emission_factor],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:fuel_use] * characteristics[:automobile_fuel].co2_biogenic_emission_factor
+                characteristics[:fuel_use] * characteristics[:co2_biogenic_emission_factor]
             end
           end
           
           #### CH<sub>4</sub> emission (*kg CO<sub>2</sub>e*)
           # *The automobile's CH<sub>4</sub> emissions during `active subtimeframe`.*
           committee :ch4_emission do
-            # Multiply `fuel use` (*l*) by the `automobile fuel` ch4 emission factor (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
-            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
+            # Multiply `distance` (*km*) by `ch4 emission factor` (*kg CO<sub>2</sub>e / km*) to give *kg CO<sub>2</sub>e*.
+            quorum 'from distance and ch4 emission factor', :needs => [:distance, :ch4_emission_factor],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:fuel_use] * characteristics[:automobile_fuel].ch4_emission_factor
+                characteristics[:distance] * characteristics[:ch4_emission_factor]
             end
           end
           
           #### N<sub>2</sub>O emission (*kg CO<sub>2</sub>e*)
           # *The automobile's N<sub>2</sub>O emissions during `active subtimeframe`.*
           committee :n2o_emission do
-            # Multiply `fuel use` (*l*) by the `automobile fuel` n2o emission factor (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
-            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
+            # Multiply `distance` (*km*) by `n2o emission factor` (*kg CO<sub>2</sub>e / km*) to give *kg CO<sub>2</sub>e*.
+            quorum 'from distance and n2o emission factor', :needs => [:distance, :n2o_emission_factor],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:fuel_use] * characteristics[:automobile_fuel].n2o_emission_factor
+                characteristics[:distance] * characteristics[:n2o_emission_factor]
             end
           end
           
           #### HFC emission (*kg CO<sub>2</sub>e*)
           # *The automobile's HFC emissions during `active subtimeframe`.*
           committee :hfc_emission do
-            # Multiply `fuel use` (*l*) by the `automobile fuel` hfc emission factor (*kg CO<sub>2</sub>e / l*) to give *kg CO<sub>2</sub>e*.
-            quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel],
+            # Multiply `distance` (*km*) by `hfc emission factor` (*kg CO<sub>2</sub>e / km*) to give *kg CO<sub>2</sub>e*.
+            quorum 'from distance and hfc emission factor', :needs => [:distance, :hfc_emission_factor],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:fuel_use] * characteristics[:automobile_fuel].hfc_emission_factor
+                characteristics[:distance] * characteristics[:hfc_emission_factor]
+            end
+          end
+          
+          #### CO<sub>2</sub> emission factor (*kg / various*)
+          # *The CO<sub>2</sub> emission factor.*
+          committee :co2_emission_factor do
+            # Use the `automobile fuel` co2 emission factor (*kg / various*).
+            quorum 'from automobile fuel', :needs => :automobile_fuel,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:automobile_fuel].co2_emission_factor
+            end
+            
+            # Otherwise use the `country` electricity emission factor (*kg CO<sub>2</sub>e / kWh*) (electricity is the only automobile fuel without a co2 biogenic emission factor).
+            quorum 'from country', :needs => :country,
+              :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:country].electricity_emission_factor
+            end
+            
+            # Otherwise use the global average electricity emission factor (*kg CO<sub>2</sub>e / kWh*) (electricity is the only automobile fuel without a co2 biogenic emission factor).
+            quorum 'default',
+              :complies => [:ghg_protocol_scope_3, :iso] do
+                Country.fallback.electricity_emission_factor
+            end
+          end
+          
+          #### CO<sub>2</sub> biogenic emission factor (*kg / various*)
+          # *The CO<sub>2</sub> emission factor.*
+          committee :co2_biogenic_emission_factor do
+            # Use the `automobile fuel` co2 biogenic emission factor (*kg / various*).
+            quorum 'from automobile fuel', :needs => :automobile_fuel,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:automobile_fuel].co2_biogenic_emission_factor
+            end
+            
+            # Otherwise use a default of 0 *kg / kWh* (electricity is the only automobile fuel without a co2 biogenic emission factor).
+            quorum 'default',
+              :complies => [:ghg_protocol_scope_3, :iso] do
+                0.0
+            end
+          end
+          
+          #### CH<sub>4</sub> emission factor (*kg CO<sub>2</sub>e / km*)
+          # *The CH<sub>4</sub> emission factor.*
+          committee :ch4_emission_factor do
+            # Use the `type fuel year` ch4 emission factor (*kg CO<sub>2</sub>e / km*).
+            quorum 'from type fuel year', :needs => :type_fuel_year,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:type_fuel_year].ch4_emission_factor
+            end
+            
+            # Otherwise use the `type fuel` ch4 emission factor (*kg CO<sub>2</sub>e / km*).
+            quorum 'from type fuel', :needs => :type_fuel,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:type_fuel].ch4_emission_factor
+            end
+            
+            # Otherwise use the `automobile fuel` ch4 emission factor (*kg CO<sub>2</sub>e / km*).
+            quorum 'from automobile fuel', :needs => :automobile_fuel,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:automobile_fuel].ch4_emission_factor
+            end
+          end
+          
+          #### N<sub>2</sub>O emission factor (*kg CO<sub>2</sub>e / km*)
+          # *The N<sub>2</sub>O emission factor.*
+          committee :n2o_emission_factor do
+            # Use the `type fuel year` n2o emission factor (*kg CO<sub>2</sub>e / km*).
+            quorum 'from type fuel year', :needs => :type_fuel_year,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:type_fuel_year].n2o_emission_factor
+            end
+            
+            # Otherwise use the `type fuel` n2o emission factor (*kg CO<sub>2</sub>e / km*).
+            quorum 'from type fuel', :needs => :type_fuel,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:type_fuel].n2o_emission_factor
+            end
+            
+            # Otherwise use the `automobile fuel` n2o emission factor (*kg CO<sub>2</sub>e / km*).
+            quorum 'from automobile fuel', :needs => :automobile_fuel,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:automobile_fuel].n2o_emission_factor
+            end
+          end
+          
+          #### HFC emission (*kg CO<sub>2</sub>e / km*)
+          # *The automobile's HFC emission factor.*
+          committee :hfc_emission_factor do
+            # Use the `activity year type` hfc emission factor *kg CO<sub>2</sub>e / km*.
+            quorum 'from activity year type', :needs => :activity_year_type,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:activity_year_type].hfc_emission_factor
+            end
+            
+            # Otherwise use the `activity year` hfc emission factor *kg CO<sub>2</sub>e / km*.
+            quorum 'from activity year', :needs => :activity_year,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:activity_year].hfc_emission_factor
+            end
+          end
+          
+          #### Activity year type
+          # *The automobile's [activity year and type](http://data.brighterplanet.com/automobile_activity_year_types).*
+          committee :activity_year_type do
+            # Find the best match for `active subtimeframe` and `automobile_type`.
+            quorum 'from active subtimeframe and automobile type', :needs => [:active_subtimeframe, :automobile_type],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileActivityYearType.find_by_type_name_and_closest_year(characteristics[:automobile_type].value, characteristics[:active_subtimeframe].start_date.year)
+            end
+          end
+          
+          #### Activity year
+          # *The [year](http://data.brighterplanet.com/automobile_activity_years) in which the trip occurred.*
+          committee :activity_year do
+            # Find the best match for `active subtimeframe`.
+            quorum 'from active subtimeframe', :needs => :active_subtimeframe,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileActivityYear.find_by_closest_year(characteristics[:active_subtimeframe].start_date.year)
             end
           end
           
           #### Energy (*MJ*)
           # *The automobile's energy use during `active subtimeframe`.*
           committee :energy do
-            # Multiply `fuel use` (*l*) by the `automobile fuel` energy content (*MJ / l*) to give *MJ*.
+            # Multiply `fuel use` (*various*) by the `automobile fuel` energy content (*MJ / various*) to give *MJ*.
             quorum 'from fuel use and automobile fuel', :needs => [:fuel_use, :automobile_fuel] do |characteristics|
               characteristics[:fuel_use] * characteristics[:automobile_fuel].energy_content
             end
           end
           
-          #### Fuel use (*l*)
+          #### Fuel use (*various*)
           # *The automobile's fuel use during `active subtimeframe`.*
           committee :fuel_use do
+            # Multiply `annual fuel use` (*various*) by the fraction of the calendar year in which `timeframe` falls that overlaps with `active subtimeframe` to give *various*.
+            quorum 'from annual fuel use and active subtimeframe', :needs => [:annual_fuel_use, :active_subtimeframe],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
+                characteristics[:annual_fuel_use] * (characteristics[:active_subtimeframe] / timeframe.year)
+            end
+          end
+          
+          #### Annual fuel use (*various*)
+          # *The fuel the automobile would use if it were used for the entire calendar year in which `timeframe` falls.*
+          # Note that this will be **more** than the actual fuel used if the automobile was not in use for the entire calendar year (if either `acquisition` or `retirement` occurs during the calendar year in which `timeframe` falls).
+          committee :annual_fuel_use do
             # Use client input, if available.
             
-            # Otherwise divide `distance` (*km*) by `fuel efficiency` (*km / l*) to give *l*.
-            quorum 'from fuel efficiency and distance', :needs => [:fuel_efficiency, :distance],
+            # Otherwise divide `annual distance` (*km*) by `fuel efficiency` (*km / various*) to give *various*.
+            quorum 'from fuel efficiency, annual distance, and automobile fuel', :needs => [:fuel_efficiency, :annual_distance, :automobile_fuel],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:distance] / characteristics[:fuel_efficiency]
+                if characteristics[:automobile_fuel].non_liquid?
+                  characteristics[:annual_distance] / characteristics[:fuel_efficiency] * AutomobileFuel.find('gasoline').energy_content / characteristics[:automobile_fuel].energy_content
+                else
+                  characteristics[:annual_distance] / characteristics[:fuel_efficiency]
+                end
             end
           end
           
@@ -125,7 +258,7 @@ module BrighterPlanet
           # *The distance the automobile travelled during `active subtimeframe`.*
           committee :distance do
             # Multiply `annual distance` (*km*) by the fraction of the calendar year in which `timeframe` falls that overlaps with `active subtimeframe` to give *km*.
-            quorum 'from annual distance', :needs => [:annual_distance, :active_subtimeframe],
+            quorum 'from annual distance and active subtimeframe', :needs => [:annual_distance, :active_subtimeframe],
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 characteristics[:annual_distance] * (characteristics[:active_subtimeframe] / timeframe.year)
             end
@@ -136,6 +269,13 @@ module BrighterPlanet
           # Note that this will be **more** than the actual distance traveled if the automobile was not in use for the entire calendar year (if either `acquisition` or `retirement` occurs during the calendar year in which `timeframe` falls).
           committee :annual_distance do
             # Use client input, if available.
+            
+            # Otherwise multiply client-input `fuel use` (*various*) by `fuel efficiency` (*km / l*) to give *km*.
+            # This is necessary to make sure `distance` is reasonable given `fuel use` - otherwise ch4 and n2o emissions may be absurdly large.
+            quorum 'from annual fuel use and fuel efficiency', :needs => [:annual_fuel_use, :fuel_efficiency],
+              :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
+                characteristics[:annual_fuel_use] * characteristics[:fuel_efficiency]
+            end
             
             # Otherwise divide `weekly distance` (*km*) by 7 and multiply by the number of days in the calendar year in which `timeframe` falls to give *km*.
             quorum 'from weekly distance and timeframe', :needs => :weekly_distance,
@@ -156,10 +296,16 @@ module BrighterPlanet
                 characteristics[:daily_duration] / 3600.0 * characteristics[:speed] * timeframe.year.days
             end
             
-            # Otherwise use the `size class` annual distance (*km*).
-            quorum 'from size class', :needs => :size_class,
+            # Otherwise use the `type fuel year` annual distance (*km*).
+            quorum 'from type fuel year', :needs => :type_fuel_year,
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:size_class].annual_distance
+                characteristics[:type_fuel_year].annual_distance
+            end
+            
+            # Otherwise use the `type fuel` annual distance (*km*).
+            quorum 'from type fuel', :needs => :type_fuel,
+              :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:type_fuel].annual_distance
             end
             
             # Otherwise use the `automobile fuel` annual distance (*km*).
@@ -179,39 +325,70 @@ module BrighterPlanet
           #
           # Use client input if available.
           
+          #### Type fuel year
+          # *The [automobile type, automobile fuel, and year](http://data.brighterplanet.com/automobile_type_fuel_years).*
+          committee :type_fuel_year do
+            # Match `automobile type`, `automobile fuel`, and `year` to a record in our database.
+            quorum 'from automobile type, automobile fuel, and year', :needs => [:automobile_type, :automobile_fuel, :year],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileTypeFuelYear.find_by_type_name_and_fuel_common_name_and_closest_year(characteristics[:automobile_type].value, characteristics[:automobile_fuel].common_name, characteristics[:year].year)
+            end
+          end
+          
+          #### Type fuel
+          # *The [automobile type and automobile fuel](http://data.brighterplanet.com/automobile_type_fuels).*
+          committee :type_fuel do
+            # Match `automobile type` and `automobile fuel` to a record in our database.
+            quorum 'from automobile type and automobile fuel', :needs => [:automobile_type, :automobile_fuel],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileTypeFuel.find_by_type_name_and_fuel_common_name(characteristics[:automobile_type].value, characteristics[:automobile_fuel].common_name)
+            end
+          end
+          
+          #### Automobile type
+          # *The automobile's [type](http://data.brighterplanet.com/automobile_types).*
+          committee :automobile_type do
+            # Use the `make model year` automobile type.
+            quorum 'from make model year', :needs => :make_model_year,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:make_model_year].type_name
+            end
+            
+            # Otherwise use the `make model` automobile type.
+            quorum 'from make model', :needs => :make_model,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:make_model].type_name
+            end
+            
+            # Otherwise use the `size class` automobile type.
+            quorum 'from size class', :needs => :size_class,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:size_class].type_name
+            end
+          end
+          
           #### Daily duration (*seconds*)
           # *The average time the automobile is driven each day.*
           #
           # Use client input, if available.
-          
-          #### Automobile fuel
-          # *The automobile's [fuel type](http://data.brighterplanet.com/automobile_fuels).*
-          committee :automobile_fuel do
-            # Use client input, if available.
-            
-            # Otherwise use the `make model year` [automobile fuel](http://data.brighterplanet.com/automobile_fuels).
-            quorum 'from make model year', :needs => :make_model_year,
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:make_model_year].automobile_fuel
-            end
-            
-            # Otherwise use the average [automobile fuel](http://data.brighterplanet.com/automobile_fuels).
-            quorum 'default',
-              :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
-                AutomobileFuel.fallback
-            end
-          end
           
           #### Speed (*km / hour*)
           # *The automobile's average speed.*
           committee :speed do
             # Use client input, if available.
             
-            # Otherwise look up the `safe country` average automobile city speed (*km / hour*) and automobile highway speed (*km / hour*).
-            # Calculate the harmonic mean of those speeds weighted by `urbanity` to give *km / hour*.
-            quorum 'from urbanity and safe country', :needs => [:urbanity, :safe_country],
+            # Otherwise calculate the harmonic mean of the `country` average automobile city and highway speeds (*km / hour*), weighted by `urbanity`, to give *km / hour*.
+            quorum 'from urbanity and country', :needs => [:urbanity, :country],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                1 / (characteristics[:urbanity] / characteristics[:safe_country].automobile_city_speed + (1 - characteristics[:urbanity]) / characteristics[:safe_country].automobile_highway_speed)
+                if characteristics[:country].automobile_city_speed and characteristics[:country].automobile_highway_speed
+                  1 / (characteristics[:urbanity] / characteristics[:country].automobile_city_speed + (1 - characteristics[:urbanity]) / characteristics[:country].automobile_highway_speed)
+                end
+            end
+            
+            # Otherwise calculate the harmonic mean of the global average automobile city and highway speeds (*km / hour*), weighted by `urbanity`, to give *km / hour*.
+            quorum 'from urbanity', :needs => :urbanity,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                1 / (characteristics[:urbanity] / Country.fallback.automobile_city_speed + (1 - characteristics[:urbanity]) / Country.fallback.automobile_highway_speed)
             end
           end
           
@@ -220,23 +397,12 @@ module BrighterPlanet
           committee :fuel_efficiency do
             # Use client input, if available.
             
-            # Otherwise look up the `make model year` fuel efficiency city (*km / l*) and fuel efficiency highway (*km / l*).
-            # Calculate the harmonic mean of those fuel efficiencies, weighted by `urbanity`, to give *km / l*.
-            quorum 'from make model year and urbanity', :needs => [:make_model_year, :urbanity],
+            # Otherwise calculate the harmonic mean of `fuel efficiency city` (*km / l*) and `fuel efficiency highway` (*km / l*), weighted by `urbanity`, to give *km / l*.
+            quorum 'from fuel efficiency city, fuel efficiency highway, and urbanity', :needs => [:fuel_efficiency_city, :fuel_efficiency_highway, :urbanity],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
                 1.0 / (
-                  (characteristics[:urbanity]         / characteristics[:make_model_year].fuel_efficiency_city) +
-                  ((1.0 - characteristics[:urbanity]) / characteristics[:make_model_year].fuel_efficiency_highway)
-                )
-            end
-            
-            # Otherwise look up the `make model` fuel efficiency city (*km / l*) and fuel efficiency highway (*km / l*).
-            # Calculate the harmonic mean of those fuel efficiencies, weighted by `urbanity`, to give *km / l*.
-            quorum 'from make model and urbanity', :needs => [:make_model, :urbanity],
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                1.0 / (
-                  (characteristics[:urbanity]         / characteristics[:make_model].fuel_efficiency_city) +
-                  ((1.0 - characteristics[:urbanity]) / characteristics[:make_model].fuel_efficiency_highway)
+                  (characteristics[:urbanity]         / characteristics[:fuel_efficiency_city]) +
+                  ((1.0 - characteristics[:urbanity]) / characteristics[:fuel_efficiency_highway])
                 )
             end
             
@@ -251,30 +417,111 @@ module BrighterPlanet
                 )) * characteristics[:hybridity_multiplier]
             end
             
-            # Otherwise look up the `make year` fuel efficiency (*km / l*).
-            # Multiply by `hybridity multiplier` to give *km / l*.
+            # Otherwise multiply the `make year` fuel efficiency (*km / l*) by `hybridity multiplier` to give *km / l*.
             quorum 'from make year and hybridity multiplier', :needs => [:make_year, :hybridity_multiplier],
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
                 characteristics[:make_year].fuel_efficiency * characteristics[:hybridity_multiplier]
             end
             
-            # Otherwise look up the `make` fuel efficiency (*km / l*).
-            # Multiply by `hybridity multiplier` to give *km / l*.
+            # Otherwise multiply the `make` fuel efficiency (*km / l*) by `hybridity multiplier` to give *km / l*.
             quorum 'from make and hybridity multiplier', :needs => [:make, :hybridity_multiplier],
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
                 characteristics[:make].fuel_efficiency * characteristics[:hybridity_multiplier]
             end
             
-            # Otherwise look up the `safe country` average `automobile fuel efficiency` (*km / l*).
-            # Multiply by `hybridity multiplier` to give *km / l*.
-            quorum 'from hybridity multiplier and safe country', :needs => [:hybridity_multiplier, :safe_country],
+            # Otherwise multiply the `country` average automobile fuel efficiency (*km / l*) by `hybridity multiplier` to give *km / l*.
+            quorum 'from country and hybridity multiplier', :needs => [:country, :hybridity_multiplier],
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:safe_country].automobile_fuel_efficiency * characteristics[:hybridity_multiplier]
+                if characteristics[:country].automobile_fuel_efficiency
+                  characteristics[:country].automobile_fuel_efficiency * characteristics[:hybridity_multiplier]
+                end
+            end
+            
+            # Otherwise multiply the global average automobile fuel efficiency (*km / l*) by `hybridity multiplier` to give *km / l*.
+            quorum 'from hybridity multiplier', :needs => :hybridity_multiplier,
+              :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
+                Country.fallback.automobile_fuel_efficiency * characteristics[:hybridity_multiplier]
+            end
+          end
+          
+          #### Fuel efficiency city (*km / l*)
+          # *The automobile's city fuel efficiency.*
+          committee :fuel_efficiency_city do
+            # Use client input, if available.
+            
+            # Otherwise check whether `automobile fuel` is the `make model year` primary or secondary fuel and use the appropriate city fuel efficiency (*km / l*).
+            quorum 'from make model year and automobile fuel', :needs => [:make_model_year, :automobile_fuel],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                if characteristics[:automobile_fuel].same_as? characteristics[:make_model_year].automobile_fuel
+                  characteristics[:make_model_year].fuel_efficiency_city
+                elsif characteristics[:automobile_fuel].same_as? characteristics[:make_model_year].alt_automobile_fuel
+                  characteristics[:make_model_year].alt_fuel_efficiency_city
+                end
+            end
+            
+            # Otherwise check whether `automobile fuel` is the `make model` primary or secondary fuel and use the appropriate city fuel efficiency (*km / l*).
+            quorum 'from make model and automobile fuel', :needs => [:make_model, :automobile_fuel],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                if characteristics[:automobile_fuel].same_as? characteristics[:make_model].automobile_fuel
+                  characteristics[:make_model].fuel_efficiency_city
+                elsif characteristics[:automobile_fuel].same_as? characteristics[:make_model].alt_automobile_fuel
+                  characteristics[:make_model].alt_fuel_efficiency_city
+                end
+            end
+          end
+          
+          #### Fuel efficiency highway (*km / l*)
+          # *The automobile's highway fuel efficiency.*
+          committee :fuel_efficiency_highway do
+            # Use client input, if available.
+            
+            # Otherwise check whether `automobile fuel` is the `make model year` primary or secondary fuel and use the appropriate highway fuel efficiency (*km / l*).
+            quorum 'from make model year and automobile fuel', :needs => [:make_model_year, :automobile_fuel],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                if characteristics[:automobile_fuel].same_as? characteristics[:make_model_year].automobile_fuel
+                  characteristics[:make_model_year].fuel_efficiency_highway
+                elsif characteristics[:automobile_fuel].same_as? characteristics[:make_model_year].alt_automobile_fuel
+                  characteristics[:make_model_year].alt_fuel_efficiency_highway
+                end
+            end
+            
+            # Otherwise check whether `automobile fuel` is the `make model` primary or secondary fuel and use the appropriate highway fuel efficiency (*km / l*).
+            quorum 'from make model and automobile fuel', :needs => [:make_model, :automobile_fuel],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                if characteristics[:automobile_fuel].same_as? characteristics[:make_model].automobile_fuel
+                  characteristics[:make_model].fuel_efficiency_highway
+                elsif characteristics[:automobile_fuel].same_as? characteristics[:make_model].alt_automobile_fuel
+                  characteristics[:make_model].alt_fuel_efficiency_highway
+                end
+            end
+          end
+          
+          #### Automobile fuel
+          # *The automobile's [fuel type](http://data.brighterplanet.com/automobile_fuels).*
+          committee :automobile_fuel do
+            # Use client input, if available.
+            
+            # Otherwise use the `make model year` automobile fuel.
+            quorum 'from make model year', :needs => :make_model_year,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:make_model_year].automobile_fuel
+            end
+            
+            # Otherwise use the `make model` automobile fuel.
+            quorum 'from make model', :needs => :make_model,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                characteristics[:make_model].automobile_fuel
+            end
+            
+            # Otherwise use the average automobile fuel.
+            quorum 'default',
+              :complies => [:ghg_protocol_scope_3, :iso] do
+                AutomobileFuel.fallback
             end
           end
           
           #### Hybridity multiplier (*dimensionless*)
-          # *A multiplier used to adjust fuel efficiency if we know the automobile is a hybrid or conventional vehicle.*
+          # *A multiplier to adjust fuel efficiency based on whether the automobile is a hybrid or conventional vehicle.*
           committee :hybridity_multiplier do
             # Check whether the `size class` has `hybridity` multipliers for city and highway fuel efficiency.
             # If it does, calculate the harmonic mean of those multipliers, weighted by `urbanity`.
@@ -319,30 +566,20 @@ module BrighterPlanet
           
           #### Urbanity (*%*)
           # *The fraction of the total distance driven that is in towns and cities rather than highways.*
-          # Highways are defined as all driving at speeds of 45 miles per hour or greater.
+          # Highways are defined as roads with a speed limit of 45 miles per hour or more.
           committee :urbanity do
-            # Use the `safe country` average automobile urbanity (*%*).
-            quorum 'from safe country', :needs => :safe_country,
-              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                characteristics[:safe_country].automobile_urbanity
-            end
-          end
-          
-          #### Safe country
-          # *Ensure that `country` has all needed values.*
-          committee :safe_country do
-            # Confirm that the client-input `country` has all the needed values.
+            # Use client input, if available.
+            
+            # Otherwise use the `country` average automobile urbanity (*%*).
             quorum 'from country', :needs => :country,
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                if [:automobile_city_speed, :automobile_highway_speed, :automobile_urbanity, :automobile_fuel_efficiency].all? { |required_attr| characteristics[:country].send(required_attr).present? }
-                  characteristics[:country]
-                end
+                characteristics[:country].automobile_urbanity
             end
             
-            # Otherwise use an artificial country that contains global averages.
+            # Otherwise use the global average automobile urbanity (*%*).
             quorum 'default',
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do
-                Country.fallback
+                Country.fallback.automobile_urbanity
             end
           end
           
@@ -354,11 +591,15 @@ module BrighterPlanet
           #### Active subtimeframe (*date range*)
           # *The portion of `timeframe` that falls between `acquisition` and `retirement`.*
           committee :active_subtimeframe do
-            # Calculate the portion of `timeframe` that falls between `acqusition` and `retirement` (*date range*).
-            # If there is no overlap then we don't know active subtimeframe.
+            # Calculate the portion of `timeframe` that falls between `acqusition` and `retirement`.
+            # If there is no overlap then we don't know `active subtimeframe`.
             quorum 'from acquisition and retirement', :needs => [:acquisition, :retirement],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
-                Timeframe.constrained_new characteristics[:acquisition].to_date, characteristics[:retirement].to_date, timeframe
+                if characteristics[:acquisition].value <= characteristics[:retirement].value
+                  Timeframe.constrained_new characteristics[:acquisition].to_date, characteristics[:retirement].to_date, timeframe
+                else
+                  Timeframe.constrained_new characteristics[:retirement].to_date, characteristics[:retirement].to_date, timeframe
+                end
             end
           end
           
@@ -367,14 +608,14 @@ module BrighterPlanet
           committee :acquisition do
             # Use client input, if available.
             
-            # Otherwise use the first day of `year` (*date*).
+            # Otherwise use the first day of `year`.
             quorum 'from year', :needs => :year,
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics|
                 Date.new characteristics[:year].year, 1, 1
             end
             
             # Otherwise use whichever is earlier: the first day of `timeframe` or `retirement`.
-            quorum 'default', :appreciates => :retirement,
+            quorum 'from timeframe and retirement', :needs => :retirement,
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 [ timeframe.from, characteristics[:retirement] ].compact.min
             end
@@ -395,8 +636,7 @@ module BrighterPlanet
           #### Make model year
           # *The automobile's [make, model, and year](http://data.brighterplanet.com/automobile_make_model_years).*
           committee :make_model_year do
-            # Check whether the `make`, `model`, and `year` combination matches any automobiles in our database.
-            # If it doesn't then we don't know make model year.
+            # Match `make`, `model`, and `year` to a record in our database.
             quorum 'from make, model, and year', :needs => [:make, :model, :year],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
                 AutomobileMakeModelYear.find_by_make_name_and_model_name_and_year(characteristics[:make].name, characteristics[:model].name, characteristics[:year].year)
@@ -406,8 +646,7 @@ module BrighterPlanet
           #### Make year
           # *The automobile's [make and year](http://data.brighterplanet.com/automobile_make_years).*
           committee :make_year do
-            # Check whether the `make` and `year` combination matches any automobiles in our database.
-            # If it doesn't then we don't know make year.
+            # Match `make` and `year` to a record in our database.
             quorum 'from make and year', :needs => [:make, :year],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
                 AutomobileMakeYear.find_by_make_name_and_year(characteristics[:make].name, characteristics[:year].year)
@@ -417,8 +656,7 @@ module BrighterPlanet
           #### Make model
           # *The automobile's [make and model](http://data.brighterplanet.com/automobile_make_models).*
           committee :make_model do
-            # Check whether the `make` and `model` combination matches any automobiles in our database.
-            # If it doesn't then we don't know make model.
+            # Match `make` and `model` to a record in our database.
             quorum 'from make and model', :needs => [:make, :model],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
                 AutomobileMakeModel.find_by_make_name_and_model_name(characteristics[:make].name, characteristics[:model].name)

@@ -1,5 +1,9 @@
-name,fuel_common_name,type_year_name,total_travel,fuel_consumption,ch4_emission_factor,ch4_emission_factor_units,n2o_emission_factor,n2o_emission_factor_units
-Light-duty trucks diesel 2008,diesel,Light-duty trucks 2008,700000,10000,0.000005,kilograms_per_litre,0.000005,kilograms_per_litre
-Passenger cars diesel 2008,diesel,Passenger cars 2008,125000,1500,0.000003,kilograms_per_litre,0.000007,kilograms_per_litre
-Light-duty trucks gasoline 2008,gasoline,Light-duty trucks 2008,1700000,200000,0.00008,kilograms_per_litre,0.000025,kilograms_per_litre
-Passenger cars gasoline 2008,gasoline,Passenger cars 2008,2500000,250000,0.00011,kilograms_per_litre,0.000034,kilograms_per_litre
+name,type_name,fuel_common_name,year,annual_distance,ch4_emission_factor,n2o_emission_factor
+Passenger cars diesel 2003,Passenger cars,diesel,2003,17500,0.000008,0.0002
+Passenger cars gasoline 2003,Passenger cars,gasoline,2003,17500,0.0002,0.0025
+Light-duty trucks diesel 2003,Light-duty trucks,diesel,2003,25000,0.000016,0.0003
+Light-duty trucks gasoline 2003,Light-duty trucks,gasoline,2003,21500,0.00024,0.002
+Passenger cars diesel 2009,Passenger cars,diesel,2009,24000,0.000008,0.0002
+Passenger cars gasoline 2009,Passenger cars,gasoline,2009,24000,0.00016,0.003
+Light-duty trucks diesel 2009,Light-duty trucks,diesel,2009,42500,0.000016,0.0003
+Light-duty trucks gasoline 2009,Light-duty trucks,gasoline,2009,32000,0.00025,0.001
