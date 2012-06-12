@@ -52,7 +52,7 @@ Feature: Automobile Committee Calculations
     Given a characteristic "timeframe" of "2010-01-01/2011-01-01"
     And a characteristic "acquisition" of "<acquisition>"
     When the "retirement" committee reports
-    Then the committee should have used quorum "default"
+    Then the committee should have used quorum "from timeframe"
     And the conclusion of the committee should be "<retirement>"
     And the conclusion should comply with standards "ghg_protocol_scope_3, iso"
     Examples:
@@ -316,7 +316,7 @@ Feature: Automobile Committee Calculations
     And a characteristic "active_subtimeframe" of "<active_subtimeframe>"
     And a characteristic "timeframe" of "2010-01-01/2011-01-01"
     When the "distance" committee reports
-    Then the committee should have used quorum "from annual distance and active subtimeframe"
+    Then the committee should have used quorum "from annual distance, active subtimeframe, and timeframe"
     And the conclusion of the committee should be "<distance>"
     And the conclusion should comply with standards "ghg_protocol_scope_3, iso"
     Examples:
@@ -345,7 +345,7 @@ Feature: Automobile Committee Calculations
     And a characteristic "active_subtimeframe" of "<active_subtimeframe>"
     And a characteristic "timeframe" of "2010-01-01/2011-01-01"
     When the "fuel_use" committee reports
-    Then the committee should have used quorum "from annual fuel use and active subtimeframe"
+    Then the committee should have used quorum "from annual fuel use, active subtimeframe, and timeframe"
     And the conclusion of the committee should be "<fuel_use>"
     And the conclusion should comply with standards "ghg_protocol_scope_3, iso"
     Examples:

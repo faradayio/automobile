@@ -231,7 +231,7 @@ module BrighterPlanet
           # *The automobile's fuel use during `active subtimeframe`.*
           committee :fuel_use do
             # Multiply `annual fuel use` (*various*) by the fraction of the calendar year in which `timeframe` falls that overlaps with `active subtimeframe` to give *various*.
-            quorum 'from annual fuel use and active subtimeframe', :needs => [:annual_fuel_use, :active_subtimeframe],
+            quorum 'from annual fuel use, active subtimeframe, and timeframe', :needs => [:annual_fuel_use, :active_subtimeframe],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 characteristics[:annual_fuel_use] * (characteristics[:active_subtimeframe] / timeframe.year)
             end
@@ -258,7 +258,7 @@ module BrighterPlanet
           # *The distance the automobile travelled during `active subtimeframe`.*
           committee :distance do
             # Multiply `annual distance` (*km*) by the fraction of the calendar year in which `timeframe` falls that overlaps with `active subtimeframe` to give *km*.
-            quorum 'from annual distance and active subtimeframe', :needs => [:annual_distance, :active_subtimeframe],
+            quorum 'from annual distance, active subtimeframe, and timeframe', :needs => [:annual_distance, :active_subtimeframe],
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 characteristics[:annual_distance] * (characteristics[:active_subtimeframe] / timeframe.year)
             end
@@ -592,7 +592,7 @@ module BrighterPlanet
           # *The portion of `timeframe` that falls between `acquisition` and `retirement`.*
           committee :active_subtimeframe do
             # Calculate the portion of `timeframe` that falls between `acqusition` and `retirement`.
-            # If there is no overlap then we don't know `active subtimeframe`.
+            # If there is no overlap then `active subtimeframe` is zero days.
             quorum 'from acquisition and retirement', :needs => [:acquisition, :retirement],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 if characteristics[:acquisition].value <= characteristics[:retirement].value
@@ -627,7 +627,7 @@ module BrighterPlanet
             # Use client input, if available.
             
             # Otherwise use whichever is later: the last day of `timeframe` or `acquisition` (if we know it).
-            quorum 'default', :appreciates => :acquisition,
+            quorum 'from timeframe', :appreciates => :acquisition,
               :complies => [:ghg_protocol_scope_3, :iso] do |characteristics, timeframe|
                 [ timeframe.to, characteristics[:acquisition] ].compact.max
             end
