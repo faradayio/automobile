@@ -1,4 +1,4 @@
-name,code,common_name,distance_key,base_fuel_name,blend_fuel_name,blend_portion,annual_distance,energy_content,energy_content_units,co2_emission_factor,co2_biogenic_emission_factor,ch4_emission_factor,n2o_emission_factor,total_consumption
+name,code,group,distance_key,base_fuel_name,blend_fuel_name,blend_portion,annual_distance,energy_content,energy_content_units,co2_emission_factor,co2_biogenic_emission_factor,ch4_emission_factor,n2o_emission_factor,total_consumption
 B20,BP-B20,b20,diesel,Distillate Fuel Oil No. 2,Biodiesel,0.2,22000,38,megajoules_per_litre,2.2,0.5,0.00001,0.0002
 CNG,C,cng,gasoline,Pipeline Natural Gas,,,18000,38,megajoules_per_cubic_metre,1.9,0,0.01,0.01
 diesel,D,diesel,diesel,Distillate Fuel Oil No. 2,,,22000,38.5,megajoules_per_litre,2.7,0,0.00001,0.0003,5800

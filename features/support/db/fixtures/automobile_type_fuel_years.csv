@@ -1,4 +1,4 @@
-name,type_name,fuel_common_name,year,annual_distance,ch4_emission_factor,n2o_emission_factor
+name,type_name,fuel_group,year,annual_distance,ch4_emission_factor,n2o_emission_factor
 Passenger cars diesel 2003,Passenger cars,diesel,2003,17500,0.000008,0.0002
 Passenger cars gasoline 2003,Passenger cars,gasoline,2003,17500,0.0002,0.0025
 Light-duty trucks diesel 2003,Light-duty trucks,diesel,2003,25000,0.000016,0.0003
