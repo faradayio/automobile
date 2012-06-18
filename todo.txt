@@ -1,5 +1,3 @@
-Look up fuel type from AutomobileMakeModelYear
+"VW Jetta 2012" + "diesel" should find "VW Jetta Diesel 2012"
 
 Calculate hybridity multipliers in earth automatically
-
-Figure out a way for a user to specify an automobile variant - as of now they have to provide a row hash
