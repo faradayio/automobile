@@ -90,7 +90,8 @@ Feature: Automobile Impact Calculations
     Given it has "make.name" of "<make>"
     And it has "model.name" of "<model>"
     And it has "urbanity" of "0.5"
-    When impacts are calculated
+    When make_model is determined
+    And impacts are calculated
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     And the amount of "energy" should be within "0.01" of "<energy>"
     # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
@@ -109,7 +110,8 @@ Feature: Automobile Impact Calculations
     And it has "model.name" of "<model>"
     And it has "year.year" of "<year>"
     And it has "urbanity" of "0.5"
-    When impacts are calculated
+    When make_model_year is determined
+    And impacts are calculated
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     And the amount of "energy" should be within "0.01" of "<energy>"
     # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
@@ -188,7 +190,8 @@ Feature: Automobile Impact Calculations
     And it has "model.name" of "<model>"
     And it has "year.year" of "<year>"
     And it has "automobile_fuel.code" of "<fuel>"
-    When impacts are calculated
+    When make_model_year is determined
+    And impacts are calculated
     Then the amount of "carbon" should be within "0.01" of "<carbon>"
     And the amount of "energy" should be within "0.01" of "<energy>"
     # And the calculation should comply with standards "ghg_protocol_scope_3, iso"
