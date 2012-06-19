@@ -204,7 +204,7 @@ module BrighterPlanet
             # Find the best match for `active subtimeframe` and `automobile_type`.
             quorum 'from active subtimeframe and automobile type', :needs => [:active_subtimeframe, :automobile_type],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                AutomobileActivityYearType.find_by_type_name_and_closest_year(characteristics[:automobile_type].value, characteristics[:active_subtimeframe].start_date.year)
+                AutomobileActivityYearType.find_by_type_name_and_closest_year characteristics[:automobile_type].value, characteristics[:active_subtimeframe].start_date.year
             end
           end
           
@@ -214,7 +214,7 @@ module BrighterPlanet
             # Find the best match for `active subtimeframe`.
             quorum 'from active subtimeframe', :needs => :active_subtimeframe,
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                AutomobileActivityYear.find_by_closest_year(characteristics[:active_subtimeframe].start_date.year)
+                AutomobileActivityYear.find_by_closest_year characteristics[:active_subtimeframe].start_date.year
             end
           end
           
@@ -331,7 +331,7 @@ module BrighterPlanet
             # Match `automobile type`, `automobile fuel`, and `year` to a record in our database.
             quorum 'from automobile type, automobile fuel, and year', :needs => [:automobile_type, :automobile_fuel, :year],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                AutomobileTypeFuelYear.find_by_type_name_and_fuel_family_and_closest_year(characteristics[:automobile_type].value, characteristics[:automobile_fuel].family, characteristics[:year].year)
+                AutomobileTypeFuelYear.find_by_type_name_and_fuel_family_and_closest_year characteristics[:automobile_type].value, characteristics[:automobile_fuel].family, characteristics[:year].year
             end
           end
           
@@ -341,7 +341,7 @@ module BrighterPlanet
             # Match `automobile type` and `automobile fuel` to a record in our database.
             quorum 'from automobile type and automobile fuel', :needs => [:automobile_type, :automobile_fuel],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                AutomobileTypeFuel.find_by_type_name_and_fuel_family(characteristics[:automobile_type].value, characteristics[:automobile_fuel].family)
+                AutomobileTypeFuel.find_by_type_name_and_fuel_family characteristics[:automobile_type].value, characteristics[:automobile_fuel].family
             end
           end
           
@@ -644,7 +644,7 @@ module BrighterPlanet
             # Match `make` and `year` to a record in our database.
             quorum 'from make and year', :needs => [:make, :year],
               :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
-                AutomobileMakeYear.find_by_make_name_and_year(characteristics[:make].name, characteristics[:year].year)
+                AutomobileMakeYear.find_by_make_name_and_year characteristics[:make].name, characteristics[:year].year
             end
           end
           
