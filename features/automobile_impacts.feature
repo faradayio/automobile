@@ -90,40 +90,42 @@ Feature: Automobile Impact Calculations
     Given it has "make.name" of "<make>"
     And it has "model.name" of "<model>"
     And it has "urbanity" of "0.5"
-    When make_model is determined
-    And impacts are calculated
+    And it has "automobile_fuel.code" of "<fuel>"
+    When impacts are calculated
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     And the amount of "energy" should be within "0.01" of "<energy>"
     # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     Examples:
-      | make       | model        | energy   | carbon  |
-      | Toyota     | Prius        | 29634.87 | 2152.03 |
-      | Ford       | F150 FFV     | 99531.25 | 6989.13 |
-      | Chevrolet  | Volt         | 36235.29 | 2585.78 |
-      | Nissan     | Leaf         | 15076.92 | 2748.08 |
-      | Volkswagen | Jetta Diesel | 45903.85 | 3348.97 |
-      | Honda      | Civic CNG    | 51136.36 | 3042.82 |
-      | Honda      | FCX          | 24230.77 |  126.00 |
+      | make       | model     | fuel | energy   | carbon  |
+      | Toyota     | Prius     |      | 29634.87 | 2152.03 |
+      | Ford       | F150 FFV  |      | 99531.25 | 6989.13 |
+      | Chevrolet  | Volt      |      | 36235.29 | 2585.78 |
+      | Nissan     | Leaf      |      | 15076.92 | 2748.08 |
+      | Volkswagen | Jetta     |      | 56145.83 | 3894.18 |
+      | Volkswagen | Jetta     | D    | 45903.85 | 3348.97 |
+      | Honda      | Civic CNG |      | 51136.36 | 3042.82 |
+      | Honda      | FCX       |      | 24230.77 |  126.00 |
 
   Scenario Outline: Automobile emission from make model year and urbanity
     Given it has "make.name" of "<make>"
     And it has "model.name" of "<model>"
     And it has "year.year" of "<year>"
     And it has "urbanity" of "0.5"
-    When make_model_year is determined
-    And impacts are calculated
+    And it has "automobile_fuel.code" of "<fuel>"
+    When impacts are calculated
     And the amount of "carbon" should be within "0.01" of "<carbon>"
     And the amount of "energy" should be within "0.01" of "<energy>"
     # Then the calculation should comply with standards "ghg_protocol_scope_3, iso"
     Examples:
-      | make       | model        | year | energy    | carbon  |
-      | Toyota     | Prius        | 2003 |  35028.59 | 2471.63 |
-      | Ford       | F150 FFV     | 2012 | 142222.22 | 9866.03 |
-      | Chevrolet  | Volt         | 2012 |  52705.88 | 3707.37 |
-      | Nissan     | Leaf         | 2012 |  15076.92 | 2748.08 |
-      | Volkswagen | Jetta Diesel | 2003 |  42777.78 | 3126.14 |
-      | Honda      | Civic CNG    | 2003 |  52867.13 | 3129.36 |
-      | Honda      | FCX          | 2010 |  24230.77 |  126.00 |
+      | make       | model     | fuel | year | energy    | carbon  |
+      | Toyota     | Prius     |      | 2003 |  35028.59 | 2471.63 |
+      | Ford       | F150 FFV  |      | 2012 | 142222.22 | 9866.03 |
+      | Chevrolet  | Volt      |      | 2012 |  52705.88 | 3707.37 |
+      | Nissan     | Leaf      |      | 2012 |  15076.92 | 2748.08 |
+      | Volkswagen | Jetta     |      | 2003 |  63802.08 | 4362.46 |
+      | Volkswagen | Jetta     | D    | 2003 |  42777.78 | 3126.14 |
+      | Honda      | Civic CNG |      | 2003 |  52867.13 | 3129.36 |
+      | Honda      | FCX       |      | 2010 |  24230.77 |  126.00 |
 
   Scenario Outline: Automobile emission from various distances and fuel efficiency
     Given it has "fuel_efficiency" of "10"
@@ -190,15 +192,15 @@ Feature: Automobile Impact Calculations
     And it has "model.name" of "<model>"
     And it has "year.year" of "<year>"
     And it has "automobile_fuel.code" of "<fuel>"
-    When make_model_year is determined
-    And impacts are calculated
+    When impacts are calculated
     Then the amount of "carbon" should be within "0.01" of "<carbon>"
     And the amount of "energy" should be within "0.01" of "<energy>"
     # And the calculation should comply with standards "ghg_protocol_scope_3, iso"
     Examples:
-      | make       | model        | year | fuel   | energy | carbon | notes |
-      | Toyota     | Prius        | 2003 | R      | 199.21 | 14.06  | different code meaning gasoline |
-      | Ford       | F150 FFV     | 2012 | E      | 440.48 |  9.65  | alt fuel |
-      | Chevrolet  | Volt         | 2012 | EL     |  87.50 | 15.92  | alt fuel |
-      | Volkswagen | Jetta Diesel | 2003 | BP-B20 | 246.30 | 14.98  | alt fuel |
-      | Honda      | Civic CNG    | 2003 | G      | 269.23 | 18.66  | not a fuel for this variant |
+      | make       | model     | year | fuel   | energy | carbon | notes |
+      | Toyota     | Prius     | 2003 | R      | 199.21 | 14.06  | different code meaning gasoline |
+      | Ford       | F150 FFV  | 2012 | E      | 440.48 |  9.65  | alt fuel |
+      | Chevrolet  | Volt      | 2012 | EL     |  87.50 | 15.92  | alt fuel |
+      | Volkswagen | Jetta     | 2003 | G      | 376.74 | 25.73  | alt fuel |
+      | Volkswagen | Jetta     | 2003 | BP-B20 | 246.30 | 14.98  | alt fuel |
+      | Honda      | Civic CNG | 2003 | G      | 269.23 | 18.66  | not a fuel for this variant |

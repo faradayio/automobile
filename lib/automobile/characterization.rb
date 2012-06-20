@@ -6,8 +6,6 @@ module BrighterPlanet
           has :make
           has :model
           has :year
-          has :make_model      # don't expect user to specify; cm1 interprets this automatically
-          has :make_model_year # don't expect user to specify; cm1 interprets this automatically
           has :size_class
           has :automobile_fuel # can't call this 'fuel' or else sniff thinks it refers to Fuel not AutomobileFuel
           has :country

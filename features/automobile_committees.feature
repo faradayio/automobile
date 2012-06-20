@@ -4,6 +4,28 @@ Feature: Automobile Committee Calculations
   Background:
     Given a Automobile
 
+  Scenario Outline: Make model committee
+    Given a characteristic "make.name" of "<make>"
+    And a characteristic "model.name" of "<model>"
+    And a characteristic "automobile_fuel.code" of "<fuel>"
+    When the "make_model" committee reports
+    Then the committee should have used quorum "from make and model"
+    And the conclusion of the committee should have "name" of "<make_model>"
+    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
+    Examples:
+      | make       | model | fuel | make_model              |
+      | Toyota     | Prius |      | Toyota Prius            |
+      | Volkswagen | Jetta |      | Volkswagen Jetta        |
+      | Volkswagen | Jetta | C    | Volkswagen Jetta        |
+      | Volkswagen | Jetta | D    | Volkswagen Jetta DIESEL |
+
+  Scenario: Make model committee from invalid make model combo
+    Given a characteristic "make.name" of "Honda"
+    And a characteristic "model.name" of "Jetta"
+    And a characteristic "automobile_fuel.code" of "D"
+    When the "make_model" committee reports
+    And the conclusion of the committee should be nil
+
   Scenario: Make year committee from valid make year combination
     Given a characteristic "make.name" of "Toyota"
     And a characteristic "year.year" of "2003"
@@ -17,6 +39,26 @@ Feature: Automobile Committee Calculations
     And a characteristic "year.year" of "2010"
     When the "make_year" committee reports
     Then the conclusion of the committee should be nil
+
+  Scenario: Make model year committee
+    Given a characteristic "make.name" of "Volkswagen"
+    And a characteristic "model.name" of "Jetta"
+    And a characteristic "automobile_fuel.code" of "D"
+    And a characteristic "year.year" of "2003"
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
+    Then the committee should have used quorum "from make model and year"
+    And the conclusion of the committee should have "name" of "Volkswagen Jetta DIESEL 2003"
+    And the conclusion should comply with standards "ghg_protocol_scope_1, ghg_protocol_scope_3, iso"
+
+  Scenario: Make model year committee from invalid make model year combo
+    Given a characteristic "make.name" of "Volkswagen"
+    And a characteristic "model.name" of "Jetta"
+    And a characteristic "automobile_fuel.code" of "D"
+    And a characteristic "year.year" of "2012"
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
+    And the conclusion of the committee should be nil
 
   Scenario Outline: Retirement committee
     Given a characteristic "timeframe" of "2010-01-01/2011-01-01"
@@ -99,8 +141,8 @@ Feature: Automobile Committee Calculations
     Given a characteristic "make.name" of "<make>"
     And a characteristic "model.name" of "<model>"
     And a characteristic "year.year" of "<year>"
-    When make_model is determined
-    And make_model_year is determined
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
     And the "automobile_fuel" committee reports
     Then the committee should have used quorum "<quorum>"
     And the conclusion should comply with standards "<standards>"
@@ -116,8 +158,8 @@ Feature: Automobile Committee Calculations
     And a characteristic "model.name" of "<model>"
     And a characteristic "year.year" of "<year>"
     And a characteristic "automobile_fuel.code" of "<fuel>"
-    When make_model is determined
-    And make_model_year is determined
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
     And the "fuel_efficiency_highway" committee reports
     Then the committee should have used quorum "<quorum>"
     And the conclusion of the committee should be "<fe>"
@@ -134,8 +176,8 @@ Feature: Automobile Committee Calculations
     And a characteristic "model.name" of "<model>"
     And a characteristic "year.year" of "<year>"
     And a characteristic "automobile_fuel.code" of "<fuel>"
-    When make_model is determined
-    And make_model_year is determined
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
     And the "fuel_efficiency_highway" committee reports
     Then the conclusion of the committee should be nil
     Examples:
@@ -148,8 +190,8 @@ Feature: Automobile Committee Calculations
     And a characteristic "model.name" of "<model>"
     And a characteristic "year.year" of "<year>"
     And a characteristic "automobile_fuel.code" of "<fuel>"
-    When make_model is determined
-    And make_model_year is determined
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
     And the "fuel_efficiency_city" committee reports
     Then the committee should have used quorum "<quorum>"
     And the conclusion of the committee should be "<fe>"
@@ -166,8 +208,8 @@ Feature: Automobile Committee Calculations
     And a characteristic "model.name" of "<model>"
     And a characteristic "year.year" of "<year>"
     And a characteristic "automobile_fuel.code" of "<fuel>"
-    When make_model is determined
-    And make_model_year is determined
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
     And the "fuel_efficiency_city" committee reports
     Then the conclusion of the committee should be nil
     Examples:
@@ -216,8 +258,8 @@ Feature: Automobile Committee Calculations
     And a characteristic "model.name" of "<model>"
     And a characteristic "year.year" of "<year>"
     And a characteristic "size_class.name" of "<size_class>"
-    When make_model is determined
-    And make_model_year is determined
+    When the "make_model" committee reports
+    And the "make_model_year" committee reports
     And the "automobile_type" committee reports
     Then the committee should have used quorum "<quorum>"
     And the conclusion of the committee should be "<type>"

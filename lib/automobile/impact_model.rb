@@ -635,8 +635,13 @@ module BrighterPlanet
           
           #### Make model year
           # *The automobile's [make, model, and year](http://data.brighterplanet.com/automobile_make_model_years).*
-          #
-          # Match client input to a record in our database.
+          committee :make_model_year do
+            # Match `make model` and `year` to a record in our database.
+            quorum 'from make model and year', :needs => [:make_model, :year],
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileMakeModelYear.find_by_make_name_and_model_name_and_year characteristics[:make_model].make_name, characteristics[:make_model].model_name, characteristics[:year].year
+            end
+          end
           
           #### Make year
           # *The automobile's [make and year](http://data.brighterplanet.com/automobile_make_years).*
@@ -650,8 +655,13 @@ module BrighterPlanet
           
           #### Make model
           # *The automobile's [make and model](http://data.brighterplanet.com/automobile_make_models).*
-          #
-          # Match client input to a record in our database.
+          committee :make_model do
+            # Match `make` and `model` to a record in our database, also considering client-input `automobile fuel`.
+            quorum 'from make and model', :needs => [:make, :model], :appreciates => :automobile_fuel,
+              :complies => [:ghg_protocol_scope_1, :ghg_protocol_scope_3, :iso] do |characteristics|
+                AutomobileMakeModel.custom_find characteristics
+            end
+          end
           
           #### Year
           # *The automobile's [year of manufacture](http://data.brighterplanet.com/automobile_years).*
