@@ -1,14 +1,6 @@
-require 'bundler'
-Bundler.setup
-
-require 'cucumber'
+require 'bundler/setup'
 
 require 'sniff'
-Sniff.init File.join(File.dirname(__FILE__), '..', '..'),
-  # :adapter => 'mysql2',
-  # :database => 'test_flight',
-  # :username => 'root',
-  # :password => 'password',
-  :earth => [:automobile, :locality],
+Sniff.init File.expand_path('../../..', __FILE__),
   :cucumber => true,
-  :logger => 'log/test_log.txt'
+  :logger => false # change this to $stderr to see database activity

@@ -1,13 +1,3 @@
-require 'rubygems'
-
-require 'bundler'
-Bundler.setup
-
-require 'bueller'
-Bueller::Tasks.new
-
-require 'sniff'
+require 'bundler/setup'
 require 'sniff/rake_tasks'
-Sniff::RakeTasks.define_tasks do |t|
-  t.earth_domains = [:automobile, :fuel, :locality]
-end
+Sniff::RakeTasks.define_tasks
