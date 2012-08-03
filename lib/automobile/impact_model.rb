@@ -2,6 +2,16 @@
 # See LICENSE for details.
 # Contact Brighter Planet for dual-license arrangements.
 
+require 'earth/automobile/automobile_activity_year'
+require 'earth/automobile/automobile_activity_year_type'
+require 'earth/automobile/automobile_make_model'
+require 'earth/automobile/automobile_make_model_year'
+require 'earth/automobile/automobile_make_year'
+require 'earth/automobile/automobile_size_class'
+require 'earth/automobile/automobile_type_fuel'
+require 'earth/automobile/automobile_type_fuel_year'
+require 'earth/locality/country'
+
 ### Automobile impact model
 # This model is used by the [Brighter Planet](http://brighterplanet.com) [CM1 web service](http://impact.brighterplanet.com) to calculate the impacts of an automobile, such as energy use and greenhouse gas emissions.
 

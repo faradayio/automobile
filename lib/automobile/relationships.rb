@@ -1,3 +1,8 @@
+require 'earth/automobile/automobile_make'
+require 'earth/automobile/automobile_model'
+require 'earth/automobile/automobile_year'
+require 'earth/automobile/automobile_size_class'
+
 module BrighterPlanet
   module Automobile
     module Relationships
