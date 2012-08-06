@@ -1,5 +1,11 @@
 require 'emitter'
 
+require 'automobile/impact_model'
+require 'automobile/characterization'
+require 'automobile/data'
+require 'automobile/relationships'
+require 'automobile/summarization'
+
 module BrighterPlanet
   module Automobile
     extend BrighterPlanet::Emitter
