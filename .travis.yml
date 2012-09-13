@@ -2,6 +2,8 @@
 language: ruby
 rvm:
 - 1.9.3
+env:
+- DATABASE_URL=mysql2://root@127.0.0.1/test_automobile
 before_script:
 - rake db:create
 - rake db:migrate
