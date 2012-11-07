@@ -59,7 +59,7 @@ Feature: Automobile Impact Calculations
     Examples:
       | hybridity | energy   | carbon  |
       | true      | 45389.87 | 3226.00 |
-      | false     | 85106.01 | 5838.32 |
+      | false     | 85105.99 | 5838.32 |
 
   Scenario Outline: Automobile emission from make
     Given it has "make.name" of "<make>"
